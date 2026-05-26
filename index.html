@@ -206,6 +206,51 @@ tr:hover td{background:var(--primary-light)}
 .login-body .login-btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(26,61,203,.42)}
 .login-body .login-btn:active{transform:translateY(0)}
 .login-hint{font-size:11px;color:#aab4c0;margin-top:14px}
+/* sortable table headers */
+th.sort-th{cursor:pointer;user-select:none;white-space:nowrap;position:relative;transition:background-color .12s,color .12s}
+th.sort-th:hover{background:#eef3fb;color:#1a3dcb}
+th.sort-th .sort-ind{display:inline-block;margin-left:3px;font-size:10px;color:#b5c2d4;letter-spacing:-1px;min-width:8px}
+th.sort-th.sort-active{background:#e8efff;color:#1a3dcb}
+th.sort-th.sort-active .sort-ind{color:#1a3dcb;font-weight:900}
+/* info modal */
+.info-btn{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:#1a3dcb;color:#fff;font-size:11px;font-weight:700;cursor:pointer;border:none;margin-left:6px;vertical-align:middle;transition:transform .1s,background .15s}
+.info-btn:hover{background:#142577;transform:scale(1.1)}
+.info-btn-sm{width:15px;height:15px;font-size:10px;margin-left:4px}
+.info-modal{display:none;position:fixed;inset:0;background:rgba(20,37,119,.55);z-index:99998;align-items:center;justify-content:center;padding:24px;animation:fadeIn .15s ease}
+.info-modal.show{display:flex}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.info-modal-box{background:#fff;border-radius:14px;max-width:680px;width:100%;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(20,37,119,.4);overflow:hidden;animation:slideUp .2s ease}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.info-modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;background:linear-gradient(135deg,#1a3dcb,#2747b9);color:#fff}
+.info-modal-head h3{margin:0;font-size:17px;font-weight:800;letter-spacing:-0.3px}
+.info-modal-close{background:rgba(255,255,255,.18);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:14px;transition:background .15s}
+.info-modal-close:hover{background:rgba(255,255,255,.32)}
+.info-modal-body{padding:22px 26px;overflow-y:auto;font-size:13.5px;color:#333;line-height:1.65}
+.info-modal-body h4{font-size:14.5px;color:#1a3dcb;margin:18px 0 8px;font-weight:800;border-left:3px solid #1a3dcb;padding-left:8px}
+.info-modal-body h4:first-child{margin-top:0}
+.info-modal-body table{width:100%;border-collapse:collapse;margin:8px 0;font-size:12.5px}
+.info-modal-body th,.info-modal-body td{border:1px solid #e1e6f0;padding:7px 10px;text-align:left}
+.info-modal-body th{background:#f3f6ff;color:#142577;font-weight:700}
+.info-modal-body td b{color:#1a3dcb}
+.info-modal-body .grp{background:#f8faff;border-left:4px solid #1a3dcb;padding:10px 14px;margin:8px 0;border-radius:0 8px 8px 0}
+.info-modal-body .grp b{color:#142577}
+.info-modal-body code{background:#f0f3ff;color:#1a3dcb;padding:1px 6px;border-radius:4px;font-size:12px}
+.info-modal-body ul{margin:6px 0 10px;padding-left:22px}
+.info-modal-body li{margin-bottom:4px}
+/* clickable grade chips + post-it */
+.grade-chip{display:inline-flex;align-items:center;gap:5px;cursor:pointer;padding:3px 8px;border-radius:6px;transition:background .12s,transform .08s;user-select:none}
+.grade-chip:hover{background:#f3f6ff;transform:translateY(-1px)}
+.grade-chip:active{transform:translateY(0)}
+.grade-dot{width:11px;height:11px;border-radius:50%;display:inline-block}
+.grade-postit{position:absolute;z-index:10000;width:260px;background:#fff8b8;border:1px solid rgba(0,0,0,.08);box-shadow:0 8px 24px rgba(0,0,0,.18),0 2px 6px rgba(0,0,0,.1);padding:14px 16px 12px;font-size:12.5px;line-height:1.55;color:#3a2e00;border-radius:2px;transform:rotate(-1.4deg);animation:postitPop .18s cubic-bezier(.5,1.5,.5,1)}
+.grade-postit::before{content:'';position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-2deg);width:62px;height:14px;background:linear-gradient(180deg,rgba(255,200,100,.45),rgba(255,200,100,.25));border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+@keyframes postitPop{from{opacity:0;transform:rotate(-1.4deg) scale(.9) translateY(-6px)}to{opacity:1;transform:rotate(-1.4deg) scale(1) translateY(0)}}
+.grade-postit h5{margin:0 0 6px;font-size:13px;font-weight:800;color:#1a1a1a;display:flex;align-items:center;gap:6px}
+.grade-postit h5 .pdot{width:11px;height:11px;border-radius:50%;flex:none;box-shadow:0 0 0 2px rgba(255,255,255,.65)}
+.grade-postit .pclose{position:absolute;top:5px;right:6px;background:rgba(0,0,0,.08);border:none;width:20px;height:20px;border-radius:50%;font-size:11px;cursor:pointer;color:#3a2e00;line-height:18px;text-align:center;padding:0}
+.grade-postit .pclose:hover{background:rgba(0,0,0,.15)}
+.grade-postit p{margin:4px 0 0}
+.grade-postit .pcrit{margin-top:6px;padding-top:6px;border-top:1px dashed rgba(0,0,0,.15);font-size:11px;color:#5a4a00;font-weight:600}
 #officeKpis{grid-template-columns:repeat(7,1fr);gap:12px}
 #officeKpis .kpi-card{padding:14px 15px}
 #officeKpis .kpi-card .label{margin-bottom:7px}
@@ -285,12 +330,23 @@ tr:hover td{background:var(--primary-light)}
   </div>
 </div>
 
+<!-- 설명 모달 시스템 -->
+<div id="infoModal" class="info-modal" onclick="closeInfoModal(event)">
+  <div class="info-modal-box" onclick="event.stopPropagation()">
+    <div class="info-modal-head">
+      <h3 id="infoModalTitle">설명</h3>
+      <button class="info-modal-close" onclick="closeInfoModal()">✕</button>
+    </div>
+    <div class="info-modal-body" id="infoModalBody"></div>
+  </div>
+</div>
+
 <div class="header">
   <div style="display:flex;align-items:center;gap:14px">
     <img src="data:image/png;base64,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" alt="Wellcheck" style="height:30px;width:auto;background:#fff;padding:5px 9px;border-radius:7px;box-shadow:0 2px 6px rgba(0,0,0,.18)">
     <div>
       <div style="font-size:19px;font-weight:700;letter-spacing:-0.5px">일만사 × 웰체크 전략지도 대시보드</div>
-      <div style="font-size:12px;color:#a8c0e0;margin-top:2px">사업소 · 사무소 현황 · 추천 동선</div>
+      <div style="font-size:12px;color:#a8c0e0;margin-top:2px">사업소 · 사무소 현황 · 교육간호사 · 추천 동선  <span style="margin-left:6px;padding:2px 8px;background:rgba(255,255,255,.18);border-radius:4px;font-size:11px;font-weight:600">📅 데이터 기준: 2026년 4월</span></div>
     </div>
   </div>
   <div class="header-right">
@@ -369,8 +425,17 @@ tr:hover td{background:var(--primary-light)}
     <div class="hospital-table-wrap">
       <table>
         <thead><tr>
-          <th>병원명</th><th>담당자</th><th>등급</th><th>단계</th><th>사업유형</th>
-          <th>활성</th><th>일만사</th><th>웰체크</th><th>수가(4월)</th><th>청구</th><th>네비</th>
+          <th class="sort-th" data-sort="hospital" onclick="setOfficeSort('hospital')">병원명 <span class="sort-ind"></span></th>
+          <th class="sort-th" data-sort="manager" onclick="setOfficeSort('manager')">담당자 <span class="sort-ind"></span></th>
+          <th class="sort-th" data-sort="grade" onclick="setOfficeSort('grade')">등급 <span class="sort-ind"></span></th>
+          <th class="sort-th" data-sort="stage" onclick="setOfficeSort('stage')">단계 <span class="sort-ind"></span></th>
+          <th class="sort-th" data-sort="program" onclick="setOfficeSort('program')">사업유형 <span class="sort-ind"></span></th>
+          <th class="sort-th" data-sort="active" onclick="setOfficeSort('active')">활성 <span class="sort-ind"></span></th>
+          <th class="sort-th" data-sort="ilmansa" onclick="setOfficeSort('ilmansa')">일만사 <span class="sort-ind"></span></th>
+          <th class="sort-th" data-sort="wellcheck" onclick="setOfficeSort('wellcheck')">웰체크 <span class="sort-ind"></span></th>
+          <th class="sort-th" data-sort="fee" onclick="setOfficeSort('fee')">수가(4월) <span class="sort-ind"></span></th>
+          <th class="sort-th" data-sort="claim" onclick="setOfficeSort('claim')">청구 <span class="sort-ind"></span></th>
+          <th>네비</th>
         </tr></thead>
         <tbody id="hospitalTbody"></tbody>
       </table>
@@ -381,7 +446,7 @@ tr:hover td{background:var(--primary-light)}
 
 <!-- ===== TAB 3: 추천 동선 ===== -->
 <div class="tab-content" id="tab-route">
-  <div class="section-title" style="margin-bottom:10px">🗺 추천 동선</div>
+  <div class="section-title" style="margin-bottom:10px">🎯 오늘의 타겟 의원 리스트 <button class="info-btn" onclick="openInfoModal('route')" title="추천동선 설계 철학">?</button> <span style="font-size:12px;font-weight:500;color:#7a8fb5;margin-left:4px">— 거리 기반 동선 순서 포함</span></div>
   <div class="route-controls" id="routeControls">
     <div class="ctrl-group" style="position:relative">
       <label>기준 의원 (검색·선택 시 그 의원 중심 동선)</label>
@@ -390,7 +455,7 @@ tr:hover td{background:var(--primary-light)}
       <div id="routeAnchorTag" style="display:none;margin-top:6px;font-size:11px"></div>
     </div>
     <div class="ctrl-group">
-      <label>동선 방식</label>
+      <label>동선 방식 <button class="info-btn info-btn-sm" onclick="openInfoModal('mode')" title="동선 방식 자세히">?</button></label>
       <select id="routeMode" onchange="renderRoute()">
         <option value="balanced" selected>균형 (등급 + 거리)</option>
         <option value="priority">등급 우선 (시급한 곳)</option>
@@ -416,17 +481,17 @@ tr:hover td{background:var(--primary-light)}
       </select>
     </div>
     <div class="ctrl-group">
-      <label>전략유형</label>
+      <label>전략유형 <button class="info-btn info-btn-sm" onclick="openInfoModal('strategy')" title="11개 전략 자세히">?</button></label>
       <select id="routeStrategy" onchange="renderRoute()">
         <option value="">전체</option>
         <optgroup label="A. 긴급 회복 — 손실 차단">
-          <option value="a1">🔥 대형 긴급-청구누수</option>
-          <option value="a2">🔥 일반 청구누수 활성화</option>
-          <option value="a3">⚠ 이탈 방어</option>
+          <option value="a1">🔥 대형 긴급-청구누수 (일만사 ≥50 + 미청구)</option>
+          <option value="a2">🔥 일반 긴급-청구누수 (일만사 10~49 + 미청구)</option>
+          <option value="a3">🛡 이탈 방어 (활성 1~4 + 청구 O)</option>
         </optgroup>
         <optgroup label="B. 활성처 수익화 — 새는 곳 막기">
-          <option value="b1">💸 허수 활성 진짜화</option>
-          <option value="b2">🛡 우수처 누수 방어</option>
+          <option value="b1">💛 진입 정착 필요 (일만사 1~9 + 미청구)</option>
+          <option value="b2">🛡 우수처 누수 방어 (A++/S+ 활성)</option>
           <option value="b3">🌟 명의풀 레퍼런스 확보</option>
         </optgroup>
         <optgroup label="C. 성장 가속 — 참여 중 활성화">
@@ -435,7 +500,7 @@ tr:hover td{background:var(--primary-light)}
           <option value="c3">🟢 웰체크 도입 권유</option>
         </optgroup>
         <optgroup label="D. 신규 개척 — 미참여 영입">
-          <option value="d1">🚀 미기동-잠재대형</option>
+          <option value="d1">✅ 기본 활성 성장 (일만사 1~9 + 청구 O)</option>
           <option value="d2">🚀 신규 미참여</option>
         </optgroup>
       </select>
@@ -473,22 +538,23 @@ tr:hover td{background:var(--primary-light)}
     </div>
     <div class="ctrl-group">
       <label>하루 방문 수 (1개 이상)</label>
-      <input type="number" id="routeN" min="1" value="8" oninput="renderRoute()">
+      <input type="number" id="routeN" min="1" value="5" oninput="renderRoute()">
     </div>
   </div>
   <div class="maps-bar" id="mapsBarWrap" style="display:none">
-    <span style="font-size:13px;font-weight:600">📍 추천 동선 <b id="selectedN" style="color:#1a6faf">0</b>개 병원 — 1번(최우선)에서 가까운 순서로 이동 동선을 계산했습니다.</span>
+    <span style="font-size:13px;font-weight:600">🎯 오늘의 타겟 <b id="selectedN" style="color:#1a3dcb">0</b>개 의원 <span id="poolInfo" style="color:#5b6b7d;font-weight:500;margin-left:4px"></span> — 위에서부터 방문 우선순위 (1번이 출발점)</span>
   </div>
   <div id="strategyBanner" style="display:none;margin:0 0 12px;padding:12px 16px;border-radius:10px;font-size:13px;font-weight:600;background:#eff6ff;color:#1d4ed8;border-left:4px solid #3b82f6"></div>
   <div style="display:flex;flex-wrap:wrap;gap:6px 14px;background:#fff;border-radius:10px;padding:9px 14px;margin-bottom:10px;box-shadow:0 1px 5px rgba(0,0,0,.07);font-size:11px;color:#444">
-    <span style="display:flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:50%;background:#7f1d1d;display:inline-block"></span>긴급-청구누수(대형)</span>
-    <span style="display:flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:50%;background:#ef4444;display:inline-block"></span>긴급-청구누수</span>
-    <span style="display:flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:50%;background:#f97316;display:inline-block"></span>A++ 대규모활성</span>
-    <span style="display:flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:50%;background:#eab308;display:inline-block"></span>S+ 우수활성</span>
-    <span style="display:flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:50%;background:#22c55e;display:inline-block"></span>A 안정활성</span>
-    <span style="display:flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:50%;background:#0891b2;display:inline-block"></span>이탈방어</span>
-    <span style="display:flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:50%;background:#8b5cf6;display:inline-block"></span>미기동-잠재대형</span>
-    <span style="display:flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:50%;background:#94a3b8;display:inline-block"></span>미기동/신규</span>
+    <span style="font-size:10px;color:#7a8fb5;font-weight:600;margin-right:2px">📝 클릭해 정의 보기:</span>
+    <span class="grade-chip" onclick="showGradePostit('emergency',event)"><span class="grade-dot" style="background:#dc2626"></span>긴급-청구누수</span>
+    <span class="grade-chip" onclick="showGradePostit('entry',event)"><span class="grade-dot" style="background:#f59e0b"></span>진입 정착 필요</span>
+    <span class="grade-chip" onclick="showGradePostit('churn',event)"><span class="grade-dot" style="background:#0891b2"></span>이탈방어</span>
+    <span class="grade-chip" onclick="showGradePostit('basic',event)"><span class="grade-dot" style="background:#84cc16"></span>기본 활성</span>
+    <span class="grade-chip" onclick="showGradePostit('a',event)"><span class="grade-dot" style="background:#22c55e"></span>A 안정활성</span>
+    <span class="grade-chip" onclick="showGradePostit('sp',event)"><span class="grade-dot" style="background:#eab308"></span>S+ 우수활성</span>
+    <span class="grade-chip" onclick="showGradePostit('app',event)"><span class="grade-dot" style="background:#f97316"></span>A++ 대규모활성</span>
+    <span class="grade-chip" onclick="showGradePostit('idle',event)"><span class="grade-dot" style="background:#94a3b8"></span>미참여/신규</span>
   </div>
   <div style="display:flex;flex-wrap:wrap;gap:20px;background:linear-gradient(135deg,#1a1a2e,#0f3460);color:#fff;border-radius:10px;padding:11px 18px;margin-bottom:10px;font-size:13px">
     <span>표시: <b id="routeMapCount" style="color:#06d6a0">0</b>개 병원</span>
@@ -530,14 +596,14 @@ tr:hover td{background:var(--primary-light)}
       <label>등급</label>
       <select id="mapGrade" onchange="refreshMapMarkers()">
         <option value="">전체</option>
-        <option value="🚀 미기동/신규">🚀 미기동/신규</option>
-        <option value="🚀 미기동-잠재대형">🚀 미기동-잠재대형</option>
         <option value="🔥 긴급-청구누수">🔥 긴급-청구누수</option>
-        <option value="🔥 긴급-청구누수(대형)">🔥 긴급-청구누수(대형)</option>
-        <option value="🧨 A++ 대규모활성">🧨 A++ 대규모활성</option>
-        <option value="⭐ S+ 우수활성">⭐ S+ 우수활성</option>
-        <option value="✅ A 안정활성">✅ A 안정활성</option>
+        <option value="💛 진입 정착 필요">💛 진입 정착 필요</option>
         <option value="🛡 이탈방어">🛡 이탈방어</option>
+        <option value="✅ 기본 활성">✅ 기본 활성</option>
+        <option value="🌱 A 안정활성">🌱 A 안정활성</option>
+        <option value="⭐ S+ 우수활성">⭐ S+ 우수활성</option>
+        <option value="🧨 A++ 대규모활성">🧨 A++ 대규모활성</option>
+        <option value="⚪ 미참여/신규">⚪ 미참여/신규</option>
       </select>
     </div>
     <div style="display:flex;align-items:center;gap:6px">
@@ -551,14 +617,14 @@ tr:hover td{background:var(--primary-light)}
       </select>
     </div>
     <div class="map-legend">
-      <span class="leg-item"><span class="leg-dot" style="background:#7f1d1d"></span>긴급-청구누수(대형)</span>
-      <span class="leg-item"><span class="leg-dot" style="background:#ef4444"></span>긴급-청구누수</span>
-      <span class="leg-item"><span class="leg-dot" style="background:#f97316"></span>A++ 대규모활성</span>
-      <span class="leg-item"><span class="leg-dot" style="background:#eab308"></span>S+ 우수활성</span>
-      <span class="leg-item"><span class="leg-dot" style="background:#22c55e"></span>A 안정활성</span>
+      <span class="leg-item"><span class="leg-dot" style="background:#dc2626"></span>긴급-청구누수</span>
+      <span class="leg-item"><span class="leg-dot" style="background:#f59e0b"></span>진입 정착 필요</span>
       <span class="leg-item"><span class="leg-dot" style="background:#0891b2"></span>이탈방어</span>
-      <span class="leg-item"><span class="leg-dot" style="background:#8b5cf6"></span>미기동-잠재대형</span>
-      <span class="leg-item"><span class="leg-dot" style="background:#94a3b8"></span>미기동/신규</span>
+      <span class="leg-item"><span class="leg-dot" style="background:#84cc16"></span>기본 활성</span>
+      <span class="leg-item"><span class="leg-dot" style="background:#22c55e"></span>A 안정활성</span>
+      <span class="leg-item"><span class="leg-dot" style="background:#eab308"></span>S+ 우수활성</span>
+      <span class="leg-item"><span class="leg-dot" style="background:#f97316"></span>A++ 대규모활성</span>
+      <span class="leg-item"><span class="leg-dot" style="background:#94a3b8"></span>미참여/신규</span>
     </div>
   </div>
   <div class="map-stat-bar" id="mapStatBar">
@@ -716,7 +782,48 @@ let gsheetMsg = '';
       usingCustom = true;
     }
   } catch(e) { DATA = EMBEDDED_DATA; }
+  reclassifyGrades();
 })();
+
+// ============================================================
+//  등급 재분류 — 단일 정의
+// ============================================================
+//  우선순위 1: program_type === '⚪ 미참여' → 미참여/신규
+//  우선순위 2: 활성환자 1~4 + 청구 O + 4월수가 > 0 → 이탈방어
+//  우선순위 3: 미청구
+//    - 일만사 0    → 미참여/신규
+//    - 일만사 1~9  → 진입 정착 필요
+//    - 일만사 ≥10  → 긴급-청구누수
+//  우선순위 4: 청구
+//    - 일만사 0    → 미참여/신규
+//    - 일만사 1~9  → 기본 활성
+//    - 일만사 10~39 → A 안정활성
+//    - 일만사 40~99 → S+ 우수활성
+//    - 일만사 ≥100 → A++ 대규모활성
+function classifyGrade(r){
+  var pt=r.program_type||'';
+  var act=r.active_pt||0;
+  var ilm=r.ilmansa_pt||0;
+  var cs=r.claim_status||'';
+  var fee=r.fee_apr||0;
+  if(pt==='⚪ 미참여') return '⚪ 미참여/신규';
+  if(act>=1 && act<=4 && cs==='청구' && fee>0) return '🛡 이탈방어';
+  if(cs==='미청구'){
+    if(ilm===0) return '⚪ 미참여/신규';
+    if(ilm<=9)  return '💛 진입 정착 필요';
+    return '🔥 긴급-청구누수';
+  } else {
+    if(ilm===0)  return '⚪ 미참여/신규';
+    if(ilm<=9)   return '✅ 기본 활성';
+    if(ilm<=39)  return '🌱 A 안정활성';
+    if(ilm<=99)  return '⭐ S+ 우수활성';
+    return '🧨 A++ 대규모활성';
+  }
+}
+function reclassifyGrades(){
+  if(!Array.isArray(DATA)) return;
+  DATA.forEach(function(r){ r.grade_action=classifyGrade(r); });
+}
 
 // ============================================================
 //  유틸
@@ -1114,6 +1221,44 @@ function renderDivisionTab(){
 let _officeRows=[];
 let _officePage=1;
 const PAGE_SIZE=50;
+// 정렬 상태 — 기본은 priority_rank 오름차순 (가장 시급한 의원 위)
+let _officeSort={col:'',dir:'asc'};
+const _OFFICE_SORT_MAP={
+  'hospital':{getter:r=>(r.hospital||''),type:'str',defDir:'asc'},
+  'manager':{getter:r=>(r.manager||''),type:'str',defDir:'asc'},
+  'grade':{getter:r=>(r.priority_rank||99),type:'num',defDir:'asc'},
+  'stage':{getter:r=>(r.grade_stage||''),type:'str',defDir:'asc'},
+  'program':{getter:r=>(r.program_type||''),type:'str',defDir:'asc'},
+  'active':{getter:r=>(r.active_pt||0),type:'num',defDir:'desc'},
+  'ilmansa':{getter:r=>(r.ilmansa_pt||0),type:'num',defDir:'desc'},
+  'wellcheck':{getter:r=>(r.wellcheck_pt||0),type:'num',defDir:'desc'},
+  'fee':{getter:r=>(r.fee_apr||0),type:'num',defDir:'desc'},
+  'claim':{getter:r=>(r.claim_status||''),type:'str',defDir:'asc'}
+};
+function setOfficeSort(col){
+  var meta=_OFFICE_SORT_MAP[col]; if(!meta) return;
+  if(_officeSort.col===col){
+    _officeSort.dir=(_officeSort.dir==='asc')?'desc':'asc';
+  } else {
+    _officeSort.col=col;
+    _officeSort.dir=meta.defDir;
+  }
+  renderOfficeTable();
+}
+function _updateSortIndicators(){
+  var ths=document.querySelectorAll('th.sort-th');
+  ths.forEach(function(th){
+    var col=th.getAttribute('data-sort');
+    var ind=th.querySelector('.sort-ind');
+    if(col===_officeSort.col){
+      th.classList.add('sort-active');
+      if(ind) ind.textContent=(_officeSort.dir==='asc'?'\u25B2':'\u25BC');
+    } else {
+      th.classList.remove('sort-active');
+      if(ind) ind.textContent='\u25C7';
+    }
+  });
+}
 
 function renderOfficeTable(){
   const div=document.getElementById('selDiv').value;
@@ -1129,7 +1274,20 @@ function renderOfficeTable(){
   if(tier) rows=rows.filter(r=>r.grade_stage===tier);
   if(claim) rows=rows.filter(r=>r.claim_status===claim);
   if(search) rows=rows.filter(r=>r.hospital.toLowerCase().includes(search)||r.manager.toLowerCase().includes(search));
-  rows=[...rows].sort((a,b)=>a.priority_rank-b.priority_rank);
+  if(_officeSort.col && _OFFICE_SORT_MAP[_officeSort.col]){
+    var _m=_OFFICE_SORT_MAP[_officeSort.col];
+    var _dir=(_officeSort.dir==='desc')?-1:1;
+    rows=[...rows].sort(function(a,b){
+      var va=_m.getter(a), vb=_m.getter(b);
+      if(_m.type==='num'){ return (va-vb)*_dir; }
+      // string: 빈 값은 항상 뒤로
+      if(!va && vb) return 1;
+      if(va && !vb) return -1;
+      return String(va).localeCompare(String(vb),'ko')*_dir;
+    });
+  } else {
+    rows=[...rows].sort((a,b)=>a.priority_rank-b.priority_rank);
+  }
   _officeRows=rows;
   _officePage=1;
 
@@ -1205,6 +1363,7 @@ function renderOfficePage(){
   const pagHTML=buildPagHTML();
   document.getElementById('pagControls').innerHTML=pagHTML;
   document.getElementById('pagControlsBottom').innerHTML=pagHTML;
+  _updateSortIndicators();
 }
 
 function goOfficePage(p){
@@ -1275,6 +1434,150 @@ function searchRouteAnchor(){
   box.innerHTML=_srItems(_hospMatches(q),'setRouteAnchor');
   box.classList.add('show');
 }
+// ============================================================
+//  등급별 포스트잇 정의
+// ============================================================
+const GRADE_DEFS={
+  'emergency':{color:'#dc2626',title:'🔥 긴급-청구누수',
+    body:'일만사 환자가 10명 이상 등록되어 있는데 청구가 0인 의원. 환자는 모였지만 청구 프로세스가 작동하지 않는 명백한 누수 상태.',
+    crit:'기준: 일만사 ≥10명 AND 미청구 · 전국 418곳 (10.1%)'},
+  'entry':{color:'#f59e0b',title:'💛 진입 정착 필요',
+    body:'일만사 환자가 1~9명 있지만 청구는 아직 0인 의원. 진입 초기 단계로, 청구 프로세스가 정착하면 자연스럽게 활성처로 전환됩니다.',
+    crit:'기준: 일만사 1~9명 AND 미청구 · 전국 748곳 (18.0%)'},
+  'churn':{color:'#0891b2',title:'🛡 이탈 방어',
+    body:'청구가 정상적으로 이뤄지고 수가도 발생 중이지만 활성환자가 1~4명으로 급감한 상태. 우수처에서 추락 신호 — 회복 비용은 신규 영입보다 큽니다.',
+    crit:'기준: 활성환자 1~4명 AND 청구 O AND 4월수가 > 0 · 전국 33곳 (0.8%)'},
+  'basic':{color:'#84cc16',title:'✅ 기본 활성',
+    body:'일만사 환자가 1~9명이고 청구도 정상. 정착 직후의 작은 활성처 — 환자 풀을 키우면 안정활성으로 성장 가능합니다.',
+    crit:'기준: 일만사 1~9명 AND 청구 O · 전국 40곳 (1.0%)'},
+  'a':{color:'#22c55e',title:'🌱 A 안정활성',
+    body:'일만사 10~39명, 청구 정상. 운영이 안정화된 의원으로 우수활성처로의 성장 후보입니다.',
+    crit:'기준: 일만사 10~39명 AND 청구 O · 전국 122곳 (2.9%)'},
+  'sp':{color:'#eab308',title:'⭐ S+ 우수활성',
+    body:'일만사 40~99명, 청구 정상. 안정적으로 일정 규모의 매출이 발생하는 의원. 명의풀(5단계)로의 진입 후보.',
+    crit:'기준: 일만사 40~99명 AND 청구 O · 전국 120곳 (2.9%)'},
+  'app':{color:'#f97316',title:'🧨 A++ 대규모활성',
+    body:'일만사 100명 이상, 청구 정상. 매출 규모가 큰 대형 활성처 — 삭감·불능 누수 방어가 핵심 (베스트내과 패턴).',
+    crit:'기준: 일만사 ≥100명 AND 청구 O · 전국 289곳 (7.0%)'},
+  'idle':{color:'#94a3b8',title:'⚪ 미참여/신규',
+    body:'사업에 참여하지 않았거나 일만사 환자가 0인 의원. 기본 사업 소개·교육·관계 형성이 필요한 단계입니다.',
+    crit:'기준: program_type=미참여 OR 일만사=0 · 전국 2,377곳 (57.3%)'}
+};
+function showGradePostit(key,ev){
+  if(ev){ ev.stopPropagation(); }
+  // 기존 포스트잇 제거
+  document.querySelectorAll('.grade-postit').forEach(function(el){el.remove();});
+  var d=GRADE_DEFS[key]; if(!d) return;
+  var pit=document.createElement('div');
+  pit.className='grade-postit';
+  pit.innerHTML='<button class="pclose" onclick="this.parentElement.remove();event.stopPropagation()">✕</button>'+
+                '<h5><span class="pdot" style="background:'+d.color+'"></span>'+d.title+'</h5>'+
+                '<p>'+d.body+'</p>'+
+                '<div class="pcrit">📌 '+d.crit+'</div>';
+  document.body.appendChild(pit);
+  // 위치 — 클릭 좌표 + 약간 아래 오프셋, 화면 밖으로 안 나가게
+  var x=(ev&&ev.clientX)||(window.innerWidth/2)-130;
+  var y=(ev&&ev.clientY)||(window.innerHeight/2);
+  var pw=260, ph=140;
+  if(x+pw+12>window.innerWidth) x=window.innerWidth-pw-12;
+  if(x<10) x=10;
+  if(y+ph+20>window.innerHeight) y=y-ph-20;
+  else y=y+18;
+  pit.style.left=(x+window.scrollX)+'px';
+  pit.style.top=(y+window.scrollY)+'px';
+}
+// 외부 클릭 시 포스트잇 닫기
+document.addEventListener('click',function(e){
+  if(e.target.closest && (e.target.closest('.grade-postit')||e.target.closest('.grade-chip'))) return;
+  document.querySelectorAll('.grade-postit').forEach(function(el){el.remove();});
+});
+
+// ============================================================
+//  설명 모달 — 추천동선 설계 철학·동선방식·전략유형
+// ============================================================
+const INFO_CONTENTS={
+  'route':{
+    title:'🎯 오늘의 타겟 의원 리스트 — 설계 철학',
+    body:'<h4>왜 이렇게 만들었나</h4>'+
+      '<p>처음엔 "최적 동선 자동 계산기"로 시작했지만, 현장에서 <b>"간호사는 정해진 동선대로 다니지 않는다"</b>는 피드백을 받았습니다. 그래서 도구의 정체성을 다시 정의했습니다.</p>'+
+      '<div class="grp"><b>지금의 정체성:</b> 동선을 만들어주는 도구가 아니라, <b>"오늘 어디부터 가야 하나"를 데이터로 빠르게 좁혀주는 우선순위 도구</b>입니다. 정렬된 결과는 보조일 뿐, 실제 동선은 현장 판단을 따릅니다.</div>'+
+      '<h4>세 개의 의사결정 노브</h4>'+
+      '<table><tr><th>노브</th><th>역할</th><th>현장 의사결정 대응</th></tr>'+
+      '<tr><td><b>기준 의원</b></td><td>출발점</td><td>오늘 반드시 들러야 하는 곳</td></tr>'+
+      '<tr><td><b>전략 유형</b></td><td>비즈니스 목적</td><td>이번 주 어떤 케이스를 풀고 싶은가</td></tr>'+
+      '<tr><td><b>동선 방식</b></td><td>정렬 기준</td><td>시급함 vs 효율 — 어느 쪽을 살릴까</td></tr></table>'+
+      '<h4>알고리즘 흐름</h4>'+
+      '<ul>'+
+      '<li>① 일반 필터 (사업소·사무소·간호사·청구·사업유형) 적용</li>'+
+      '<li>② 전략 유형 필터 적용 → 풀 사이즈 산출</li>'+
+      '<li>③ 기준 의원이 필터·전략에 부합하는지 확인 (불일치 시 경고)</li>'+
+      '<li>④ "같은 사무소만" 적용 (기본 ON) — 간호사는 배정 사무소에서 움직이는 현실 반영</li>'+
+      '<li>⑤ 거리 계산 (km 단위로 표시)</li>'+
+      '<li>⑥ 동선 방식대로 정렬 (등급·거리·균형)</li>'+
+      '<li>⑦ 상위 N개 선택 + 기준 의원을 출발점 0번에 강제 배치</li>'+
+      '<li>⑧ Nearest-neighbor로 순회 동선 재구성</li>'+
+      '</ul>'+
+      '<h4>설계 원칙</h4>'+
+      '<ul>'+
+      '<li><b>투명성</b>: 왜 이 의원이 N번인지 카드에 그대로 표시 (등급·거리·환자 수)</li>'+
+      '<li><b>현장 정합성</b>: 같은 사무소 default — 시스템이 운영 구조를 따른다</li>'+
+      '<li><b>검증 가능성</b>: 모든 분류·정렬은 데이터로 재현 가능 (감 X)</li>'+
+      '</ul>'
+  },
+  'mode':{
+    title:'📍 동선 방식 — 3가지 모드의 의미',
+    body:'<h4>왜 3가지를 두었나</h4>'+
+      '<p>같은 의원 풀이라도 그날의 목적에 따라 어떤 순서로 도느냐가 달라져야 합니다. 한 가지 정답이 없기 때문에 사용자에게 선택권을 드렸습니다.</p>'+
+      '<h4>3가지 모드</h4>'+
+      '<table><tr><th>모드</th><th>공식</th><th>언제 쓰나</th></tr>'+
+      '<tr><td><b>등급 우선</b></td><td><code>priority_rank ↑</code></td><td>시급한 곳부터 충분히 시간 들이고 싶을 때 — 긴급 청구누수 같은 케이스</td></tr>'+
+      '<tr><td><b>거리 우선</b></td><td><code>거리 ↑</code></td><td>하루에 많이 돌고 싶을 때 — 가까운 곳 중심 가벼운 방문</td></tr>'+
+      '<tr><td><b>균형</b></td><td><code>rank + (거리/maxD) × 3.5</code></td><td>일반적인 운영 — 등급과 거리를 가중 평균</td></tr></table>'+
+      '<h4>균형 공식의 "3.5"는 어떻게 정했나</h4>'+
+      '<p>가중치 3.5는 <b>"동일 등급 의원이 여러 곳 있을 때 더 가까운 곳을 우선"</b>하도록 실험적으로 정한 값입니다. priority_rank가 1~9 범위이고 정규화된 거리가 0~1이므로, 3.5를 곱하면 거리가 등급 한 단계 정도의 영향력을 갖습니다.</p>'+
+      '<div class="grp">⚠ <b>향후 검증 예정</b>: 실제 운영 데이터로 가중치가 적절한지 확인 후 조정합니다. 현재는 합리적 휴리스틱.</div>'+
+      '<h4>기준 의원 설정 시</h4>'+
+      '<p>v26부터 기준 의원이 있어도 위 3가지 모드가 그대로 적용됩니다. 이전엔 항상 거리 우선으로 작동했던 버그를 수정했습니다.</p>'
+  },
+  'strategy':{
+    title:'🎯 전략 유형 11개 — 어떻게 나눴나',
+    body:'<h4>분류 기준</h4>'+
+      '<p>의원 데이터의 3개 축 — <b>grade_action</b>(긴급도), <b>grade_stage</b>(운영 단계), <b>program_type</b>(참여 유형) — 을 비즈니스 의도별로 조합해 11개 케이스로 정리했습니다.</p>'+
+      '<h4>4그룹 우선순위 (ROI 순)</h4>'+
+      '<table><tr><th>그룹</th><th>의도</th><th>시점</th><th>대표</th></tr>'+
+      '<tr><td><b>A. 긴급 회복</b></td><td>지금 새고 있는 손실 차단</td><td>"지금"</td><td>a1 대형 긴급-청구누수 (255곳)</td></tr>'+
+      '<tr><td><b>B. 활성처 수익화</b></td><td>이미 가진 것 키우기</td><td>"이번 달"</td><td>b2 우수처 누수 방어 (621곳)</td></tr>'+
+      '<tr><td><b>C. 성장 가속</b></td><td>참여 중인 곳 활성화</td><td>"이번 분기"</td><td>c1 시범→본사업 전환 (147곳)</td></tr>'+
+      '<tr><td><b>D. 신규 개척</b></td><td>새 영토 영입</td><td>"장기"</td><td>d2 신규 미참여 (1,131곳)</td></tr></table>'+
+      '<h4>각 전략의 데이터 근거</h4>'+
+      '<div class="grp"><b>A1 대형 긴급-청구누수</b> · 전국 255곳 · 평균 일만사 258명 · 전원 미청구 → 1곳 정상화당 잠재 매출 효과가 가장 큰 단일 구간</div>'+
+      '<div class="grp"><b>A2 일반 청구누수 활성화</b> · 전국 937곳 · 평균 일만사 7명 · 전원 미청구 → 환자 풀은 작지만 빠른 ROI</div>'+
+      '<div class="grp"><b>A3 이탈 방어</b> · 전국 20곳 · 현재 월 평균 수가 7.4만 원 발생 중 → 이탈 후 회복 비용 ≫ 신규 영입</div>'+
+      '<div class="grp"><b>B1 허수 활성 진짜화</b> · 전국 479곳 · 평균 일만사 169명 · 청구 0 → 수익화 프로세스 정립 (세란내과 패턴)</div>'+
+      '<div class="grp"><b>B2 우수처 누수 방어</b> · 전국 621곳 · 월 평균 수가 161만 원 → 베스트내과 600만 원+ 방어 사례</div>'+
+      '<div class="grp"><b>B3 명의풀 레퍼런스 확보</b> · 전국 199곳 · 평균 일만사 304명 · 월 평균 수가 366만 원 → 사례·증언 자산화</div>'+
+      '<div class="grp"><b>C1 시범→본사업 전환</b> · 전국 147곳 · 평균 일만사 28명 → 진입 장벽 낮음 (성재의원 케이스)</div>'+
+      '<div class="grp"><b>C2 본사업 초기 정착</b> · 전국 540곳 · 평균 일만사 84명 → 표준 프로세스 교육으로 활성처 전환</div>'+
+      '<div class="grp"><b>C3 웰체크 도입 권유</b> · 전국 171곳 · 본사업만 운영 → 동일 데스크에 얹기만 하면 확장</div>'+
+      '<div class="grp"><b>D1 미기동-잠재대형</b> · 전국 54곳 · 평균 일만사 224명 잠재 → 도입 시 즉시 활성처</div>'+
+      '<div class="grp"><b>D2 신규 미참여</b> · 전국 1,131곳 → 가장 큰 미개척 영역</div>'+
+      '<h4>왜 4그룹 ROI 순서대로 정렬했나</h4>'+
+      '<p>같은 시간·노력을 투입했을 때 <b>A → B → C → D 순으로 단위당 임팩트가 큰 경향</b>입니다. 그래서 드롭다운의 순서 자체가 권장 우선순위입니다. (예: D2 신규 미참여가 1,131곳으로 가장 많지만, A1 1건 정상화의 ROI가 더 클 수 있음)</p>'
+  }
+};
+function openInfoModal(key){
+  var c=INFO_CONTENTS[key]; if(!c) return;
+  document.getElementById('infoModalTitle').textContent=c.title;
+  document.getElementById('infoModalBody').innerHTML=c.body;
+  document.getElementById('infoModal').classList.add('show');
+}
+function closeInfoModal(e){
+  if(e && e.target.id && e.target.id!=='infoModal') return;
+  document.getElementById('infoModal').classList.remove('show');
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){ var m=document.getElementById('infoModal'); if(m&&m.classList.contains('show')) m.classList.remove('show'); }
+});
 function setRouteAnchor(i){
   routeAnchor=DATA[i];
   document.getElementById('routeAnchorResults').classList.remove('show');
@@ -1344,17 +1647,18 @@ function renderRoute(){
   if(claimFilter) rows=rows.filter(r=>r.claim_status===claimFilter);
   if(progFilter) rows=rows.filter(r=>r.program_type===progFilter);
   // 전략유형 필터
-  if(strategyFilter==='a1') rows=rows.filter(r=>r.grade_action==='🔥 긴급-청구누수(대형)');
-  else if(strategyFilter==='a2') rows=rows.filter(r=>r.grade_action==='🔥 긴급-청구누수' && r.ilmansa_pt>=1);
-  else if(strategyFilter==='a3') rows=rows.filter(r=>(r.grade_action||'').indexOf('이탈방어')>=0);
-  else if(strategyFilter==='b1') rows=rows.filter(r=>r.ilmansa_pt>=10 && r.claim_status==='미청구');
-  else if(strategyFilter==='b2') rows=rows.filter(r=>((r.grade_action||'').indexOf('대규모활성')>=0 || (r.grade_action||'').indexOf('우수활성')>=0) && r.fee_apr>0);
+  // 새 등급 정의 기반 (v30)
+  if(strategyFilter==='a1') rows=rows.filter(r=>r.grade_action==='🔥 긴급-청구누수' && r.ilmansa_pt>=50);
+  else if(strategyFilter==='a2') rows=rows.filter(r=>r.grade_action==='🔥 긴급-청구누수' && r.ilmansa_pt<50);
+  else if(strategyFilter==='a3') rows=rows.filter(r=>r.grade_action==='🛡 이탈방어');
+  else if(strategyFilter==='b1') rows=rows.filter(r=>r.grade_action==='💛 진입 정착 필요');
+  else if(strategyFilter==='b2') rows=rows.filter(r=>(r.grade_action==='🧨 A++ 대규모활성'||r.grade_action==='⭐ S+ 우수활성'));
   else if(strategyFilter==='b3') rows=rows.filter(r=>r.grade_stage==='5_명의풀' && r.fee_apr>0);
   else if(strategyFilter==='c1') rows=rows.filter(r=>r.program_type==='🟡 시범사업만');
   else if(strategyFilter==='c2') rows=rows.filter(r=>r.program_type==='🔵 시범+본사업' && (r.grade_stage==='1_초기진입'||r.grade_stage==='2_도입'));
   else if(strategyFilter==='c3') rows=rows.filter(r=>r.program_type==='🟢 본사업만' && r.wellcheck_pt===0);
-  else if(strategyFilter==='d1') rows=rows.filter(r=>(r.grade_action||'').indexOf('미기동-잠재대형')>=0);
-  else if(strategyFilter==='d2') rows=rows.filter(r=>r.program_type==='⚪ 미참여' && r.grade_stage==='0_미활성');
+  else if(strategyFilter==='d1') rows=rows.filter(r=>r.grade_action==='✅ 기본 활성');
+  else if(strategyFilter==='d2') rows=rows.filter(r=>r.grade_action==='⚪ 미참여/신규');
   // 간호사 필터
   if(nurseFilter==='담당없음'){
     const nurseOffices=Object.keys(NURSE_MAP);
@@ -1363,7 +1667,11 @@ function renderRoute(){
     const nurseOffice=Object.keys(NURSE_MAP).find(k=>NURSE_MAP[k]===nurseFilter);
     if(nurseOffice) rows=rows.filter(r=>r.office===nurseOffice);
   }
+  // 풀 크기 (필터·전략 적용 후, 잘라내기 전)
+  var _poolSize=rows.length;
   if(routeAnchor){
+    // 기준 의원이 현재 필터·전략을 통과하는지 확인
+    var _anchorPasses=(rows.indexOf(routeAnchor)!==-1);
     var _o=rows.filter(function(r){return r!==routeAnchor;});
     var _cb=document.getElementById('anchorSameOffice');
     var _sameOnly=_cb?_cb.checked:true;
@@ -1376,24 +1684,43 @@ function renderRoute(){
         _o=_filtered;
       }
     }
+    // (FIX 4) 거리(km) 계산 — 정렬용 _ad + 표시용 _km
     var _aLa=parseFloat(routeAnchor.lat),_aLn=parseFloat(routeAnchor.lng);
-    _o.forEach(function(r){var dLa=_aLa-parseFloat(r.lat),dLn=(_aLn-parseFloat(r.lng))*0.81;r._ad=dLa*dLa+dLn*dLn;});
-    _o.sort(function(a,b){return (a._ad||0)-(b._ad||0);});
+    _o.forEach(function(r){
+      var dLa=_aLa-parseFloat(r.lat), dLn=(_aLn-parseFloat(r.lng))*0.81;
+      r._ad=dLa*dLa+dLn*dLn;
+      r._km=Math.sqrt(r._ad)*111;
+    });
+    routeAnchor._km=0;
+    // (FIX 1) 기준 의원 분기에서도 동선 방식(routeMode) 적용
+    var _modeA=(document.getElementById('routeMode')&&document.getElementById('routeMode').value)||'balanced';
+    if(_modeA==='priority'){
+      _o.sort(function(a,b){return (a.priority_rank||5)-(b.priority_rank||5);});
+    } else if(_modeA==='distance'){
+      _o.sort(function(a,b){return (a._ad||0)-(b._ad||0);});
+    } else { // balanced
+      var _maxDA=1; _o.forEach(function(r){ if((r._ad||0)>_maxDA) _maxDA=r._ad; });
+      _o.forEach(function(r){ r._score=(r.priority_rank||5)+((r._ad||0)/_maxDA)*3.5; });
+      _o.sort(function(a,b){return (a._score||0)-(b._score||0);});
+    }
     rows=[routeAnchor].concat(_o.slice(0,Math.max(0,n-1)));
     rows=nearestNeighborOrder(rows);
+    // (FIX 2) 전략 불일치 경고 + (existing) 같은 사무소 경고 — 합쳐서 anchor-note에 반영
+    var _mismatchNote='';
+    if(!_anchorPasses && (strategyFilter||claimFilter||progFilter||div||office)){
+      _mismatchNote=' <span style="color:#b35;font-weight:600">⚠ 기준 의원은 현재 필터·전략에 해당하지 않음 (출발점으로만 사용)</span>';
+    }
+    var _combinedNote=_mismatchNote+_officeNote;
     var _tagEl=document.getElementById('routeAnchorTag');
-    if(_tagEl && _tagEl.dataset.note!==_officeNote){
-      _tagEl.dataset.note=_officeNote;
-      if(_officeNote){
-        var _existing=_tagEl.querySelector('.anchor-note');
-        if(_existing) _existing.remove();
+    if(_tagEl && _tagEl.dataset.note!==_combinedNote){
+      _tagEl.dataset.note=_combinedNote;
+      var _ex=_tagEl.querySelector('.anchor-note');
+      if(_ex) _ex.remove();
+      if(_combinedNote){
         var _span=document.createElement('span');
         _span.className='anchor-note';
-        _span.innerHTML=_officeNote;
+        _span.innerHTML=_combinedNote;
         _tagEl.appendChild(_span);
-      } else {
-        var _ex2=_tagEl.querySelector('.anchor-note');
-        if(_ex2) _ex2.remove();
       }
     }
   } else {
@@ -1407,7 +1734,9 @@ function renderRoute(){
       _rest.forEach(function(r){
         var dLa=_sLa-parseFloat(r.lat), dLn=(_sLn-parseFloat(r.lng))*0.81;
         r._sd=dLa*dLa+dLn*dLn;
+        r._km=Math.sqrt(r._sd)*111;
       });
+      if(_s){ _s._km=0; }
       if(_mode==='distance'){
         _rest.sort(function(a,b){return (a._sd||0)-(b._sd||0);});
       } else {
@@ -1424,17 +1753,17 @@ function renderRoute(){
   // 전략 배너 업데이트
   const sBanner=document.getElementById('strategyBanner');
   var _bannerMap={
-    'a1':'🔥 <b>대형 긴급-청구누수</b> — 일만사 환자가 많고 매출 잠재가 큰데 청구가 안 되고 있는 의원. 정상화 1건의 임팩트가 가장 큽니다. <span style="opacity:.7">(grade_action = 긴급-청구누수(대형))</span>',
-    'a2':'🔥 <b>일반 청구누수 활성화</b> — 일만사 환자가 1명 이상 있는데 청구가 미흡한 의원. 환자 풀이 확보돼 있어 ROI가 즉시 발생합니다. <span style="opacity:.7">(grade_action = 긴급-청구누수 · ilmansa_pt ≥1)</span>',
-    'a3':'⚠ <b>이탈 방어</b> — 우수처에서 추락 조짐을 보이는 의원. 떨어지면 신규 영입보다 회복 비용이 더 큽니다. <span style="opacity:.7">(grade_action: 이탈방어)</span>',
-    'b1':'💸 <b>허수 활성 진짜화</b> — 활성처(일만사 ≥10명)인데 청구가 0인 의원. 통계상 활성이지만 매출 0 — 수익화 프로세스 정립으로 즉시 매출 전환. <span style="opacity:.7">(ilmansa_pt ≥10 · claim_status = 미청구)</span>',
-    'b2':'🛡 <b>우수처 누수 방어</b> — 잘 가동되는 대규모활성·우수활성처에서도 삭감·불능이 새는 누수 지점. 600만 원+ 방어한 베스트내과 패턴. <span style="opacity:.7">(grade_action: 대규모/우수활성 · fee_apr > 0)</span>',
-    'b3':'🌟 <b>명의풀 레퍼런스 확보</b> — 최고 운영 단계(5_명의풀) 의원. 사례·증언 자산화 — 다른 의원 설득에 사용할 레퍼런스 확보. <span style="opacity:.7">(grade_stage = 5_명의풀 · fee_apr > 0)</span>',
-    'c1':'🟡 <b>시범→본사업 전환</b> — 시범 경험이 있어 본사업 진입 장벽이 낮음. 발표의 성재의원 케이스. <span style="opacity:.7">(program_type = 시범사업만)</span>',
-    'c2':'🔵 <b>본사업 초기 정착</b> — 본사업 등록은 했지만 운영이 익숙지 않은 초기진입·도입 단계. 표준 프로세스 교육으로 활성처 전환. <span style="opacity:.7">(program_type = 시범+본사업 · grade_stage = 1·2단계)</span>',
-    'c3':'🟢 <b>웰체크 도입 권유</b> — 본사업(일만사)은 운영 중인데 웰체크는 미참여. 동일 데스크 프로세스에 얹기만 하면 확장 — 발표 출발점 패턴. <span style="opacity:.7">(program_type = 본사업만 · wellcheck_pt = 0)</span>',
-    'd1':'🚀 <b>미기동-잠재대형</b> — 미참여이지만 의원 규모가 커서 도입 시 임팩트가 큰 우선 영입 대상. <span style="opacity:.7">(grade_action: 미기동-잠재대형)</span>',
-    'd2':'🚀 <b>신규 미참여</b> — 사업 전혀 참여하지 않은 의원. 신규 사업 제안 대상. <span style="opacity:.7">(program_type = 미참여 · grade_stage = 0_미활성)</span>',
+    'a1':'🔥 <b>대형 긴급-청구누수</b> — 일만사 환자가 50명 이상인데 청구가 0인 의원. 잠재 매출 효과가 가장 큰 정상화 후보. <span style="opacity:.7">(긴급-청구누수 · 일만사 ≥50)</span>',
+    'a2':'🔥 <b>일반 긴급-청구누수</b> — 일만사 환자 10~49명, 청구 0. 분명한 누수 상태로 청구 프로세스만 정립하면 즉시 매출 발생. <span style="opacity:.7">(긴급-청구누수 · 일만사 10~49)</span>',
+    'a3':'🛡 <b>이탈 방어</b> — 전국 <b>33곳</b> · 청구 정상 + 4월 수가 발생 중이지만 활성환자가 1~4명으로 급감. 우수처에서 추락 신호 — 회복 비용은 신규 영입보다 큽니다. <span style="opacity:.7">(이탈방어 등급)</span>',
+    'b1':'💛 <b>진입 정착 필요</b> — 전국 <b>748곳</b> · 일만사 1~9명 + 미청구. 진입 초기 단계 — 청구 정착만 도와도 자연스럽게 활성처로 전환됩니다. <span style="opacity:.7">(진입 정착 필요 등급)</span>',
+    'b2':'🛡 <b>우수처 누수 방어</b> — 전국 <b>409곳</b> · A++ 대규모활성(289) + S+ 우수활성(120). 잘 가동되는 곳에서도 삭감·불능으로 새는 손실 — 베스트내과 600만 원+ 방어 사례. <span style="opacity:.7">(A++ 또는 S+ 등급)</span>',
+    'b3':'🌟 <b>명의풀 레퍼런스 확보</b> — 최상위 운영 단계(5_명의풀) 의원. 사례·증언이 다른 의원 설득의 핵심 자산. <span style="opacity:.7">(grade_stage = 5_명의풀 · 수가 > 0)</span>',
+    'c1':'🟡 <b>시범→본사업 전환</b> — 전국 <b>147곳</b> · 시범사업만 운영 중. 시범 경험이 본사업 진입 장벽을 낮춤 (성재의원 케이스). <span style="opacity:.7">(program_type = 시범사업만)</span>',
+    'c2':'🔵 <b>본사업 초기 정착</b> — 본사업 등록 후 운영이 익숙지 않은 초기진입·도입 단계. 표준 프로세스 교육으로 활성처 전환 가능. <span style="opacity:.7">(시범+본사업 · stage 1·2단계)</span>',
+    'c3':'🟢 <b>웰체크 도입 권유</b> — 전국 <b>171곳</b> · 본사업(일만사) 운영 중인데 웰체크 미참여. 동일 데스크 프로세스에 얹기만 하면 확장 (발표 출발점 패턴). <span style="opacity:.7">(program_type = 본사업만 · wellcheck_pt = 0)</span>',
+    'd1':'✅ <b>기본 활성 성장</b> — 전국 <b>40곳</b> · 일만사 1~9명 + 청구 O. 정착 직후 작은 활성처 — 환자 풀을 키우면 안정활성으로 성장. <span style="opacity:.7">(기본 활성 등급)</span>',
+    'd2':'🚀 <b>신규 미참여</b> — 전국 <b>2,377곳</b> · 사업 미참여 또는 일만사 0. 가장 큰 미개척 영역 — 장기 수익 토대. <span style="opacity:.7">(미참여/신규 등급)</span>',
   };
   if(_bannerMap[strategyFilter]){
     sBanner.style.display='block';
@@ -1443,8 +1772,18 @@ function renderRoute(){
     sBanner.style.display='none';
   }
   const bar=document.getElementById('mapsBarWrap');
-  if(rows.length>0){ bar.style.display='flex'; document.getElementById('selectedN').textContent=rows.length; }
-  else bar.style.display='none';
+  if(rows.length>0){
+    bar.style.display='flex';
+    document.getElementById('selectedN').textContent=rows.length;
+    var _pi=document.getElementById('poolInfo');
+    if(_pi){
+      if(_poolSize>rows.length){
+        _pi.textContent='(현 필터 매칭 '+_poolSize.toLocaleString()+'곳 중 상위 '+rows.length+')';
+      } else {
+        _pi.textContent='(전체 매칭 '+_poolSize.toLocaleString()+'곳)';
+      }
+    }
+  } else bar.style.display='none';
   const list=document.getElementById('routeList');
   list.innerHTML='';
   const _routeHtml=[];
@@ -1460,12 +1799,14 @@ function renderRoute(){
         <h4>${r.hospital}</h4>
         <div class="rmeta">📍 ${r.address||'-'} &nbsp;|&nbsp; 👤 ${r.manager} &nbsp;|&nbsp; 🏢 ${r.office||'-'} &nbsp;|&nbsp; 👩‍⚕️ 간호사 <b style="color:${NURSE_MAP[r.office]?'#1a6faf':'#e85858'}">${nurseName}</b></div>
         <div class="rmeta">${r.grade_action}</div>
+        <div style="margin-top:4px;font-size:11.5px;color:#1a3dcb;background:#eef2ff;padding:4px 9px;border-radius:6px;display:inline-block;font-weight:600">✨ 추천 근거: ${(i===0&&routeAnchor)?'기준 의원 (출발점)':'우선순위 '+(r.priority_rank||'-')+'순위'+((typeof r._km==='number'&&r._km>0)?' · '+r._km.toFixed(1)+'km 거리':'')+((r.ilmansa_pt||0)>0?' · 일만사 '+r.ilmansa_pt+'명':'')+((r.fee_apr||0)>0?' · 월수가 '+fmtW(r.fee_apr)+'원':'')}</div>
         <div class="rtags">
           ${tierBadge(r.target_tier)}
           ${progBadge(r.program_type)}
           <span class="tag">활성 ${fmt(r.active_pt)}</span>
           <span class="tag">일만사 ${fmt(r.ilmansa_pt)}</span>
           ${r.fee_apr>0?`<span class="tag">수가 ${fmtW(r.fee_apr)}원</span>`:''}
+          ${(typeof r._km==='number')?`<span class="tag" style="background:#e8f2fa;color:#1a3dcb;font-weight:700">${i===0?'출발':r._km.toFixed(1)+'km'}</span>`:''}
           <span class="tag" style="${r.claim_status==='미청구'?'background:#ffeaea;color:#cc0000':''}">${r.claim_status}</span>
         </div>
         <div style="margin-top:8px">${navBtn}</div>
@@ -1832,14 +2173,14 @@ const PROG_COLOR={
 };
 
 const GRADE_COLOR={
-  '🔥 긴급-청구누수(대형)':'#7f1d1d',
-  '🔥 긴급-청구누수'      :'#ef4444',
-  '🧨 A++ 대규모활성'     :'#f97316',
-  '⭐ S+ 우수활성'        :'#eab308',
-  '✅ A 안정활성'         :'#22c55e',
-  '🛡 이탈방어'           :'#0891b2',
-  '🚀 미기동-잠재대형'    :'#8b5cf6',
-  '🚀 미기동/신규'        :'#94a3b8',
+  '🔥 긴급-청구누수'  :'#dc2626',
+  '💛 진입 정착 필요' :'#f59e0b',
+  '🛡 이탈방어'       :'#0891b2',
+  '✅ 기본 활성'      :'#84cc16',
+  '🌱 A 안정활성'     :'#22c55e',
+  '⭐ S+ 우수활성'    :'#eab308',
+  '🧨 A++ 대규모활성' :'#f97316',
+  '⚪ 미참여/신규'    :'#94a3b8',
 };
 
 
