@@ -1350,7 +1350,7 @@ function renderOfficePage(){
   const tbody=document.getElementById('hospitalTbody');
   const htmlParts=pageRows.map((r)=>{
     const cCls=r.claim_status==='청구'?'claim-yes':'claim-no';
-    return `<tr>
+    return `<tr style="cursor:pointer;transition:background-color .12s" onmouseover="this.style.background='#f3f6ff'" onmouseout="this.style.background=''" onclick="openHospitalModal('${r.biz_no}')">
       <td><b>${r.hospital}</b></td>
       <td>${r.manager}</td>
       <td style="font-size:12px">${r.grade_action}</td>
@@ -1360,7 +1360,7 @@ function renderOfficePage(){
       <td>${fmt(r.wellcheck_pt)}</td>
       <td>${r.fee_apr>0?fmtW(r.fee_apr)+'원':'-'}</td>
       <td class="${cCls}">${r.claim_status}</td>
-      <td>${r.nav_url?`<button class="btn-nav" onclick="window.open('${r.nav_url}','_blank')">📍</button>`:'-'}</td>
+      <td>${r.nav_url?`<button class="btn-nav" onclick="event.stopPropagation();window.open('${r.nav_url}','_blank')">📍</button>`:'-'}</td>
     </tr>`;
   });
   tbody.innerHTML=htmlParts.join('');
@@ -1619,6 +1619,83 @@ const INFO_CONTENTS={
       '<p>이전 b1(허수 활성 진짜화)은 A1·A2와 정의가 겹쳐 중복이었고, d1(미기동-잠재대형)은 "잠재 환자 수" 데이터가 없어 정의 불가였습니다. 이번 v31에서 <b>b1 → 진입 정착 필요</b>, <b>d1 → 기본 활성 성장</b>으로 데이터 기반 재정의했습니다.</p>'
   }
 };
+// ============================================================
+//  의원 상세 모달 — 클릭 시 모든 정보 표시
+// ============================================================
+function _fmtN(n){ return (n>0)?n.toLocaleString():'-'; }
+function _fmtMoney(n){
+  if(!n||n<=0) return '-';
+  if(n>=100000000) return (n/100000000).toFixed(1)+'억원';
+  if(n>=10000) return (n/10000).toFixed(1)+'만원';
+  return n.toLocaleString()+'원';
+}
+function openHospitalModal(bizNo){
+  var r = DATA.find(function(x){ return String(x.biz_no)===String(bizNo); });
+  if(!r){ alert('의원 정보를 찾을 수 없습니다.'); return; }
+  // 등급 정의 매칭 — GRADE_DEFS에서 라벨 일치하는 것 찾기
+  var gradeKey=null, gradeDef=null;
+  for(var k in GRADE_DEFS){
+    if(r.grade_action===GRADE_DEFS[k].title || r.grade_action.indexOf(GRADE_DEFS[k].title.replace(/^[^\s]+\s/, ''))>=0){
+      gradeKey=k; gradeDef=GRADE_DEFS[k]; break;
+    }
+  }
+  var clr = (gradeDef&&gradeDef.color)||(GRADE_COLOR[r.grade_action]||'#1a3dcb');
+  var nurseName = NURSE_MAP[r.office]||'없음';
+  var nurseColor = NURSE_MAP[r.office]?'#1a6faf':'#e85858';
+  var html='';
+  // 위치·담당자
+  html += '<h4>📍 위치 & 담당</h4>';
+  html += '<table>';
+  html += '<tr><th style="width:30%">주소</th><td>'+(r.address||'-')+'</td></tr>';
+  html += '<tr><th>사업소</th><td>'+(r.division||'-')+' · 사무소 '+(r.office||'-')+' (소장: '+(r.office_head||'-')+')</td></tr>';
+  html += '<tr><th>담당자</th><td>'+(r.manager||'-')+'</td></tr>';
+  html += '<tr><th>담당 간호사</th><td style="color:'+nurseColor+';font-weight:700">'+nurseName+'</td></tr>';
+  html += '<tr><th>사업자번호</th><td style="font-family:monospace;color:#5b6b7d">'+(r.biz_no||'-')+'</td></tr>';
+  html += '</table>';
+  // 분류
+  html += '<h4>🏷 분류</h4>';
+  html += '<table>';
+  html += '<tr><th style="width:30%">등급</th><td><span style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;background:'+clr+';color:#fff;border-radius:6px;font-weight:700">'+r.grade_action+'</span></td></tr>';
+  if(gradeDef){
+    html += '<tr><th>등급 정의</th><td style="font-size:12.5px;color:#3a4659">'+gradeDef.body+'<br><span style="opacity:.7;font-size:11.5px">'+gradeDef.crit+'</span></td></tr>';
+  }
+  html += '<tr><th>운영 단계</th><td>'+(r.grade_stage||'-')+'</td></tr>';
+  html += '<tr><th>사업 유형</th><td>'+(r.program_type||'-')+'</td></tr>';
+  html += '<tr><th>방문 티어</th><td>'+(r.target_tier||'-')+' (우선순위 '+(r.priority_rank||'-')+'순위)</td></tr>';
+  html += '</table>';
+  // 환자·매출
+  html += '<h4>📊 환자 & 매출 (4월 기준)</h4>';
+  html += '<table>';
+  html += '<tr><th style="width:30%">활성 환자</th><td><b>'+_fmtN(r.active_pt)+'</b>명</td></tr>';
+  html += '<tr><th>일만사 환자</th><td><b>'+_fmtN(r.ilmansa_pt)+'</b>명</td></tr>';
+  html += '<tr><th>웰체크 환자</th><td><b>'+_fmtN(r.wellcheck_pt)+'</b>명</td></tr>';
+  html += '<tr><th>4월 행위수가</th><td><b style="color:'+(r.fee_apr>0?"#18a86a":"#999")+'">'+_fmtMoney(r.fee_apr)+'</b></td></tr>';
+  html += '<tr><th>청구 상태</th><td><span style="padding:3px 9px;background:'+(r.claim_status==="청구"?"#e8f7ee":"#ffeaea")+';color:'+(r.claim_status==="청구"?"#18a86a":"#cc0000")+';border-radius:5px;font-weight:700">'+r.claim_status+'</span></td></tr>';
+  html += '</table>';
+  // 액션 노트
+  if(r.action){
+    html += '<h4>💡 권장 액션</h4>';
+    html += '<div class="grp">'+r.action+'</div>';
+  }
+  // 네비게이션 버튼
+  html += '<h4>🗺 외부 지도</h4>';
+  var navBtns='';
+  if(r.nav_url){
+    navBtns += '<button onclick="window.open(\''+r.nav_url+'\',\'_blank\')" style="padding:8px 16px;background:#1a3dcb;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;margin-right:8px">📍 네비게이션 열기</button>';
+  }
+  if(r.lat&&r.lng){
+    var kakaoUrl='https://map.kakao.com/link/map/'+encodeURIComponent(r.hospital)+','+r.lat+','+r.lng;
+    navBtns += '<button onclick="window.open(\''+kakaoUrl+'\',\'_blank\')" style="padding:8px 16px;background:#fee500;color:#3c1e1e;border:none;border-radius:8px;font-weight:700;cursor:pointer;margin-right:8px">카카오맵</button>';
+    var naverUrl='https://map.naver.com/v5/search/'+encodeURIComponent(r.hospital);
+    navBtns += '<button onclick="window.open(\''+naverUrl+'\',\'_blank\')" style="padding:8px 16px;background:#03c75a;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer">네이버 지도</button>';
+  }
+  if(!navBtns) navBtns = '<span style="color:#999">좌표 정보 없음</span>';
+  html += '<div>'+navBtns+'</div>';
+  // 모달에 주입
+  document.getElementById('infoModalTitle').textContent='🏥 '+r.hospital;
+  document.getElementById('infoModalBody').innerHTML=html;
+  document.getElementById('infoModal').classList.add('show');
+}
 function openInfoModal(key){
   var c=INFO_CONTENTS[key]; if(!c) return;
   document.getElementById('infoModalTitle').textContent=c.title;
@@ -1844,10 +1921,10 @@ function renderRoute(){
   if(!rows.length){ list.innerHTML='<div style="text-align:center;color:#999;padding:40px">조건에 맞는 병원이 없습니다.</div>'; return; }
   rows.forEach((r,i)=>{
     const clr=r.target_tier.includes('긴급')?'#e63946':r.target_tier.includes('정기')?'#ffd166':r.target_tier.includes('유지')?'#06d6a0':r.target_tier.includes('개척')?'#4361ee':'#adb5bd';
-    const navBtn=r.nav_url?`<button class="btn-nav" onclick="window.open('${r.nav_url}','_blank')">📍 네비게이션</button>`:'';
+    const navBtn=r.nav_url?`<button class="btn-nav" onclick="event.stopPropagation();window.open('${r.nav_url}','_blank')">📍 네비게이션</button>`:'';
     const nurseName=NURSE_MAP[r.office]||'없음';
     _routeHtml.push(`
-    <div class="route-item" style="--bclr:${clr}">
+    <div class="route-item" style="--bclr:${clr};cursor:pointer;transition:transform .1s,box-shadow .15s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(26,61,203,.15)'" onmouseout="this.style.transform='';this.style.boxShadow=''" onclick="openHospitalModal('${r.biz_no}')">
       <div class="rnum">${i+1}</div>
       <div class="rinfo" style="flex:1">
         <h4>${r.hospital}</h4>
