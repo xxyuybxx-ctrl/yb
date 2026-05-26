@@ -11,6 +11,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" crossorigin="anonymous"></script>
 <style>
 :root{
   --primary:#1a6faf;--primary-dark:#0d4f8a;--primary-light:#e8f2fa;
@@ -251,6 +253,35 @@ th.sort-th.sort-active .sort-ind{color:#1a3dcb;font-weight:900}
 .grade-postit .pclose:hover{background:rgba(0,0,0,.15)}
 .grade-postit p{margin:4px 0 0}
 .grade-postit .pcrit{margin-top:6px;padding-top:6px;border-top:1px dashed rgba(0,0,0,.15);font-size:11px;color:#5a4a00;font-weight:600}
+/* 인쇄용 스타일 */
+.print-only{display:none}
+@media print {
+  @page { size:A4; margin:14mm 12mm 16mm 12mm }
+  html,body{background:#fff !important;color:#222 !important;font-size:11pt}
+  /* 인쇄 시 숨길 영역 */
+  #loginGate, .header, .tabs, #strategyBanner,
+  .route-controls, .route-map-wrap, .map-controls, .map-stat-bar, .map-legend-bar,
+  #routeMapContainer, #mapContainer,
+  .maps-bar, .no-print,
+  #nurseKpis, #nurseCards, .section-card,
+  .tab-content:not(#tab-route),
+  .info-modal { display:none !important }
+  /* 추천 동선 탭만 보이게 */
+  #tab-route.tab-content{display:block !important;padding:0 !important;margin:0 !important}
+  .container{padding:0 !important;margin:0 !important;max-width:100% !important}
+  /* 인쇄 헤더 보이기 */
+  #printHeader, .print-only{display:block !important}
+  /* 추천 동선 카드 — 인쇄용 압축 레이아웃 */
+  .route-item{break-inside:avoid;page-break-inside:avoid;padding:8px 12px !important;margin-bottom:6px !important;box-shadow:none !important;border:1px solid #ccc !important;border-left:4px solid var(--bclr,#1a6faf) !important}
+  .route-item .rnum{font-size:16pt !important;min-width:22px !important}
+  .route-item .rinfo h4{font-size:12pt !important;margin-bottom:2px !important}
+  .route-item .rinfo .rmeta{font-size:9pt !important;margin-bottom:2px !important;color:#333 !important}
+  .route-item .rinfo .rtags{margin-top:3px !important}
+  .route-item .tag, .route-item .tier-badge, .route-item .prog-badge{font-size:8pt !important;padding:1px 6px !important}
+  .route-item .btn-nav, .route-item button{display:none !important}
+  .route-item div[style*="background:#eef2ff"]{font-size:9pt !important;padding:2px 6px !important;background:#f3f6ff !important;color:#1a3dcb !important;border:1px solid #cbd5e8}
+  .route-item div[style*="background:#f8f9fa"]{font-size:9pt !important;padding:3px 7px !important}
+}
 #officeKpis{grid-template-columns:repeat(7,1fr);gap:12px}
 #officeKpis .kpi-card{padding:14px 15px}
 #officeKpis .kpi-card .label{margin-bottom:7px}
@@ -447,7 +478,7 @@ th.sort-th.sort-active .sort-ind{color:#1a3dcb;font-weight:900}
 
 <!-- ===== TAB 3: 추천 동선 ===== -->
 <div class="tab-content" id="tab-route">
-  <div class="section-title" style="margin-bottom:10px">🎯 오늘의 타겟 의원 리스트 <button class="info-btn" onclick="openInfoModal('route')" title="추천동선 설계 철학">?</button> <span style="font-size:12px;font-weight:500;color:#7a8fb5;margin-left:4px">— 거리 기반 동선 순서 포함</span></div>
+  <div class="section-title" style="margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span>🎯 오늘의 타겟 의원 리스트</span> <button class="info-btn" onclick="openInfoModal('route')" title="추천동선 설계 철학">?</button> <span style="font-size:12px;font-weight:500;color:#7a8fb5">— 거리 기반 동선 순서 포함</span><div style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap" class="no-print"><button onclick="shareWebAPI()" title="모바일 시스템 공유 (카톡·메시지 등)" style="background:#5b6b7d;color:#fff;border:none;padding:7px 12px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s" onmouseover="this.style.background='#3a4659'" onmouseout="this.style.background='#5b6b7d'">📤 공유</button><button onclick="shareImage()" title="동선을 이미지로 저장 (PNG)" style="background:#18a86a;color:#fff;border:none;padding:7px 12px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s" onmouseover="this.style.background='#0f7a4d'" onmouseout="this.style.background='#18a86a'">🖼 이미지</button><button onclick="shareKakao()" title="카카오톡 공유 (SDK)" style="background:#fee500;color:#3c1e1e;border:none;padding:7px 12px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s" onmouseover="this.style.background='#ffd83d'" onmouseout="this.style.background='#fee500'">💬 카톡</button><button onclick="printRoute()" id="btnPrintRoute" style="background:#1a3dcb;color:#fff;border:none;padding:7px 12px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s" onmouseover="this.style.background='#142577'" onmouseout="this.style.background='#1a3dcb'">🖨 인쇄</button></div></div>
   <div class="route-controls" id="routeControls">
     <div class="ctrl-group" style="position:relative">
       <label>기준 의원 (검색·선택 시 그 의원 중심 동선)</label>
@@ -540,6 +571,12 @@ th.sort-th.sort-active .sort-ind{color:#1a3dcb;font-weight:900}
     <div class="ctrl-group">
       <label>하루 방문 수 (1개 이상)</label>
       <input type="number" id="routeN" min="1" value="5" oninput="renderRoute()">
+    </div>
+  </div>
+  <div id="printHeader" class="print-only" style="display:none">
+    <div style="display:flex;align-items:center;gap:16px;padding-bottom:12px;border-bottom:2px solid #1a3dcb;margin-bottom:14px">
+      <div style="font-size:20px;font-weight:800;color:#142577">🎯 오늘의 타겟 의원 리스트</div>
+      <div id="printMeta" style="font-size:12px;color:#5b6b7d;margin-left:auto"></div>
     </div>
   </div>
   <div class="maps-bar" id="mapsBarWrap" style="display:none">
@@ -963,6 +1000,132 @@ function doLogin(){
   } else {
     document.getElementById('loginErr').textContent='아이디 또는 비밀번호가 올바르지 않습니다.';
   }
+}
+
+function printRoute(){
+  // 추천동선 탭이 활성화되어 있어야 함
+  var routeTab=document.getElementById('tab-route');
+  if(!routeTab || !routeTab.classList.contains('active')){
+    alert('추천동선 탭에서만 인쇄할 수 있습니다.');
+    return;
+  }
+  // 인쇄 헤더의 메타정보 갱신
+  var meta=document.getElementById('printMeta');
+  if(meta){
+    var now=new Date();
+    var dateStr=now.getFullYear()+'.'+String(now.getMonth()+1).padStart(2,'0')+'.'+String(now.getDate()).padStart(2,'0');
+    var routeN=(routeRows&&routeRows.length)||0;
+    var anchor=(routeAnchor&&routeAnchor.hospital)?'기준: '+routeAnchor.hospital+(routeAnchor.office?' ('+routeAnchor.office+')':''):'';
+    var strategyEl=document.getElementById('routeStrategy');
+    var strategyTxt=(strategyEl&&strategyEl.options&&strategyEl.selectedIndex>0)?strategyEl.options[strategyEl.selectedIndex].text:'';
+    meta.innerHTML='출력일: <b>'+dateStr+'</b> &nbsp;|&nbsp; 대상 <b>'+routeN+'</b>곳'+
+                   (anchor?' &nbsp;|&nbsp; '+anchor:'')+
+                   (strategyTxt?' &nbsp;|&nbsp; 전략: '+strategyTxt:'');
+  }
+  window.print();
+}
+
+// ============================================================
+//  공유 기능 — Web Share API / 이미지 캡처 / Kakao SDK
+// ============================================================
+// !!! 카카오 JavaScript 키를 받으면 아래 값을 교체하세요 !!!
+const KAKAO_JS_KEY = '73282444d098252a5084169c19042629';
+
+function _buildShareText(){
+  var lines=['🎯 오늘의 타겟 의원 리스트'];
+  var now=new Date();
+  var dateStr=now.getFullYear()+'.'+String(now.getMonth()+1).padStart(2,'0')+'.'+String(now.getDate()).padStart(2,'0');
+  lines.push('📅 '+dateStr);
+  if(routeAnchor) lines.push('📌 기준 의원: '+routeAnchor.hospital+' ('+(routeAnchor.office||'')+')');
+  var strEl=document.getElementById('routeStrategy');
+  if(strEl && strEl.selectedIndex>0){ lines.push('🏷 전략: '+strEl.options[strEl.selectedIndex].text); }
+  lines.push('');
+  (routeRows||[]).forEach(function(r,i){
+    var km=(typeof r._km==='number'&&r._km>0)?' ('+r._km.toFixed(1)+'km)':'';
+    lines.push((i+1)+'. '+r.hospital+km+' — '+r.grade_action);
+  });
+  return lines.join('\n');
+}
+
+function shareWebAPI(){
+  if(!routeRows||routeRows.length===0){ alert('공유할 동선이 없습니다.'); return; }
+  var text = _buildShareText();
+  if(navigator.share){
+    navigator.share({
+      title:'🎯 오늘의 타겟 의원 리스트',
+      text:text,
+      url:location.href
+    }).catch(function(e){ if(e.name!=='AbortError') console.log('share failed',e); });
+  } else {
+    // 폴백: 클립보드 복사
+    if(navigator.clipboard){
+      navigator.clipboard.writeText(text).then(function(){
+        alert('이 브라우저는 시스템 공유 기능을 지원하지 않습니다.\n동선 텍스트를 클립보드에 복사했습니다 — 카톡에 붙여넣기 하세요.');
+      });
+    } else {
+      alert('이 브라우저는 공유 기능을 지원하지 않습니다. 인쇄 또는 이미지로 저장해 주세요.');
+    }
+  }
+}
+
+function shareImage(){
+  if(!routeRows||routeRows.length===0){ alert('이미지로 만들 동선이 없습니다.'); return; }
+  if(typeof html2canvas==='undefined'){ alert('이미지 캡처 라이브러리가 로드되지 않았습니다. 인터넷 연결을 확인하세요.'); return; }
+  var listEl=document.getElementById('routeList');
+  if(!listEl){ alert('동선 영역을 찾을 수 없습니다.'); return; }
+  // 캡처용 임시 컨테이너 — 헤더 + 리스트
+  var temp=document.createElement('div');
+  temp.style.cssText='position:fixed;left:-9999px;top:0;width:680px;background:#fff;padding:24px 26px;font-family:\'맑은 고딕\',\'Malgun Gothic\',sans-serif';
+  var now=new Date();
+  var dateStr=now.getFullYear()+'.'+String(now.getMonth()+1).padStart(2,'0')+'.'+String(now.getDate()).padStart(2,'0');
+  var anchor=(routeAnchor&&routeAnchor.hospital)?'<br><span style="font-size:12px;color:#5b6b7d">📌 기준: '+routeAnchor.hospital+' ('+(routeAnchor.office||'')+')</span>':'';
+  var strEl=document.getElementById('routeStrategy');
+  var strategyTxt=(strEl&&strEl.selectedIndex>0)?'<br><span style="font-size:12px;color:#5b6b7d">🏷 '+strEl.options[strEl.selectedIndex].text+'</span>':'';
+  temp.innerHTML='<div style="padding-bottom:14px;margin-bottom:14px;border-bottom:2px solid #1a3dcb">'+
+                 '<div style="font-size:22px;font-weight:800;color:#142577">🎯 오늘의 타겟 의원 리스트</div>'+
+                 '<div style="font-size:13px;color:#5b6b7d;margin-top:4px">'+dateStr+' · 대상 '+routeRows.length+'곳</div>'+
+                 anchor+strategyTxt+
+                 '</div>'+
+                 listEl.innerHTML;
+  document.body.appendChild(temp);
+  html2canvas(temp,{scale:2, backgroundColor:'#ffffff', logging:false}).then(function(canvas){
+    document.body.removeChild(temp);
+    var link=document.createElement('a');
+    link.download='오늘의_타겟_'+dateStr+'.png';
+    link.href=canvas.toDataURL('image/png');
+    link.click();
+  }).catch(function(e){
+    try{ document.body.removeChild(temp);}catch(_){}
+    alert('이미지 생성 실패: '+e.message);
+  });
+}
+
+function shareKakao(){
+  if(!KAKAO_JS_KEY){
+    alert('카카오톡 공유를 사용하려면 먼저 카카오 디벨로퍼에서 JavaScript 키를 발급받아 코드의 KAKAO_JS_KEY에 입력해야 합니다.\n\n임시로 "공유" 또는 "이미지" 버튼을 사용하세요.');
+    return;
+  }
+  if(typeof Kakao==='undefined'){ alert('카카오 SDK가 로드되지 않았습니다. 인터넷 연결을 확인하세요.'); return; }
+  if(!Kakao.isInitialized()) Kakao.init(KAKAO_JS_KEY);
+  if(!routeRows||routeRows.length===0){ alert('공유할 동선이 없습니다.'); return; }
+  var now=new Date();
+  var dateStr=now.getFullYear()+'.'+String(now.getMonth()+1).padStart(2,'0')+'.'+String(now.getDate()).padStart(2,'0');
+  var firstName=(routeRows[0]&&routeRows[0].hospital)||'';
+  var description=dateStr+' · 대상 '+routeRows.length+'곳';
+  if(routeAnchor) description+=' · 기준 '+routeAnchor.hospital;
+  Kakao.Share.sendDefault({
+    objectType:'feed',
+    content:{
+      title:'🎯 오늘의 타겟 의원 — '+firstName+' 외 '+(routeRows.length-1)+'곳',
+      description:description,
+      imageUrl:location.origin+location.pathname.replace(/\/?index\.html?$/,'')+'/assets/ogimage.jpg',
+      link:{ mobileWebUrl:location.href, webUrl:location.href }
+    },
+    buttons:[{
+      title:'대시보드 열기',
+      link:{ mobileWebUrl:location.href, webUrl:location.href }
+    }]
+  });
 }
 
 function logout(){
