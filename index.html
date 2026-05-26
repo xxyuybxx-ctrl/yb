@@ -382,6 +382,14 @@ tr:hover td{background:var(--primary-light)}
       <div id="routeAnchorTag" style="display:none;margin-top:6px;font-size:11px"></div>
     </div>
     <div class="ctrl-group">
+      <label>동선 방식</label>
+      <select id="routeMode" onchange="renderRoute()">
+        <option value="balanced" selected>균형 (등급 + 거리)</option>
+        <option value="priority">등급 우선 (시급한 곳)</option>
+        <option value="distance">거리 우선 (효율 동선)</option>
+      </select>
+    </div>
+    <div class="ctrl-group">
       <label>사업소</label>
       <select id="routeDiv" onchange="filterRouteOffice()"><option value="">전체</option></select>
     </div>
@@ -403,9 +411,25 @@ tr:hover td{background:var(--primary-light)}
       <label>전략유형</label>
       <select id="routeStrategy" onchange="renderRoute()">
         <option value="">전체</option>
-        <option value="s1">① 시범→본사업 등록·활성화</option>
-        <option value="s2">② 청구누수 병원 활성화</option>
-        <option value="s3">③ 미참여 병원 신규 제안</option>
+        <optgroup label="A. 긴급 회복 — 손실 차단">
+          <option value="a1">🔥 대형 긴급-청구누수</option>
+          <option value="a2">🔥 일반 청구누수 활성화</option>
+          <option value="a3">⚠ 이탈 방어</option>
+        </optgroup>
+        <optgroup label="B. 활성처 수익화 — 새는 곳 막기">
+          <option value="b1">💸 허수 활성 진짜화</option>
+          <option value="b2">🛡 우수처 누수 방어</option>
+          <option value="b3">🌟 명의풀 레퍼런스 확보</option>
+        </optgroup>
+        <optgroup label="C. 성장 가속 — 참여 중 활성화">
+          <option value="c1">🟡 시범→본사업 전환</option>
+          <option value="c2">🔵 본사업 초기 정착</option>
+          <option value="c3">🟢 웰체크 도입 권유</option>
+        </optgroup>
+        <optgroup label="D. 신규 개척 — 미참여 영입">
+          <option value="d1">🚀 미기동-잠재대형</option>
+          <option value="d2">🚀 신규 미참여</option>
+        </optgroup>
       </select>
     </div>
     <div class="ctrl-group">
@@ -1249,8 +1273,10 @@ function setRouteAnchor(i){
   document.getElementById('routeAnchorSearch').value=routeAnchor.hospital||'';
   var tag=document.getElementById('routeAnchorTag');
   tag.style.display='block';
-  tag.innerHTML='<span style="background:#e8f2fa;color:#1a6faf;padding:3px 9px;border-radius:8px;font-weight:700">📌 기준 의원: '+(routeAnchor.hospital||'')+'</span> '
-    +'<a onclick="clearRouteAnchor()" style="color:#e85858;cursor:pointer;font-weight:700;margin-left:4px">✕ 해제</a>';
+  var _of=routeAnchor.office||'';
+  tag.innerHTML='<span style="background:#e8f2fa;color:#1a6faf;padding:3px 9px;border-radius:8px;font-weight:700">📌 기준: '+(routeAnchor.hospital||'')+(_of?' <span style=\'opacity:.7\'>· '+_of+'</span>':'')+'</span> '
+    +'<label style="display:inline-flex;align-items:center;gap:4px;margin-left:8px;color:#28527a;font-weight:600;cursor:pointer"><input type="checkbox" id="anchorSameOffice" checked onchange="renderRoute()" style="margin:0"> 같은 사무소만</label>'
+    +'<a onclick="clearRouteAnchor()" style="color:#e85858;cursor:pointer;font-weight:700;margin-left:8px">✕ 해제</a>';
   renderRoute();
 }
 function clearRouteAnchor(){
@@ -1310,9 +1336,17 @@ function renderRoute(){
   if(claimFilter) rows=rows.filter(r=>r.claim_status===claimFilter);
   if(progFilter) rows=rows.filter(r=>r.program_type===progFilter);
   // 전략유형 필터
-  if(strategyFilter==='s1') rows=rows.filter(r=>r.program_type==='🟡 시범사업만');
-  else if(strategyFilter==='s2') rows=rows.filter(r=>r.ilmansa_pt>=1&&r.claim_status==='미청구');
-  else if(strategyFilter==='s3') rows=rows.filter(r=>r.ilmansa_pt===0&&r.wellcheck_pt===0);
+  if(strategyFilter==='a1') rows=rows.filter(r=>r.grade_action==='🔥 긴급-청구누수(대형)');
+  else if(strategyFilter==='a2') rows=rows.filter(r=>r.grade_action==='🔥 긴급-청구누수' && r.ilmansa_pt>=1);
+  else if(strategyFilter==='a3') rows=rows.filter(r=>(r.grade_action||'').indexOf('이탈방어')>=0);
+  else if(strategyFilter==='b1') rows=rows.filter(r=>r.ilmansa_pt>=10 && r.claim_status==='미청구');
+  else if(strategyFilter==='b2') rows=rows.filter(r=>((r.grade_action||'').indexOf('대규모활성')>=0 || (r.grade_action||'').indexOf('우수활성')>=0) && r.fee_apr>0);
+  else if(strategyFilter==='b3') rows=rows.filter(r=>r.grade_stage==='5_명의풀' && r.fee_apr>0);
+  else if(strategyFilter==='c1') rows=rows.filter(r=>r.program_type==='🟡 시범사업만');
+  else if(strategyFilter==='c2') rows=rows.filter(r=>r.program_type==='🔵 시범+본사업' && (r.grade_stage==='1_초기진입'||r.grade_stage==='2_도입'));
+  else if(strategyFilter==='c3') rows=rows.filter(r=>r.program_type==='🟢 본사업만' && r.wellcheck_pt===0);
+  else if(strategyFilter==='d1') rows=rows.filter(r=>(r.grade_action||'').indexOf('미기동-잠재대형')>=0);
+  else if(strategyFilter==='d2') rows=rows.filter(r=>r.program_type==='⚪ 미참여' && r.grade_stage==='0_미활성');
   // 간호사 필터
   if(nurseFilter==='담당없음'){
     const nurseOffices=Object.keys(NURSE_MAP);
@@ -1323,28 +1357,80 @@ function renderRoute(){
   }
   if(routeAnchor){
     var _o=rows.filter(function(r){return r!==routeAnchor;});
+    var _cb=document.getElementById('anchorSameOffice');
+    var _sameOnly=_cb?_cb.checked:true;
+    var _officeNote='';
+    if(_sameOnly && routeAnchor.office){
+      var _filtered=_o.filter(function(r){return r.office===routeAnchor.office;});
+      if(_filtered.length===0){
+        _officeNote=' <span style="color:#b35;font-weight:600">⚠ 같은 사무소 후보 0건 → 전체에서 추천</span>';
+      } else {
+        _o=_filtered;
+      }
+    }
     var _aLa=parseFloat(routeAnchor.lat),_aLn=parseFloat(routeAnchor.lng);
     _o.forEach(function(r){var dLa=_aLa-parseFloat(r.lat),dLn=(_aLn-parseFloat(r.lng))*0.81;r._ad=dLa*dLa+dLn*dLn;});
     _o.sort(function(a,b){return (a._ad||0)-(b._ad||0);});
     rows=[routeAnchor].concat(_o.slice(0,Math.max(0,n-1)));
     rows=nearestNeighborOrder(rows);
+    var _tagEl=document.getElementById('routeAnchorTag');
+    if(_tagEl && _tagEl.dataset.note!==_officeNote){
+      _tagEl.dataset.note=_officeNote;
+      if(_officeNote){
+        var _existing=_tagEl.querySelector('.anchor-note');
+        if(_existing) _existing.remove();
+        var _span=document.createElement('span');
+        _span.className='anchor-note';
+        _span.innerHTML=_officeNote;
+        _tagEl.appendChild(_span);
+      } else {
+        var _ex2=_tagEl.querySelector('.anchor-note');
+        if(_ex2) _ex2.remove();
+      }
+    }
   } else {
-    rows=[...rows].sort((a,b)=>a.priority_rank-b.priority_rank).slice(0,n);
+    var _mode=(document.getElementById('routeMode')&&document.getElementById('routeMode').value)||'balanced';
+    rows=[...rows].sort((a,b)=>a.priority_rank-b.priority_rank);
+    if(_mode==='priority' || rows.length<2){
+      rows=rows.slice(0,n);
+    } else {
+      var _s=rows[0], _sLa=parseFloat(_s.lat), _sLn=parseFloat(_s.lng);
+      var _rest=rows.slice(1);
+      _rest.forEach(function(r){
+        var dLa=_sLa-parseFloat(r.lat), dLn=(_sLn-parseFloat(r.lng))*0.81;
+        r._sd=dLa*dLa+dLn*dLn;
+      });
+      if(_mode==='distance'){
+        _rest.sort(function(a,b){return (a._sd||0)-(b._sd||0);});
+      } else {
+        var _maxD=1; _rest.forEach(function(r){ if((r._sd||0)>_maxD) _maxD=r._sd; });
+        _rest.forEach(function(r){ r._score=(r.priority_rank||5)+((r._sd||0)/_maxD)*3.5; });
+        _rest.sort(function(a,b){return (a._score||0)-(b._score||0);});
+      }
+      rows=[_s].concat(_rest.slice(0,Math.max(0,n-1)));
+    }
     rows=nearestNeighborOrder(rows);
   }
   routeRows=rows;
   drawRouteMap(rows);
   // 전략 배너 업데이트
   const sBanner=document.getElementById('strategyBanner');
-  if(strategyFilter==='s1'){
+  var _bannerMap={
+    'a1':'🔥 <b>대형 긴급-청구누수</b> — 일만사 환자가 많고 매출 잠재가 큰데 청구가 안 되고 있는 의원. 정상화 1건의 임팩트가 가장 큽니다. <span style="opacity:.7">(grade_action = 긴급-청구누수(대형))</span>',
+    'a2':'🔥 <b>일반 청구누수 활성화</b> — 일만사 환자가 1명 이상 있는데 청구가 미흡한 의원. 환자 풀이 확보돼 있어 ROI가 즉시 발생합니다. <span style="opacity:.7">(grade_action = 긴급-청구누수 · ilmansa_pt ≥1)</span>',
+    'a3':'⚠ <b>이탈 방어</b> — 우수처에서 추락 조짐을 보이는 의원. 떨어지면 신규 영입보다 회복 비용이 더 큽니다. <span style="opacity:.7">(grade_action: 이탈방어)</span>',
+    'b1':'💸 <b>허수 활성 진짜화</b> — 활성처(일만사 ≥10명)인데 청구가 0인 의원. 통계상 활성이지만 매출 0 — 수익화 프로세스 정립으로 즉시 매출 전환. <span style="opacity:.7">(ilmansa_pt ≥10 · claim_status = 미청구)</span>',
+    'b2':'🛡 <b>우수처 누수 방어</b> — 잘 가동되는 대규모활성·우수활성처에서도 삭감·불능이 새는 누수 지점. 600만 원+ 방어한 베스트내과 패턴. <span style="opacity:.7">(grade_action: 대규모/우수활성 · fee_apr > 0)</span>',
+    'b3':'🌟 <b>명의풀 레퍼런스 확보</b> — 최고 운영 단계(5_명의풀) 의원. 사례·증언 자산화 — 다른 의원 설득에 사용할 레퍼런스 확보. <span style="opacity:.7">(grade_stage = 5_명의풀 · fee_apr > 0)</span>',
+    'c1':'🟡 <b>시범→본사업 전환</b> — 시범 경험이 있어 본사업 진입 장벽이 낮음. 발표의 성재의원 케이스. <span style="opacity:.7">(program_type = 시범사업만)</span>',
+    'c2':'🔵 <b>본사업 초기 정착</b> — 본사업 등록은 했지만 운영이 익숙지 않은 초기진입·도입 단계. 표준 프로세스 교육으로 활성처 전환. <span style="opacity:.7">(program_type = 시범+본사업 · grade_stage = 1·2단계)</span>',
+    'c3':'🟢 <b>웰체크 도입 권유</b> — 본사업(일만사)은 운영 중인데 웰체크는 미참여. 동일 데스크 프로세스에 얹기만 하면 확장 — 발표 출발점 패턴. <span style="opacity:.7">(program_type = 본사업만 · wellcheck_pt = 0)</span>',
+    'd1':'🚀 <b>미기동-잠재대형</b> — 미참여이지만 의원 규모가 커서 도입 시 임팩트가 큰 우선 영입 대상. <span style="opacity:.7">(grade_action: 미기동-잠재대형)</span>',
+    'd2':'🚀 <b>신규 미참여</b> — 사업 전혀 참여하지 않은 의원. 신규 사업 제안 대상. <span style="opacity:.7">(program_type = 미참여 · grade_stage = 0_미활성)</span>',
+  };
+  if(_bannerMap[strategyFilter]){
     sBanner.style.display='block';
-    sBanner.innerHTML='① 🟡 <b>시범→본사업 등록·활성화 전략</b> — 시범사업을 경험한 의원에 본사업 참여를 권유하고 일만사 활성화를 유도합니다.';
-  } else if(strategyFilter==='s2'){
-    sBanner.style.display='block';
-    sBanner.innerHTML='② 🔴 <b>청구누수 병원 활성화 전략</b> — 일만사 등록은 있으나 청구가 없는 병원을 방문해 청구 피드백 및 활성화를 지원합니다.';
-  } else if(strategyFilter==='s3'){
-    sBanner.style.display='block';
-    sBanner.innerHTML='③ ⚪ <b>미참여 병원 신규 제안 전략</b> — 일만사·웰체크 모두 참여하지 않은 병원에 신규 사업을 제안합니다.';
+    sBanner.innerHTML=_bannerMap[strategyFilter];
   } else {
     sBanner.style.display='none';
   }
