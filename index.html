@@ -51,16 +51,29 @@ body{font-family:'Pretendard','Noto Sans KR',Apple SD Gothic Neo,sans-serif;back
 .section-title::before{content:'';width:4px;height:16px;background:var(--primary);border-radius:2px;display:block;flex-shrink:0}
 .section-title span{font-size:12px;color:var(--muted);font-weight:500;letter-spacing:0}
 .division-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;margin-bottom:22px}
-.div-card{background:var(--card);border-radius:14px;padding:18px 20px 16px;box-shadow:var(--shadow);border:1px solid var(--border);border-top:4px solid var(--clr);transition:transform .12s,box-shadow .15s}
-.div-card:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(20,37,119,.1)}
-.div-card h3{font-size:17px;font-weight:800;margin-bottom:2px;letter-spacing:-0.3px;color:#142577}
-.div-card .head{font-size:11.5px;color:var(--muted);margin-bottom:12px}
+/* v50: 프로페셔널 사업소 카드 */
+.div-card{background:#fff;border-radius:18px;padding:24px 24px 20px;
+  box-shadow:0 1px 2px rgba(15,23,42,.04),0 4px 12px rgba(15,23,42,.05),0 16px 40px rgba(15,23,42,.07);
+  border:1px solid #f1f5f9;border-top:4px solid var(--clr);
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .25s ease;
+  position:relative;overflow:visible;font-variant-numeric:tabular-nums}
+.div-card:hover{transform:translateY(-4px);box-shadow:0 2px 4px rgba(15,23,42,.06),0 8px 20px rgba(15,23,42,.08),0 24px 56px rgba(15,23,42,.1)}
+.div-card h3{font-size:30px;font-weight:900;margin:0 0 4px;letter-spacing:-1.2px;color:#0f172a;line-height:1.1;font-feature-settings:'tnum'}
+.div-card .head{font-size:13px;color:#94a3b8;margin:0 0 16px;font-weight:500;letter-spacing:-0.2px;font-variant-numeric:tabular-nums}
 .div-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.div-metric{background:#f5f8fb;border-radius:9px;padding:9px 11px;white-space:nowrap;overflow:hidden}
-.div-metric .ml{font-size:10.5px;color:var(--muted);font-weight:600;letter-spacing:0.2px}
-.div-metric .mv{font-size:17px;font-weight:800;color:var(--text);white-space:nowrap;letter-spacing:-0.3px}
-.div-metric.hero{background:linear-gradient(135deg,#eef2ff,#f5f8ff);border:1px solid #e1e6f0}
-.div-metric.hero .mv{font-size:22px;color:#142577}
+.div-metric{background:#f8fafc;border-radius:11px;padding:11px 13px;white-space:nowrap;overflow:hidden;border:1px solid #f1f5f9;transition:background .12s}
+.div-metric:hover{background:#f1f5f9}
+.div-metric .ml{font-size:10px;color:#94a3b8;font-weight:700;letter-spacing:0.6px;text-transform:uppercase}
+.div-metric .mv{font-size:20px;font-weight:800;color:#0f172a;white-space:nowrap;letter-spacing:-0.5px;margin-top:2px;font-variant-numeric:tabular-nums}
+.div-metric.hero{background:linear-gradient(135deg,#fafbff 0%,#f0f4ff 100%);border:1px solid #e0e7ff}
+.div-metric.hero .mv{font-size:26px;color:#0f172a;font-weight:900;letter-spacing:-0.7px}
+/* 커스텀 등급 stack-bar + 툴팁 */
+.grade-stack{position:relative;display:flex;height:13px;border-radius:6px;overflow:hidden;background:#f1f5f9;box-shadow:inset 0 1px 2px rgba(15,23,42,.06)}
+.grade-seg{height:100%;position:relative;cursor:default;transition:filter .12s}
+.grade-seg:hover{filter:brightness(1.12) saturate(1.15)}
+.grade-seg:hover .grade-tip{opacity:1;transform:translate(-50%,-8px);pointer-events:auto}
+.grade-tip{position:absolute;bottom:100%;left:50%;transform:translate(-50%,0);opacity:0;pointer-events:none;background:#0f172a;color:#fff;padding:7px 11px;border-radius:7px;font-size:11.5px;font-weight:600;white-space:nowrap;transition:opacity .15s,transform .15s;z-index:50;box-shadow:0 8px 20px rgba(15,23,42,.25);letter-spacing:-0.2px}
+.grade-tip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#0f172a}
 .chart-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
 .chart-box{background:var(--card);border-radius:14px;padding:22px;box-shadow:var(--shadow);border:1px solid var(--border)}
 .chart-box canvas{max-height:240px}
@@ -237,6 +250,27 @@ th.sort-th.sort-active .sort-ind{color:#1a3dcb;font-weight:900}
 .info-modal-body th,.info-modal-body td{border:1px solid #e1e6f0;padding:7px 10px;text-align:left}
 .info-modal-body th{background:#f3f6ff;color:#142577;font-weight:700}
 .info-modal-body td b{color:#1a3dcb}
+/* v49: 한글 + 이모지 + 짧은 라벨이 좁은 셀에서 깨지지 않도록 글로벌 방어 */
+.info-modal-body table{table-layout:auto}
+.info-modal-body td{word-break:keep-all}  /* 한글은 띄어쓰기 단위로만 줄바꿈 */
+.info-modal-body td.col-num,
+.info-modal-body td.col-grade,
+.info-modal-body td.col-ev,
+.info-modal-body td.col-rate,
+.info-modal-body td.col-date{white-space:nowrap}
+.info-modal-body td.col-grade span{white-space:nowrap;display:inline-block}
+.info-modal-body th.col-num,
+.info-modal-body th.col-grade,
+.info-modal-body th.col-ev,
+.info-modal-body th.col-rate{white-space:nowrap}
+/* v49: 모달 안 클릭 가능 행에 일관된 어포던스 적용 */
+.info-modal-body tr[onclick]{transition:all .12s;position:relative}
+.info-modal-body tr[onclick] td:last-child{padding-right:24px;position:relative}
+.info-modal-body tr[onclick] td:last-child::after{content:'›';position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:18px;color:#cbd5e8;font-weight:300;transition:all .12s}
+.info-modal-body tr[onclick]:hover{background:#f3f6ff;box-shadow:inset 3px 0 0 #1a3dcb}
+.info-modal-body tr[onclick]:hover td:last-child::after{color:#1a3dcb;font-weight:600;right:3px}
+.info-modal-body tr[onclick] td{padding:8px 10px;border-bottom:1px solid #f1f5f9}
+.info-modal-body tr[onclick]:last-child td{border-bottom:none}
 .info-modal-body .grp{background:#f8faff;border-left:4px solid #1a3dcb;padding:10px 14px;margin:8px 0;border-radius:0 8px 8px 0}
 .info-modal-body .grp b{color:#142577}
 .info-modal-body code{background:#f0f3ff;color:#1a3dcb;padding:1px 6px;border-radius:4px;font-size:12px}
@@ -307,7 +341,32 @@ th.sort-th.sort-active .sort-ind{color:#1a3dcb;font-weight:900}
 @media(max-width:1180px){#officeKpis{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:680px){#officeKpis{grid-template-columns:repeat(2,1fr)}}
 #nursePerf{max-height:250px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;margin-top:2px;padding-right:4px}
-.nurse-perf-row{display:flex;align-items:center;gap:9px}
+.nurse-perf-row{display:flex;align-items:center;gap:9px;padding:6px 12px 6px 10px;border-radius:10px;border:1px solid transparent;transition:all .14s;position:relative}
+.nurse-perf-row:hover{background:#f3f6ff;border-color:#dbe1f0;transform:translateX(3px);box-shadow:0 4px 12px rgba(26,61,203,.08)}
+.nurse-perf-row::after{content:'›';position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:20px;color:#cbd5e8;font-weight:300;transition:all .14s}
+.nurse-perf-row:hover::after{color:#1a3dcb;right:5px;font-weight:600}
+/* 간호사 탭 카드 (v48~) */
+.nurse-card{background:#fff;border:1.5px solid #e1e6f0;border-radius:14px;padding:16px 18px 14px;cursor:pointer;transition:all .14s;position:relative;overflow:hidden}
+.nurse-card:hover{transform:translateY(-3px);border-color:#1a3dcb;box-shadow:0 12px 28px rgba(26,61,203,.13)}
+.nurse-card .nc-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.nurse-card .nc-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex:none;box-shadow:0 3px 8px rgba(0,0,0,.1)}
+.nurse-card .nc-name{font-size:16px;font-weight:800;color:#142577;letter-spacing:-0.3px}
+.nurse-card .nc-sub{font-size:11.5px;color:#7a8fb5;font-weight:600;margin-top:1px}
+.nurse-card .nc-rank{position:absolute;top:14px;right:14px;font-size:18px}
+.nurse-card .nc-rate-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:5px}
+.nurse-card .nc-rate-label{font-size:10.5px;color:#7a8fb5;font-weight:700}
+.nurse-card .nc-rate{font-size:22px;font-weight:900;letter-spacing:-0.5px}
+.nurse-card .nc-bar{background:#e5e7eb;height:7px;border-radius:4px;overflow:hidden;margin-bottom:10px}
+.nurse-card .nc-bar > div{height:100%;border-radius:4px;transition:width .3s}
+.nurse-card .nc-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
+.nurse-card .nc-kpi{background:#f5f8fb;border-radius:7px;padding:6px 8px;text-align:center}
+.nurse-card .nc-kpi .l{font-size:9.5px;color:#94a3b8;font-weight:600}
+.nurse-card .nc-kpi .v{font-size:13px;font-weight:800;color:#142577;letter-spacing:-0.3px;white-space:nowrap}
+.nurse-card .nc-alerts{display:flex;gap:5px}
+.nurse-card .nc-alert{flex:1;background:#fef2f2;border-radius:6px;padding:5px 8px;font-size:10.5px;font-weight:700;color:#dc2626;text-align:center}
+.nurse-card .nc-alert.warn{background:#fffbeb;color:#92400e}
+.nurse-card::after{content:'›';position:absolute;top:18px;right:16px;font-size:22px;color:#cbd5e8;font-weight:300;transition:all .14s;opacity:0}
+.nurse-card:hover::after{opacity:1;color:#1a3dcb;right:14px}
 .np-rank{width:24px;text-align:center;flex-shrink:0}
 .np-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.22)}
 .np-info{width:118px;flex-shrink:0}
@@ -408,7 +467,8 @@ th.sort-th.sort-active .sort-ind{color:#1a3dcb;font-weight:900}
 <div class="tabs">
   <div class="tab active" onclick="switchTab('division',this)">📊 사업소별 현황</div>
   <div class="tab" onclick="switchTab('office',this)">🏥 사무소별 현황</div>
-  <div class="tab" onclick="switchTab('route',this)">🗺 추천동선 · 간호사별 현황</div>
+  <div class="tab" onclick="switchTab('nurse',this)">👩‍⚕️ 간호사</div>
+  <div class="tab" onclick="switchTab('route',this)">🗺 추천동선</div>
   <div class="tab" onclick="switchTab('mapview',this)">📍 전체지도</div>
   <div class="tab admin-tab" onclick="switchTab('admin',this)">🔐 관리자</div>
 </div>
@@ -425,7 +485,7 @@ th.sort-th.sort-active .sort-ind{color:#1a3dcb;font-weight:900}
       <canvas id="gradeChart"></canvas>
     </div>
     <div class="chart-box">
-      <div class="section-title">👩‍⚕️ 간호사별 활성화 성과 <span>활성처 비율 순위</span></div>
+      <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap"><span>👩‍⚕️ 간호사별 활성화 성과 <span style="font-size:12px;font-weight:500;color:#94a3b8">활성처 비율 순위</span></span><span style="font-size:11.5px;color:#1a3dcb;font-weight:600;background:#eef2ff;padding:3px 10px;border-radius:6px">💡 카드 클릭 → 상세 보기</span></div>
       <div id="nursePerf"></div>
     </div>
   </div>
@@ -493,6 +553,28 @@ th.sort-th.sort-active .sort-ind{color:#1a3dcb;font-weight:900}
     </div>
     <div id="pagControlsBottom" style="display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;margin-top:10px"></div>
   </div>
+</div>
+
+<!-- ===== TAB 2.5: 간호사 (v48~) ===== -->
+<div class="tab-content" id="tab-nurse">
+  <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+    <span>👩‍⚕️ 간호사 대시보드 <span style="font-size:12px;font-weight:500;color:#94a3b8">담당 사무소별 종합 성과</span></span>
+    <span style="font-size:11.5px;color:#1a3dcb;font-weight:600;background:#eef2ff;padding:3px 10px;border-radius:6px">💡 카드 클릭 → 상세 모달</span>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
+    <input type="text" id="nurseSearch" placeholder="🔍 이름·사무소 검색" oninput="renderNurseTab()" style="padding:8px 12px;border:1.5px solid #d0d7e3;border-radius:8px;font-size:13px;width:200px;outline:none">
+    <select id="nurseSort" onchange="renderNurseTab()" style="padding:8px 12px;border:1.5px solid #d0d7e3;border-radius:8px;font-size:13px;outline:none;cursor:pointer">
+      <option value="rate_desc">활성률 높은 순</option>
+      <option value="rate_asc">활성률 낮은 순</option>
+      <option value="active_desc">활성처 많은 순</option>
+      <option value="fee_desc">4월 수가 많은 순</option>
+      <option value="ilm_desc">일만사 환자 많은 순</option>
+      <option value="noclaim_desc">미청구 많은 순</option>
+      <option value="name_asc">이름순</option>
+    </select>
+    <span id="nurseCountInfo" style="font-size:12px;color:#7a8fb5;font-weight:600"></span>
+  </div>
+  <div id="nurseGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px"></div>
 </div>
 
 <!-- ===== TAB 3: 추천 동선 ===== -->
@@ -1184,6 +1266,7 @@ function switchTab(tab, el){
   document.getElementById('tab-'+tab).classList.add('active');
   el.classList.add('active');
   if(tab==='mapview') setTimeout(()=>{initMap();refreshMapMarkers();},50);
+  if(tab==='nurse') setTimeout(()=>{renderNurseTab();},50);
   if(tab==='route') setTimeout(()=>{initRouteMap();if(routeMap)routeMap.invalidateSize();renderNurseTab();renderRoute();},60);
 }
 
@@ -1391,65 +1474,77 @@ function renderDivisionTab(){
       const c=gCnt[k]; if(!c) return;
       const pct=(c/rows.length*100).toFixed(2);
       const cl=GRADE_COLOR[k]||'#94a3b8';
-      stackBar+=`<div style="background:${cl};width:${pct}%;height:100%" title="${k}: ${c}곳"></div>`;
+      stackBar+=`<div class="grade-seg" style="background:${cl};width:${pct}%"><span class="grade-tip">${k} · ${c}곳 (${pct}%)</span></div>`;
     });
     container.innerHTML += `
     <div class="div-card" style="--clr:${clr}">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px">
         <div>
-          <h3 style="margin:0">${div}</h3>
-          <div class="head" style="margin:2px 0 0">총 ${rows.length.toLocaleString()}개 기관</div>
+          <h3>${div}</h3>
+          <div class="head">총 <b style="color:#475569;font-weight:700">${rows.length.toLocaleString()}</b>개 기관</div>
         </div>
-        <div style="text-align:center;background:linear-gradient(135deg,${gE.bg},${gE.bg}88);border:2px solid ${gE.color};border-radius:12px;padding:5px 12px;min-width:58px;box-shadow:0 2px 8px ${gE.color}33">
-          <div style="font-size:9px;color:${gE.color};font-weight:800;letter-spacing:0.5px;text-transform:uppercase">5월 평가</div>
-          <div style="font-size:28px;font-weight:900;color:${gE.color};line-height:1;letter-spacing:-1px">${gE.grade}</div>
+        <div style="text-align:center;background:#fff;border:2px solid ${gE.color};border-radius:14px;padding:6px 14px;min-width:66px;box-shadow:0 1px 3px ${gE.color}22,0 4px 14px ${gE.color}1a,inset 0 -3px 0 ${gE.color}11">
+          <div style="font-size:9px;color:${gE.color};font-weight:800;letter-spacing:1.5px;text-transform:uppercase;opacity:.7">May</div>
+          <div style="font-size:32px;font-weight:900;color:${gE.color};line-height:1;letter-spacing:-2px;font-feature-settings:'tnum'">${gE.grade}</div>
         </div>
       </div>
       ${target>0?`
-      <div style="background:#f8fafc;border-radius:10px;padding:10px 12px;margin-bottom:10px">
-        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
-          <div style="font-size:11px;color:#5b6b7d;font-weight:600">달성률 (활성처 ${totalAct} / ${target})</div>
-          <div style="font-size:18px;font-weight:800;color:${gE.color}">${ach.toFixed(1)}%</div>
+      <div style="background:#f8fafc;border:1px solid #f1f5f9;border-radius:13px;padding:14px 16px;margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">
+          <div style="font-size:10px;color:#94a3b8;font-weight:700;letter-spacing:0.6px;text-transform:uppercase">달성률</div>
+          <div style="font-size:24px;font-weight:900;color:${gE.color};letter-spacing:-0.6px;font-feature-settings:'tnum'">${ach.toFixed(1)}<span style="font-size:14px;opacity:.7">%</span></div>
         </div>
-        <div style="background:#e5e7eb;height:8px;border-radius:4px;overflow:hidden;position:relative">
-          <div style="background:linear-gradient(90deg,${gE.color},${gE.color}cc);height:100%;width:${Math.min(ach,100)}%;transition:width .3s"></div>
-          <div style="position:absolute;top:-2px;left:60%;bottom:-2px;width:2px;background:#94a3b8" title="B(60%)"></div>
-          <div style="position:absolute;top:-2px;left:80%;bottom:-2px;width:2px;background:#94a3b8" title="A(80%)"></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:#475569;margin-bottom:8px">
+          <span><b style="font-weight:700;color:#0f172a;font-feature-settings:'tnum'">${totalAct.toLocaleString()}</b> <span style="color:#94a3b8">/ ${target.toLocaleString()}</span></span>
+          <span style="font-size:11px;color:#94a3b8">일만사 ${actIlm} · 비일만사 ${actNon}</span>
         </div>
-        <div style="display:flex;justify-content:space-between;margin-top:5px;font-size:10px;color:#94a3b8">
-          <span>일만사 ${actIlm}</span><span>비일만사 ${actNon}</span><span>C → B 60% → A 80% → S 100%</span>
+        <div style="background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;position:relative">
+          <div style="background:linear-gradient(90deg,${gE.color}dd,${gE.color});height:100%;width:${Math.min(ach,100)}%;transition:width .4s cubic-bezier(.4,0,.2,1);border-radius:3px;box-shadow:0 0 8px ${gE.color}66"></div>
+          <div style="position:absolute;top:-3px;left:60%;bottom:-3px;width:1.5px;background:#cbd5e1"></div>
+          <div style="position:absolute;top:-3px;left:80%;bottom:-3px;width:1.5px;background:#cbd5e1"></div>
+          <div style="position:absolute;top:-3px;left:100%;bottom:-3px;width:1.5px;background:#cbd5e1"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:9px;color:#94a3b8;font-weight:700;letter-spacing:0.4px">
+          <span>C</span><span style="margin-left:auto;margin-right:auto">B · 60%</span><span style="position:absolute;left:80%;transform:translateX(-50%)"></span><span>A · 80%</span><span style="margin-left:6px">S · 100%</span>
         </div>
       </div>`:''}
       <div class="div-metrics">
         <div class="div-metric hero" style="grid-column:span 2">
           <div style="display:flex;align-items:flex-end;justify-content:space-between">
             <div>
-              <div class="ml">💰 4월 행위수가</div>
+              <div class="ml">4월 행위수가</div>
               <div class="mv">${fmtKRW(totalFee)}</div>
             </div>
-            <div style="font-size:10px;color:#7a8fb5;text-align:right;line-height:1.5">
-              일만사환자<br><b style="color:#142577;font-size:13px">${fmt(totalIlm)}</b>
+            <div style="text-align:right">
+              <div style="font-size:10px;color:#94a3b8;font-weight:700;letter-spacing:0.4px;text-transform:uppercase">일만사환자</div>
+              <div style="font-size:18px;color:#0f172a;font-weight:800;letter-spacing:-0.3px;font-feature-settings:'tnum'">${fmt(totalIlm)}</div>
             </div>
           </div>
         </div>
-        <div class="div-metric"><div class="ml">일만사처</div><div class="mv">${ilmCnt.toLocaleString()}<span style="font-size:11px;color:#94a3b8;font-weight:600">개</span></div></div>
-        <div class="div-metric"><div class="ml">청구율</div><div class="mv">${((claimCnt/rows.length)*100).toFixed(1)}<span style="font-size:13px;color:#94a3b8;font-weight:700">%</span></div></div>
+        <div class="div-metric"><div class="ml">일만사처</div><div class="mv">${ilmCnt.toLocaleString()}<span style="font-size:13px;color:#94a3b8;font-weight:700;margin-left:1px">개</span></div></div>
+        <div class="div-metric"><div class="ml">청구율</div><div class="mv">${((claimCnt/rows.length)*100).toFixed(1)}<span style="font-size:14px;color:#94a3b8;font-weight:700;margin-left:1px">%</span></div></div>
       </div>
-      <div style="margin-top:12px">
-        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px">
-          <div style="font-size:10.5px;color:#7a8fb5;font-weight:600">등급 분포</div>
-          <div style="font-size:9.5px;color:#b8c4d4">호버하면 등급명 표시</div>
+      <div style="margin-top:16px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px">
+          <div style="font-size:10px;color:#94a3b8;font-weight:700;letter-spacing:0.6px;text-transform:uppercase">등급 분포</div>
+          <div style="font-size:10px;color:#94a3b8">마우스를 올리면 등급명</div>
         </div>
-        <div style="display:flex;height:12px;border-radius:6px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.08);background:#f1f5f9">${stackBar}</div>
+        <div class="grade-stack">${stackBar}</div>
       </div>
-      <div style="margin-top:12px;display:flex;gap:6px">
-        <div style="flex:1;background:${noClaim/rows.length>0.5?'linear-gradient(135deg,#fef2f2,#fee2e2)':'linear-gradient(135deg,#fffbeb,#fef3c7)'};border-radius:9px;padding:8px 11px;display:flex;align-items:center;justify-content:space-between">
-          <div style="font-size:10.5px;color:${noClaim/rows.length>0.5?'#dc2626':'#92400e'};font-weight:700">🚨 미청구</div>
-          <div style="font-size:16px;color:${noClaim/rows.length>0.5?'#dc2626':'#92400e'};font-weight:900;letter-spacing:-0.3px">${noClaim.toLocaleString()}</div>
+      <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="background:${noClaim/rows.length>0.5?'#fef2f2':'#fffbeb'};border:1px solid ${noClaim/rows.length>0.5?'#fecaca':'#fde68a'};border-radius:11px;padding:10px 13px">
+          <div style="display:flex;align-items:baseline;justify-content:space-between">
+            <div style="font-size:10px;color:${noClaim/rows.length>0.5?'#dc2626':'#92400e'};font-weight:700;letter-spacing:0.6px;text-transform:uppercase">미청구</div>
+            <div style="font-size:9px;color:#94a3b8;font-weight:700">${((noClaim/rows.length)*100).toFixed(0)}%</div>
+          </div>
+          <div style="font-size:22px;color:${noClaim/rows.length>0.5?'#dc2626':'#92400e'};font-weight:900;letter-spacing:-0.5px;font-feature-settings:'tnum';margin-top:2px">${noClaim.toLocaleString()}</div>
         </div>
-        <div style="flex:1;background:linear-gradient(135deg,#fef2f2,#fee2e2);border-radius:9px;padding:8px 11px;display:flex;align-items:center;justify-content:space-between">
-          <div style="font-size:10.5px;color:#dc2626;font-weight:700">⚡ 긴급방문</div>
-          <div style="font-size:16px;color:#dc2626;font-weight:900;letter-spacing:-0.3px">${urgent}</div>
+        <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:11px;padding:10px 13px">
+          <div style="display:flex;align-items:baseline;justify-content:space-between">
+            <div style="font-size:10px;color:#dc2626;font-weight:700;letter-spacing:0.6px;text-transform:uppercase">긴급방문</div>
+            <div style="font-size:9px;color:#94a3b8;font-weight:700">${((urgent/rows.length)*100).toFixed(0)}%</div>
+          </div>
+          <div style="font-size:22px;color:#dc2626;font-weight:900;letter-spacing:-0.5px;font-feature-settings:'tnum';margin-top:2px">${urgent}</div>
         </div>
       </div>
     </div>`;
@@ -1959,15 +2054,19 @@ function openNurseModal(name, office){
   }
   // Top 5 EV 추천
   html += '<h4>🎯 오늘 우선 방문 Top 5 (EV 순)</h4>';
-  html += '<table style="width:100%;border-collapse:collapse"><tr><th style="width:36px">#</th><th>의원명</th><th style="width:90px">등급</th><th style="width:80px;text-align:right">EV</th></tr>';
+  html += '<table style="width:100%;border-collapse:collapse"><tr>'+
+          '<th class="col-num" style="width:32px">#</th>'+
+          '<th>의원명</th>'+
+          '<th class="col-grade" style="width:130px">등급</th>'+
+          '<th class="col-ev" style="width:95px;text-align:right">EV</th></tr>';
   top5.forEach(function(r,i){
     var cl=GRADE_COLOR[r.grade_action]||'#94a3b8';
     var ev = ((r._ev||0)/1000).toFixed(1)+'k';
     html += '<tr style="cursor:pointer" onclick="closeInfoModal();setTimeout(function(){openHospitalModal(\''+r.biz_no+'\');},150)">'+
-            '<td><b style="color:#1a3dcb">'+(i+1)+'</b></td>'+
+            '<td class="col-num"><b style="color:#1a3dcb">'+(i+1)+'</b></td>'+
             '<td><b>'+r.hospital+'</b> <span style="color:#94a3b8;font-size:11px">· 일만사 '+(r.ilmansa_pt||0)+'명</span></td>'+
-            '<td><span style="font-size:11px;color:'+cl+';font-weight:700">'+r.grade_action+'</span></td>'+
-            '<td style="text-align:right;font-weight:800;color:#142577">'+ev+'원/분</td>'+
+            '<td class="col-grade"><span style="font-size:11.5px;color:'+cl+';font-weight:700">'+r.grade_action+'</span></td>'+
+            '<td class="col-ev" style="text-align:right;font-weight:800;color:#142577">'+ev+'원/분</td>'+
             '</tr>';
   });
   html += '</table>';
@@ -2288,7 +2387,7 @@ function renderNursePerf(){
     var c=nurseAvatarColor(i);
     var rank=i<3?('<span style="font-size:15px">'+medals[i]+'</span>')
       :('<span style="font-size:11px;color:#aab4c0;font-weight:700">'+(i+1)+'</span>');
-    return '<div class="nurse-perf-row" style="cursor:pointer;transition:background-color .12s,transform .08s" onmouseover="this.style.background=\'#f3f6ff\';this.style.transform=\'translateX(2px)\'" onmouseout="this.style.background=\'\';this.style.transform=\'\'" onclick="openNurseModal(\''+s.name+'\',\''+s.office+'\')">'
+    return '<div class="nurse-perf-row" style="cursor:pointer;padding-right:24px" onclick="openNurseModal(\''+s.name+'\',\''+s.office+'\')">'
       +'<div class="np-rank">'+rank+'</div>'
       +'<div class="np-avatar" style="background:'+c+'">👩‍⚕️</div>'
       +'<div class="np-info"><div class="np-name">'+s.name+'</div>'
@@ -2297,6 +2396,101 @@ function renderNursePerf(){
       +'<div class="np-rate">'+s.rate.toFixed(0)+'%</div>'
       +'</div>';
   }).join('');
+}
+
+// ============================================================
+//  간호사 탭 (v48~)
+// ============================================================
+function renderNurseTab(){
+  var grid = document.getElementById('nurseGrid');
+  if(!grid) return;
+  var search = (document.getElementById('nurseSearch')||{}).value||'';
+  var sortKey = (document.getElementById('nurseSort')||{}).value||'rate_desc';
+  var stats = Object.keys(NURSE_MAP).map(function(office){
+    var rows = DATA.filter(function(d){return d.office===office;});
+    var total = rows.length;
+    var actIlm = rows.reduce(function(a,r){return a+(r.is_active_ilm||0);},0);
+    var actNon = rows.reduce(function(a,r){return a+(r.is_active_non_ilm||0);},0);
+    var totalAct = actIlm + actNon;
+    var ilmCnt = rows.filter(function(r){return (r.ilmansa_pt||0)>0;}).length;
+    var totalIlm = rows.reduce(function(a,r){return a+(r.ilmansa_pt||0);},0);
+    var totalFee = rows.reduce(function(a,r){return a+(r.fee_apr||0);},0);
+    var noClaim = rows.filter(function(r){return r.claim_status==='미청구';}).length;
+    var urgent = rows.filter(function(r){return r.target_tier==='🔴 긴급방문';}).length;
+    return {
+      office:office, name:NURSE_MAP[office], total:total,
+      active:totalAct, actIlm:actIlm, actNon:actNon,
+      ilmCnt:ilmCnt, totalIlm:totalIlm, totalFee:totalFee,
+      noClaim:noClaim, urgent:urgent,
+      rate: total>0 ? (totalAct/total*100) : 0
+    };
+  });
+  // 검색
+  var q = search.trim().toLowerCase();
+  if(q){ stats = stats.filter(function(s){
+    return s.name.toLowerCase().indexOf(q)>=0 || s.office.toLowerCase().indexOf(q)>=0;
+  });}
+  // 정렬
+  stats.sort(function(a,b){
+    switch(sortKey){
+      case 'rate_desc': return b.rate - a.rate;
+      case 'rate_asc':  return a.rate - b.rate;
+      case 'active_desc': return b.active - a.active;
+      case 'fee_desc': return b.totalFee - a.totalFee;
+      case 'ilm_desc': return b.totalIlm - a.totalIlm;
+      case 'noclaim_desc': return b.noClaim - a.noClaim;
+      case 'name_asc': return a.name.localeCompare(b.name,'ko');
+      default: return 0;
+    }
+  });
+  // 활성률 순위 (전체 기준 — 검색 무관)
+  var allStats = Object.keys(NURSE_MAP).map(function(office){
+    var rows = DATA.filter(function(d){return d.office===office;});
+    var total = rows.length;
+    var actT = rows.reduce(function(a,r){return a+(r.is_active_ilm||0)+(r.is_active_non_ilm||0);},0);
+    return {office:office, rate: total>0 ? (actT/total*100) : 0};
+  }).sort(function(a,b){return b.rate-a.rate;});
+  var rankByOffice = {};
+  allStats.forEach(function(s,i){ rankByOffice[s.office] = i+1; });
+  // 정보 표시
+  var info = document.getElementById('nurseCountInfo');
+  if(info) info.textContent = '간호사 ' + stats.length + '명' + (q ? ' (검색 결과)' : '');
+  // 카드 렌더
+  var medals = ['🥇','🥈','🥉'];
+  grid.innerHTML = stats.map(function(s, idx){
+    var c = nurseAvatarColor(rankByOffice[s.office]-1);
+    var rate = s.rate;
+    var rk = rankByOffice[s.office];
+    var rankBadge = rk<=3 ? medals[rk-1] : '<span style="font-size:13px;color:#94a3b8;font-weight:700">'+rk+'위</span>';
+    var rateColor = rate>=50 ? '#22c55e' : rate>=30 ? '#f59e0b' : '#dc2626';
+    return '<div class="nurse-card" onclick="openNurseModal(\''+s.name+'\',\''+s.office+'\')">'+
+      '<div class="nc-rank">'+rankBadge+'</div>'+
+      '<div class="nc-head">'+
+        '<div class="nc-avatar" style="background:'+c+';color:#fff">👩‍⚕️</div>'+
+        '<div>'+
+          '<div class="nc-name">'+s.name+'</div>'+
+          '<div class="nc-sub">'+s.office+' · 담당 '+s.total+'곳</div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="nc-rate-row">'+
+        '<span class="nc-rate-label">활성률</span>'+
+        '<span class="nc-rate" style="color:'+rateColor+'">'+rate.toFixed(1)+'%</span>'+
+      '</div>'+
+      '<div class="nc-bar"><div style="width:'+Math.min(rate,100)+'%;background:'+rateColor+'"></div></div>'+
+      '<div class="nc-kpis">'+
+        '<div class="nc-kpi"><div class="l">활성처</div><div class="v">'+s.active+'</div></div>'+
+        '<div class="nc-kpi"><div class="l">일만사</div><div class="v">'+(s.totalIlm>=1000?Math.round(s.totalIlm/1000)+'k':s.totalIlm)+'</div></div>'+
+        '<div class="nc-kpi"><div class="l">4월수가</div><div class="v">'+fmtKRW(s.totalFee)+'</div></div>'+
+      '</div>'+
+      '<div class="nc-alerts">'+
+        '<div class="nc-alert '+(s.noClaim/s.total>0.5?'':'warn')+'">🚨 미청구 '+s.noClaim+'</div>'+
+        '<div class="nc-alert">⚡ 긴급 '+s.urgent+'</div>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+  if(stats.length===0){
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#94a3b8;padding:40px">검색 결과가 없습니다.</div>';
+  }
 }
 
 function fullPopup(r, num){
