@@ -15,7 +15,7 @@
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" crossorigin="anonymous"></script>
 <style>
 :root{
-  --primary:#1a6faf;--primary-dark:#0d4f8a;--primary-light:#e8f2fa;
+  --primary:#1976d2;--primary-dark:#2196f3;--primary-light:#eef2ff;
   --secondary:#2ecc87;--accent:#f5a623;--danger:#e85858;
   --bg:#f0f4f8;--card:#ffffff;--text:#1a2535;--muted:#6b7a8d;
   --border:#dce3ec;--shadow:0 2px 12px rgba(26,111,175,.08);
@@ -23,7 +23,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{overflow-x:hidden}
 body{font-family:'Pretendard','Noto Sans KR',Apple SD Gothic Neo,sans-serif;background:var(--bg);color:var(--text);font-size:15.5px;overflow-x:hidden;max-width:100vw}
-.header{background:linear-gradient(135deg,#0d4f8a 0%,#1a6faf 60%,#2389d4 100%);color:#fff;padding:18px 28px;display:flex;align-items:center;gap:16px;box-shadow:0 2px 16px rgba(13,79,138,.25)}
+.header{background:linear-gradient(135deg,#1976d2 0%,#2196f3 55%,#42a5f5 100%);color:#fff;padding:18px 28px;display:flex;align-items:center;gap:16px;box-shadow:0 4px 20px rgba(25,118,210,.20)}
 .header h1{font-size:20px;font-weight:700;letter-spacing:-0.5px}
 .header .subtitle{font-size:12px;color:rgba(255,255,255,.8);margin-top:2px}
 .header-right{margin-left:auto;display:flex;gap:8px;align-items:center}
@@ -42,7 +42,7 @@ body{font-family:'Pretendard','Noto Sans KR',Apple SD Gothic Neo,sans-serif;back
 .tab-content.active{display:block}
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:22px}
 .kpi-card{background:var(--card);border-radius:14px;padding:18px 22px;box-shadow:var(--shadow);border:1px solid var(--border);position:relative;overflow:hidden}
-.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--clr,#1a6faf)}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--clr,#475569)}
 .kpi-card .label{font-size:13px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
 .kpi-card .value{font-size:28px;font-weight:800;color:var(--clr,#1a2535);line-height:1;letter-spacing:-.5px}
 .kpi-card .sub{font-size:11px;color:var(--muted);margin-top:6px}
@@ -129,16 +129,16 @@ tr:hover td{background:var(--primary-light)}
 .tier-yellow{background:#fdf3e0;color:#b06f00}
 .tier-white{background:#f1f3f6;color:#6b7a8d}
 .tier-green{background:#e4f7ee;color:#1b8a5a}
-.tier-blue{background:#e8f2fa;color:#1a6faf}
+.tier-blue{background:#e8f2fa;color:#475569}
 .prog-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
-.prog-blue{background:#e8f2fa;color:#1a6faf}
+.prog-blue{background:#e8f2fa;color:#475569}
 .prog-yellow{background:#fdf3e0;color:#b06f00}
 .prog-green{background:#e4f7ee;color:#1b8a5a}
 .prog-gray{background:#f1f3f6;color:#6b7a8d}
 .claim-yes{color:#1b8a5a;font-weight:600}
 .claim-no{color:var(--danger);font-weight:600}
-.route-controls{background:var(--card);border-radius:14px;padding:20px;box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;align-items:end}
-.ctrl-group label{font-size:13.5px;font-weight:600;color:var(--muted);margin-bottom:6px;display:block}
+.route-controls{background:var(--card);border-radius:14px;padding:20px;box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px 16px;align-items:end}
+.ctrl-group label{font-size:13.5px;font-weight:600;color:var(--muted);margin-bottom:6px;display:block;word-break:keep-all;overflow-wrap:break-word;line-height:1.35;letter-spacing:-0.2px}
 .ctrl-group select,.ctrl-group input[type=range],.ctrl-group input[type=number]{width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14.5px;background:#fff;outline:none}
 .ctrl-group select:focus,.ctrl-group input[type=number]:focus{border-color:var(--primary)}
 .ctrl-group .range-val{font-weight:700;color:var(--primary)}
@@ -147,8 +147,9 @@ tr:hover td{background:var(--primary-light)}
 .btn-primary:hover{background:var(--primary-dark)}
 .btn-maps{background:var(--primary);color:#fff;display:flex;align-items:center;gap:6px;font-size:13px}
 .btn-maps:hover{background:var(--primary-dark)}
-.btn-nav{background:var(--secondary);color:#fff;padding:5px 10px;border-radius:6px;border:none;cursor:pointer;font-size:12px;font-weight:600}
-.btn-nav:hover{background:#25a86d}
+.btn-nav{background:#FEE500;color:#3c1e1e;padding:5px 9px;border-radius:6px;border:none;cursor:pointer;font-size:14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:3px;line-height:1;box-shadow:0 1px 3px rgba(254,229,0,.4);transition:transform .12s,box-shadow .15s}
+.btn-nav:hover{background:#FFE100;transform:translateY(-1px);box-shadow:0 3px 8px rgba(254,229,0,.5)}
+.btn-nav svg{width:14px;height:14px;display:block}
 #tab-mapview{padding:0}
 .map-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 20px;background:#fff;border-bottom:1px solid var(--border);position:relative;z-index:900}
 .map-controls label{font-size:12px;font-weight:600;color:#444;margin-right:4px}
@@ -161,17 +162,17 @@ tr:hover td{background:var(--primary-light)}
 .leg-item{display:flex;align-items:center;gap:4px;font-size:11px;color:#555}
 .leg-dot{width:10px;height:10px;border-radius:50%;display:inline-block;flex-shrink:0}
 #mapContainer{height:calc(100vh - 200px);width:100%;min-height:500px}
-.map-stat-bar{background:linear-gradient(135deg,#0d4f8a,#1a6faf);color:#fff;font-size:12px;padding:8px 20px;display:flex;gap:20px;align-items:center}
+.map-stat-bar{background:linear-gradient(135deg,#1976d2,#2196f3);color:#fff;font-size:12px;padding:8px 20px;display:flex;gap:20px;align-items:center}
 .map-stat-bar span b{color:#9be8c8}
 .route-list{display:flex;flex-direction:column;gap:10px}
 /* v52: 전략동선 카드 재디자인 */
 .route-item{background:#fff;border-radius:16px;padding:18px 20px;
   box-shadow:0 1px 2px rgba(15,23,42,.04),0 4px 14px rgba(15,23,42,.06);
-  border:1px solid #f1f5f9;border-left:5px solid var(--bclr,#1a6faf);
+  border:1px solid #f1f5f9;border-left:5px solid var(--bclr,#475569);
   display:flex;align-items:flex-start;gap:16px;transition:all .2s cubic-bezier(.34,1.56,.64,1);
   font-variant-numeric:tabular-nums;margin-bottom:10px}
 .route-item:hover{transform:translateY(-3px);box-shadow:0 2px 4px rgba(15,23,42,.06),0 12px 28px rgba(15,23,42,.08);border-left-width:6px}
-.route-item .rnum{font-size:32px;font-weight:900;color:var(--bclr,#1a6faf);min-width:42px;text-align:center;line-height:1;letter-spacing:-1px;font-feature-settings:'tnum';padding-top:2px}
+.route-item .rnum{font-size:32px;font-weight:900;color:var(--bclr,#475569);min-width:42px;text-align:center;line-height:1;letter-spacing:-1px;font-feature-settings:'tnum';padding-top:2px}
 .route-item .rinfo h4{font-size:19px;font-weight:800;margin:0 0 6px;color:#0f172a;letter-spacing:-0.4px}
 .route-item .rinfo .rmeta{font-size:13.5px;color:#64748b;margin-bottom:6px;line-height:1.55;font-weight:500}
 .route-item .rinfo .rmeta b{color:#0f172a;font-weight:700}
@@ -221,7 +222,7 @@ tr:hover td{background:var(--primary-light)}
 .col-check-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .col-badge{padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600}
 .col-badge.ok{background:#d1fae5;color:#065f46}
-.col-badge.miss{background:#fee2e2;color:#991b1b}
+.col-badge.miss{background:#fee2e2;color:#ef4444}
 .admin-btn-row{display:flex;gap:10px;flex-wrap:wrap}
 .btn-apply{background:var(--secondary);color:#fff;padding:12px 28px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:700;display:none}
 .btn-apply:hover{background:#25a86d}
@@ -254,47 +255,47 @@ tr:hover td{background:var(--primary-light)}
 .search-results .sr-item:hover{background:#e8f2fa}
 .search-results .sr-item .sr-sub{color:#6b7a8d;font-size:11px;margin-top:1px}
 .ctrl-group input[type=text]{width:100%;padding:8px 12px;border:1.5px solid #dce3ec;border-radius:8px;font-size:13px;background:#fff;outline:none}
-.ctrl-group input[type=text]:focus{border-color:#1a6faf}
-#loginGate{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#5e74cc 0%,#7a8fda 50%,#8195da 100%);display:flex;align-items:center;justify-content:center;padding:24px}
+.ctrl-group input[type=text]:focus{border-color:#475569}
+#loginGate{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#1976d2 0%,#42a5f5 50%,#90caf9 100%);display:flex;align-items:center;justify-content:center;padding:24px}
 .login-box{background:#fff;border-radius:22px;box-shadow:0 30px 90px rgba(20,37,119,.42),0 0 0 1px rgba(255,255,255,.5);width:380px;max-width:100%;overflow:hidden}
 .login-hero{display:block;width:100%;height:auto;background:#7a8fda}
 .login-body{padding:26px 34px 30px;text-align:center}
-.login-body h2{font-size:18px;font-weight:800;color:#142577;line-height:1.34;margin:0 0 4px;letter-spacing:-0.4px}
+.login-body h2{font-size:18px;font-weight:800;color:#3730a3;line-height:1.34;margin:0 0 4px;letter-spacing:-0.4px}
 .login-body .login-by{font-size:11px;color:#7a8fb5;font-weight:700;margin-bottom:14px;letter-spacing:0.3px}
 .login-body .login-desc{font-size:13px;color:#6b7a8d;margin-bottom:18px}
 .login-body input{width:100%;padding:12px 14px;border:1.5px solid #e1e6f0;border-radius:10px;font-size:14px;margin-bottom:10px;outline:none;transition:border-color .15s,box-shadow .15s}
-.login-body input:focus{border-color:#1a3dcb;box-shadow:0 0 0 3px rgba(26,61,203,.13)}
+.login-body input:focus{border-color:#1976d2;box-shadow:0 0 0 3px rgba(26,61,203,.13)}
 .login-err{color:#e85858;font-size:12px;font-weight:600;min-height:15px;margin-bottom:6px}
-.login-body .login-btn{width:100%;padding:13px;background:linear-gradient(135deg,#1a3dcb 0%,#2747b9 100%);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:0.3px;transition:transform .08s,box-shadow .15s;box-shadow:0 6px 18px rgba(26,61,203,.32)}
+.login-body .login-btn{width:100%;padding:13px;background:linear-gradient(135deg,#1976d2 0%,#2196f3 100%);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:0.3px;transition:transform .08s,box-shadow .15s;box-shadow:0 6px 18px rgba(26,61,203,.32)}
 .login-body .login-btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(26,61,203,.42)}
 .login-body .login-btn:active{transform:translateY(0)}
 .login-hint{font-size:11px;color:#aab4c0;margin-top:14px}
 /* sortable table headers */
 th.sort-th{cursor:pointer;user-select:none;white-space:nowrap;position:relative;transition:background-color .12s,color .12s}
-th.sort-th:hover{background:#eef3fb;color:#1a3dcb}
+th.sort-th:hover{background:#eef3fb;color:#1976d2}
 th.sort-th .sort-ind{display:inline-block;margin-left:3px;font-size:10px;color:#b5c2d4;letter-spacing:-1px;min-width:8px}
-th.sort-th.sort-active{background:#e8efff;color:#1a3dcb}
-th.sort-th.sort-active .sort-ind{color:#1a3dcb;font-weight:900}
+th.sort-th.sort-active{background:#e8efff;color:#1976d2}
+th.sort-th.sort-active .sort-ind{color:#1976d2;font-weight:900}
 /* info modal */
-.info-btn{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:#1a3dcb;color:#fff;font-size:11px;font-weight:700;cursor:pointer;border:none;margin-left:6px;vertical-align:middle;transition:transform .1s,background .15s}
-.info-btn:hover{background:#142577;transform:scale(1.1)}
+.info-btn{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:#1976d2;color:#fff;font-size:11px;font-weight:700;cursor:pointer;border:none;margin-left:6px;vertical-align:middle;transition:transform .1s,background .15s}
+.info-btn:hover{background:#3730a3;transform:scale(1.1)}
 .info-btn-sm{width:15px;height:15px;font-size:10px;margin-left:4px}
 .info-modal{display:none;position:fixed;inset:0;background:rgba(20,37,119,.55);z-index:99998;align-items:center;justify-content:center;padding:24px;animation:fadeIn .15s ease}
 .info-modal.show{display:flex}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .info-modal-box{background:#fff;border-radius:14px;max-width:680px;width:100%;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(20,37,119,.4);overflow:hidden;animation:slideUp .2s ease}
 @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-.info-modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;background:linear-gradient(135deg,#1a3dcb,#2747b9);color:#fff}
+.info-modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;background:linear-gradient(135deg,#1976d2,#2196f3);color:#fff}
 .info-modal-head h3{margin:0;font-size:17px;font-weight:800;letter-spacing:-0.3px}
 .info-modal-close{background:rgba(255,255,255,.18);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:14px;transition:background .15s}
 .info-modal-close:hover{background:rgba(255,255,255,.32)}
 .info-modal-body{padding:22px 26px;overflow-y:auto;font-size:14.5px;color:#333;line-height:1.65}
-.info-modal-body h4{font-size:16px;color:#1a3dcb;margin:20px 0 10px;font-weight:800;border-left:3px solid #1a3dcb;padding-left:8px;letter-spacing:-0.2px}
+.info-modal-body h4{font-size:16px;color:#1976d2;margin:20px 0 10px;font-weight:800;border-left:3px solid #1976d2;padding-left:8px;letter-spacing:-0.2px}
 .info-modal-body h4:first-child{margin-top:0}
 .info-modal-body table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
 .info-modal-body th,.info-modal-body td{border:1px solid #e1e6f0;padding:7px 10px;text-align:left}
-.info-modal-body th{background:#f3f6ff;color:#142577;font-weight:700}
-.info-modal-body td b{color:#1a3dcb}
+.info-modal-body th{background:#f3f6ff;color:#3730a3;font-weight:700}
+.info-modal-body td b{color:#1976d2}
 /* v49: 한글 + 이모지 + 짧은 라벨이 좁은 셀에서 깨지지 않도록 글로벌 방어 */
 .info-modal-body table{table-layout:auto}
 .info-modal-body td{word-break:keep-all}  /* 한글은 띄어쓰기 단위로만 줄바꿈 */
@@ -312,13 +313,13 @@ th.sort-th.sort-active .sort-ind{color:#1a3dcb;font-weight:900}
 .info-modal-body tr[onclick]{transition:all .12s;position:relative}
 .info-modal-body tr[onclick] td:last-child{padding-right:24px;position:relative}
 .info-modal-body tr[onclick] td:last-child::after{content:'›';position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:18px;color:#cbd5e8;font-weight:300;transition:all .12s}
-.info-modal-body tr[onclick]:hover{background:#f3f6ff;box-shadow:inset 3px 0 0 #1a3dcb}
-.info-modal-body tr[onclick]:hover td:last-child::after{color:#1a3dcb;font-weight:600;right:3px}
+.info-modal-body tr[onclick]:hover{background:#f3f6ff;box-shadow:inset 3px 0 0 #1976d2}
+.info-modal-body tr[onclick]:hover td:last-child::after{color:#1976d2;font-weight:600;right:3px}
 .info-modal-body tr[onclick] td{padding:8px 10px;border-bottom:1px solid #f1f5f9}
 .info-modal-body tr[onclick]:last-child td{border-bottom:none}
-.info-modal-body .grp{background:#f8faff;border-left:4px solid #1a3dcb;padding:10px 14px;margin:8px 0;border-radius:0 8px 8px 0}
-.info-modal-body .grp b{color:#142577}
-.info-modal-body code{background:#f0f3ff;color:#1a3dcb;padding:1px 6px;border-radius:4px;font-size:12px}
+.info-modal-body .grp{background:#f8faff;border-left:4px solid #1976d2;padding:10px 14px;margin:8px 0;border-radius:0 8px 8px 0}
+.info-modal-body .grp b{color:#3730a3}
+.info-modal-body code{background:#f0f3ff;color:#1976d2;padding:1px 6px;border-radius:4px;font-size:12px}
 .info-modal-body ul{margin:6px 0 10px;padding-left:22px}
 .info-modal-body li{margin-bottom:4px}
 /* clickable grade chips + post-it */
@@ -339,7 +340,7 @@ th.sort-th.sort-active .sort-ind{color:#1a3dcb;font-weight:900}
 .intent-card{display:flex;flex-direction:column;align-items:flex-start;padding:13px 14px;border-radius:11px;border:2px solid #e1e6f0;background:#fff;cursor:pointer;transition:all .15s;text-align:left;font-family:inherit;position:relative;overflow:hidden}
 .intent-card:hover{border-color:#c8d1e0;transform:translateY(-2px);box-shadow:0 8px 18px rgba(20,37,119,.08)}
 .intent-card .ic-icon{font-size:22px;margin-bottom:3px;line-height:1}
-.intent-card .ic-title{font-size:14px;font-weight:800;color:#142577;margin-bottom:2px;letter-spacing:-0.3px}
+.intent-card .ic-title{font-size:14px;font-weight:800;color:#3730a3;margin-bottom:2px;letter-spacing:-0.3px}
 .intent-card .ic-desc{font-size:11px;color:#5b6b7d;line-height:1.4}
 .intent-card .ic-meta{font-size:10px;color:#8a9aaf;font-style:italic;font-weight:500}
 .intent-card[data-lens='all'].selected{border-color:#8b5cf6;background:#faf7ff;box-shadow:0 6px 18px rgba(139,92,246,.18)}
@@ -347,7 +348,14 @@ th.sort-th.sort-active .sort-ind{color:#1a3dcb;font-weight:900}
 .intent-card[data-lens='restart'].selected{border-color:#a855f7;background:#faf5ff;box-shadow:0 6px 18px rgba(168,85,247,.18)}
 .intent-card[data-lens='activate'].selected{border-color:#f97316;background:#fff7ed;box-shadow:0 6px 18px rgba(249,115,22,.18)}
 .intent-card[data-lens='educate'].selected{border-color:#22c55e;background:#f0fdf4;box-shadow:0 6px 18px rgba(34,197,94,.18)}
-.intent-card[data-lens='acquire'].selected{border-color:#1a3dcb;background:#eff2ff;box-shadow:0 6px 18px rgba(26,61,203,.18)}
+.intent-card[data-lens='acquire'].selected{border-color:#1976d2;background:#eff2ff;box-shadow:0 6px 18px rgba(26,61,203,.18)}
+.intent-card.mix{position:relative;background:linear-gradient(180deg,#fafbff 0%,#fff 100%)}
+.intent-card.mix::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:11px 11px 0 0;background:linear-gradient(90deg,#0d9488,#7c3aed,#0891b2)}
+.intent-card[data-lens='mix_recover_acquire'].selected{border-color:#0d9488;background:#f0fdfa;box-shadow:0 6px 18px rgba(13,148,136,.20)}
+.intent-card[data-lens='mix_defend_grow'].selected{border-color:#0891b2;background:#ecfeff;box-shadow:0 6px 18px rgba(8,145,178,.20)}
+.intent-card[data-lens='mix_roi'].selected{border-color:#7c3aed;background:#faf5ff;box-shadow:0 6px 18px rgba(124,58,237,.20)}
+@media (max-width:768px){#lensCards{grid-template-columns:repeat(2,1fr) !important}}
+@media (max-width:430px){#lensCards{grid-template-columns:repeat(2,1fr) !important;gap:8px !important}}
 .intent-card.selected::before{content:'✓';position:absolute;top:7px;right:9px;width:18px;height:18px;background:rgba(0,0,0,.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}
 @media (max-width:768px){#lensCards{grid-template-columns:repeat(2,1fr) !important}}
 /* 인쇄용 스타일 */
@@ -369,14 +377,14 @@ th.sort-th.sort-active .sort-ind{color:#1a3dcb;font-weight:900}
   /* 인쇄 헤더 보이기 */
   #printHeader, .print-only{display:block !important}
   /* 전략동선 카드 — 인쇄용 압축 레이아웃 */
-  .route-item{break-inside:avoid;page-break-inside:avoid;padding:8px 12px !important;margin-bottom:6px !important;box-shadow:none !important;border:1px solid #ccc !important;border-left:4px solid var(--bclr,#1a6faf) !important}
+  .route-item{break-inside:avoid;page-break-inside:avoid;padding:8px 12px !important;margin-bottom:6px !important;box-shadow:none !important;border:1px solid #ccc !important;border-left:4px solid var(--bclr,#475569) !important}
   .route-item .rnum{font-size:16pt !important;min-width:22px !important}
   .route-item .rinfo h4{font-size:12pt !important;margin-bottom:2px !important}
   .route-item .rinfo .rmeta{font-size:9pt !important;margin-bottom:2px !important;color:#333 !important}
   .route-item .rinfo .rtags{margin-top:3px !important}
   .route-item .tag, .route-item .tier-badge, .route-item .prog-badge{font-size:8pt !important;padding:1px 6px !important}
   .route-item .btn-nav, .route-item button{display:none !important}
-  .route-item div[style*="background:#eef2ff"]{font-size:9pt !important;padding:2px 6px !important;background:#f3f6ff !important;color:#1a3dcb !important;border:1px solid #cbd5e8}
+  .route-item div[style*="background:#eef2ff"]{font-size:9pt !important;padding:2px 6px !important;background:#f3f6ff !important;color:#1976d2 !important;border:1px solid #cbd5e8}
   .route-item div[style*="background:#f8f9fa"]{font-size:9pt !important;padding:3px 7px !important}
 }
 #officeKpis{grid-template-columns:repeat(7,1fr);gap:12px}
@@ -389,13 +397,13 @@ th.sort-th.sort-active .sort-ind{color:#1a3dcb;font-weight:900}
 .nurse-perf-row{display:flex;align-items:center;gap:9px;padding:6px 12px 6px 10px;border-radius:10px;border:1px solid transparent;transition:all .14s;position:relative}
 .nurse-perf-row:hover{background:#f3f6ff;border-color:#dbe1f0;transform:translateX(3px);box-shadow:0 4px 12px rgba(26,61,203,.08)}
 .nurse-perf-row::after{content:'›';position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:20px;color:#cbd5e8;font-weight:300;transition:all .14s}
-.nurse-perf-row:hover::after{color:#1a3dcb;right:5px;font-weight:600}
+.nurse-perf-row:hover::after{color:#1976d2;right:5px;font-weight:600}
 /* 간호사 탭 카드 (v48~) */
 .nurse-card{background:#fff;border:1.5px solid #e1e6f0;border-radius:14px;padding:16px 18px 14px;cursor:pointer;transition:all .14s;position:relative;overflow:hidden}
-.nurse-card:hover{transform:translateY(-3px);border-color:#1a3dcb;box-shadow:0 12px 28px rgba(26,61,203,.13)}
+.nurse-card:hover{transform:translateY(-3px);border-color:#1976d2;box-shadow:0 12px 28px rgba(26,61,203,.13)}
 .nurse-card .nc-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .nurse-card .nc-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex:none;box-shadow:0 3px 8px rgba(0,0,0,.1)}
-.nurse-card .nc-name{font-size:16px;font-weight:800;color:#142577;letter-spacing:-0.3px}
+.nurse-card .nc-name{font-size:16px;font-weight:800;color:#3730a3;letter-spacing:-0.3px}
 .nurse-card .nc-sub{font-size:11.5px;color:#7a8fb5;font-weight:600;margin-top:1px}
 .nurse-card .nc-rank{position:absolute;top:14px;right:14px;font-size:18px}
 .nurse-card .nc-rate-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:5px}
@@ -406,12 +414,12 @@ th.sort-th.sort-active .sort-ind{color:#1a3dcb;font-weight:900}
 .nurse-card .nc-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
 .nurse-card .nc-kpi{background:#f5f8fb;border-radius:7px;padding:6px 8px;text-align:center}
 .nurse-card .nc-kpi .l{font-size:9.5px;color:#94a3b8;font-weight:600}
-.nurse-card .nc-kpi .v{font-size:13px;font-weight:800;color:#142577;letter-spacing:-0.3px;white-space:nowrap}
+.nurse-card .nc-kpi .v{font-size:13px;font-weight:800;color:#3730a3;letter-spacing:-0.3px;white-space:nowrap}
 .nurse-card .nc-alerts{display:flex;gap:5px}
 .nurse-card .nc-alert{flex:1;background:#fef2f2;border-radius:6px;padding:5px 8px;font-size:10.5px;font-weight:700;color:#dc2626;text-align:center}
 .nurse-card .nc-alert.warn{background:#fffbeb;color:#92400e}
 .nurse-card::after{content:'›';position:absolute;top:18px;right:16px;font-size:22px;color:#cbd5e8;font-weight:300;transition:all .14s;opacity:0}
-.nurse-card:hover::after{opacity:1;color:#1a3dcb;right:14px}
+.nurse-card:hover::after{opacity:1;color:#1976d2;right:14px}
 .np-rank{width:24px;text-align:center;flex-shrink:0}
 .np-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.22)}
 .np-info{width:118px;flex-shrink:0}
@@ -682,6 +690,18 @@ body,h1,h2,h3,h4,h5,p,span,div,td,th,button,a,label,li{
   .kpi-sig .ks-value{font-size:25px}
 }
 
+
+/* v78: route-controls 라벨 깨짐 방어 */
+@media (max-width:768px){
+  .route-controls{grid-template-columns:1fr 1fr !important;gap:12px 14px !important;padding:14px !important}
+  .route-controls .ctrl-group:first-child{grid-column:1 / -1}
+  .ctrl-group label{font-size:12.5px}
+  .ctrl-group label span:nth-child(2){font-size:10.5px !important}
+}
+@media (max-width:430px){
+  .route-controls{grid-template-columns:1fr !important;gap:12px !important}
+}
+
 </style>
 </head>
 <body>
@@ -719,12 +739,13 @@ body,h1,h2,h3,h4,h5,p,span,div,td,th,button,a,label,li{
     <img src="data:image/png;base64,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" alt="Wellcheck" style="height:30px;width:auto;background:#fff;padding:5px 9px;border-radius:7px;box-shadow:0 2px 6px rgba(0,0,0,.18)">
     <div>
       <div style="font-size:22px;font-weight:800;letter-spacing:-0.6px">일만사 × 웰체크 전략지도 대시보드</div>
-      <div style="font-size:13.5px;color:#a8c0e0;margin-top:3px">사업부 · 사무소 현황 · CM 교육간호사 · 전략 동선  <span style="margin-left:6px;padding:3px 10px;background:rgba(255,255,255,.18);border-radius:5px;font-size:12px;font-weight:700" title="환자수는 2026.05.28 영업데이터 / 4월 수가·청구상태는 그대로 유지">📅 데이터 기준: 2026.05.28 (수가·청구는 4월)</span></div>
+      <div style="font-size:13.5px;color:#e0e7ff;margin-top:3px">사업부 · 사무소 현황 · CM 교육간호사 · 전략 동선  <span style="margin-left:6px;padding:3px 10px;background:rgba(255,255,255,.18);border-radius:5px;font-size:12px;font-weight:700" title="환자수는 2026.05.28 영업데이터 / 4월 수가·청구상태는 그대로 유지">📅 데이터 기준: 2026.05.28 (수가·청구는 4월)</span></div>
     </div>
   </div>
   <div class="header-right">
     <span class="total-badge" id="totalBadge">전체 0개 기관</span>
     <span id="dataSourceBadge" class="total-badge embedded">📦 내장 데이터</span>
+    <a href="https://admin.well-check.co.kr/login" target="_blank" rel="noopener noreferrer" title="웰체크 Admin 페이지 — 모든 의원 일만사 현황 조회" style="text-decoration:none;display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,#0d9488 0%,#0f766e 100%);color:#fff;padding:7px 13px;border-radius:8px;font-size:12.5px;font-weight:800;letter-spacing:-0.2px;transition:transform .15s ease,box-shadow .2s ease;box-shadow:0 2px 8px rgba(15,118,110,.32),inset 0 -1px 0 rgba(0,0,0,.12);white-space:nowrap" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 14px rgba(15,118,110,.45),inset 0 -1px 0 rgba(0,0,0,.12)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 2px 8px rgba(15,118,110,.32),inset 0 -1px 0 rgba(0,0,0,.12)'">🌐 웰체크 Admin ↗</a>
     <button onclick="logout()" title="로그아웃" style="background:rgba(255,255,255,.18);color:#fff;border:none;padding:6px 11px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,.32)'" onmouseout="this.style.background='rgba(255,255,255,.18)'">🚪 로그아웃</button>
   </div>
 </div>
@@ -841,7 +862,7 @@ body,h1,h2,h3,h4,h5,p,span,div,td,th,button,a,label,li{
 <div class="tab-content" id="tab-nurse">
   <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
     <span>👩‍⚕️ CM 교육간호사 대시보드 <span style="font-size:12px;font-weight:500;color:#94a3b8">담당 사무소별 종합 성과</span></span>
-    <span style="font-size:11.5px;color:#1a3dcb;font-weight:600;background:#eef2ff;padding:3px 10px;border-radius:6px">💡 카드 클릭 → 상세 모달</span>
+    <span style="font-size:11.5px;color:#1976d2;font-weight:600;background:#eef2ff;padding:3px 10px;border-radius:6px">💡 카드 클릭 → 상세 모달</span>
   </div>
   <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
     <input type="text" id="nurseSearch" placeholder="🔍 이름·사무소 검색" oninput="renderNurseTab()" style="padding:8px 12px;border:1.5px solid #d0d7e3;border-radius:8px;font-size:13px;width:200px;outline:none">
@@ -861,43 +882,34 @@ body,h1,h2,h3,h4,h5,p,span,div,td,th,button,a,label,li{
 
 <!-- ===== TAB 3: 전략동선 ===== -->
 <div class="tab-content" id="tab-route">
-  <div class="section-title" style="margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span>🎯 오늘의 타겟 의원 리스트</span> <button class="info-btn" onclick="openInfoModal('route')" title="전략동선 설계 철학">?</button> <span style="font-size:12px;font-weight:500;color:#7a8fb5">— 거리 기반 동선 순서 포함</span><div style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap" class="no-print"><button onclick="shareWebAPI()" title="모바일 시스템 공유 (카톡·메시지 등)" style="background:#5b6b7d;color:#fff;border:none;padding:7px 12px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s" onmouseover="this.style.background='#3a4659'" onmouseout="this.style.background='#5b6b7d'">📤 공유</button><button onclick="shareImage()" title="동선을 이미지로 저장 (PNG)" style="background:#18a86a;color:#fff;border:none;padding:7px 12px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s" onmouseover="this.style.background='#0f7a4d'" onmouseout="this.style.background='#18a86a'">🖼 이미지</button><button onclick="shareKakao()" title="카카오톡 공유 (SDK)" style="background:#fee500;color:#3c1e1e;border:none;padding:7px 12px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s" onmouseover="this.style.background='#ffd83d'" onmouseout="this.style.background='#fee500'">💬 카톡</button><button onclick="printRoute()" id="btnPrintRoute" style="background:#1a3dcb;color:#fff;border:none;padding:7px 12px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s" onmouseover="this.style.background='#142577'" onmouseout="this.style.background='#1a3dcb'">🖨 인쇄</button></div></div>
-  <div id="lensCards" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:14px">
-    <button class="intent-card selected" data-lens="all" onclick="selectLens('all')">
+  <div class="section-title" style="margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span>🎯 오늘의 타겟 의원 리스트</span> <button class="info-btn" onclick="openInfoModal('route')" title="전략동선 설계 철학">?</button> <span style="font-size:12px;font-weight:500;color:#7a8fb5">— 거리 기반 동선 순서 포함</span><div style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap" class="no-print"><button onclick="shareWebAPI()" title="모바일 시스템 공유 (카톡·메시지 등)" style="background:#5b6b7d;color:#fff;border:none;padding:7px 12px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s" onmouseover="this.style.background='#3a4659'" onmouseout="this.style.background='#5b6b7d'">📤 공유</button><button onclick="shareImage()" title="동선을 이미지로 저장 (PNG)" style="background:#18a86a;color:#fff;border:none;padding:7px 12px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s" onmouseover="this.style.background='#0f7a4d'" onmouseout="this.style.background='#18a86a'">🖼 이미지</button><button onclick="shareKakao()" title="카카오톡 공유 (SDK)" style="background:#fee500;color:#3c1e1e;border:none;padding:7px 12px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s" onmouseover="this.style.background='#ffd83d'" onmouseout="this.style.background='#fee500'">💬 카톡</button><button onclick="printRoute()" id="btnPrintRoute" style="background:#1976d2;color:#fff;border:none;padding:7px 12px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s" onmouseover="this.style.background='#3730a3'" onmouseout="this.style.background='#1976d2'">🖨 인쇄</button></div></div>
+  <!-- v83: 4개 lens 단순화 -->
+  <div id="lensCards" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px" data-cols="4">
+    <button class="intent-card selected" data-lens="all" onclick="selectLens('all')" title="AI 추천 — 의도 구분 없이 EV 점수 최상위 자동 선택">
       <div class="ic-icon">✨</div>
       <div class="ic-title">AI 추천</div>
-      <div class="ic-desc">EV 점수 최상위<br><span class="ic-meta">전 의원 자동 정렬</span></div>
+      <div class="ic-desc">자동 — EV 점수 최상위<br><span class="ic-meta">의도 구분 없이 가장 가치 큰 곳</span></div>
     </button>
-    <button class="intent-card" data-lens="recovery" onclick="selectLens('recovery')">
+    <button class="intent-card" data-lens="recovery" onclick="selectLens('recovery')" title="매출 회복 — 새는 매출 되찾기">
       <div class="ic-icon">🔥</div>
       <div class="ic-title">매출 회복</div>
-      <div class="ic-desc">새는 매출 되찾기<br><span class="ic-meta">긴급-청구누수 + 이탈방어</span></div>
+      <div class="ic-desc">위기 대응 — 새는 매출 되찾기<br><span class="ic-meta">긴급-청구누수 + 이탈방어</span></div>
     </button>
-    <button class="intent-card" data-lens="restart" onclick="selectLens('restart')">
-      <div class="ic-icon">🔁</div>
-      <div class="ic-title">정체 재가동</div>
-      <div class="ic-desc">멈춘 활성처 깨우기<br><span class="ic-meta">4월→5월 정체·역성장</span></div>
-    </button>
-    <button class="intent-card" data-lens="activate" onclick="selectLens('activate')">
+    <button class="intent-card" data-lens="activate" onclick="selectLens('activate')" title="활성처 강화 — 잘 되는 곳 더 잘되게">
       <div class="ic-icon">🌟</div>
       <div class="ic-title">활성처 강화</div>
-      <div class="ic-desc">잘 되는 곳 더 잘<br><span class="ic-meta">A++ / S+ / A 활성</span></div>
+      <div class="ic-desc">안정 유지 — 누수 방어·성장<br><span class="ic-meta">A++ / S+ / A 활성</span></div>
     </button>
-    <button class="intent-card" data-lens="educate" onclick="selectLens('educate')">
-      <div class="ic-icon">🌱</div>
-      <div class="ic-title">진입 교육</div>
-      <div class="ic-desc">초기·정착 교육<br><span class="ic-meta">진입 정착 + 기본 활성</span></div>
-    </button>
-    <button class="intent-card" data-lens="acquire" onclick="selectLens('acquire')">
-      <div class="ic-icon">🚀</div>
-      <div class="ic-title">신규 영입</div>
-      <div class="ic-desc">미참여 영입<br><span class="ic-meta">미참여/신규</span></div>
+    <button class="intent-card mix" data-lens="mix_recover_acquire" onclick="selectLens('mix_recover_acquire')" title="회수+영입 혼합 — 한 출장에 두 임팩트">
+      <div class="ic-icon">🔀</div>
+      <div class="ic-title">회수+영입 <span style="font-size:10px;background:#0d9488;color:#fff;padding:1px 5px;border-radius:6px;font-weight:800;letter-spacing:0">혼합</span></div>
+      <div class="ic-desc">일타양득 — 위기+영입 동시<br><span class="ic-meta">긴급·이탈 + 미기동-잠재</span></div>
     </button>
   </div>
   <div class="route-controls" id="routeControls">
     <div class="ctrl-group" style="position:relative">
-      <label>기준 의원 (검색·선택 시 그 의원 중심 동선)</label>
-      <input type="text" id="routeAnchorSearch" placeholder="🔍 의원명 입력" autocomplete="off" oninput="searchRouteAnchor()">
+      <label style="display:flex;align-items:center;gap:6px;flex-wrap:wrap"><span>기준 의원</span><span style="font-size:11px;font-weight:500;color:#94a3b8;letter-spacing:-0.2px">선택 시 그 의원 중심 동선</span></label>
+      <input type="text" id="routeAnchorSearch" placeholder="🔍 의원명 입력 (선택)" autocomplete="off" oninput="searchRouteAnchor()" title="검색·선택 시 그 의원을 출발점으로 동선이 재배치됩니다">
       <div id="routeAnchorResults" class="search-results"></div>
       <div id="routeAnchorTag" style="display:none;margin-top:6px;font-size:11px"></div>
     </div>
@@ -944,13 +956,13 @@ body,h1,h2,h3,h4,h5,p,span,div,td,th,button,a,label,li{
     </div>
   </div>
   <div id="printHeader" class="print-only" style="display:none">
-    <div style="display:flex;align-items:center;gap:16px;padding-bottom:12px;border-bottom:2px solid #1a3dcb;margin-bottom:14px">
-      <div style="font-size:20px;font-weight:800;color:#142577">🎯 오늘의 타겟 의원 리스트</div>
+    <div style="display:flex;align-items:center;gap:16px;padding-bottom:12px;border-bottom:2px solid #1976d2;margin-bottom:14px">
+      <div style="font-size:20px;font-weight:800;color:#3730a3">🎯 오늘의 타겟 의원 리스트</div>
       <div id="printMeta" style="font-size:12px;color:#5b6b7d;margin-left:auto"></div>
     </div>
   </div>
   <div class="maps-bar" id="mapsBarWrap" style="display:none">
-    <span style="font-size:14.5px;font-weight:700">🎯 오늘의 타겟 <b id="selectedN" style="color:#1a3dcb;font-size:17px">0</b>개 의원 <span id="poolInfo" style="color:#5b6b7d;font-weight:600;margin-left:4px;font-size:13.5px"></span> — 위에서부터 방문 우선순위 (1번이 출발점)</span>
+    <span style="font-size:14.5px;font-weight:700">🎯 오늘의 타겟 <b id="selectedN" style="color:#1976d2;font-size:17px">0</b>개 의원 <span id="poolInfo" style="color:#5b6b7d;font-weight:600;margin-left:4px;font-size:13.5px"></span> — 위에서부터 방문 우선순위 (1번이 출발점)</span>
   </div>
   <div id="strategyBanner" style="display:none;margin:0 0 12px;padding:12px 16px;border-radius:10px;font-size:13px;font-weight:600;background:#eff6ff;color:#1d4ed8;border-left:4px solid #3b82f6"></div>
   <div style="display:flex;flex-wrap:wrap;gap:6px 14px;background:#fff;border-radius:10px;padding:9px 14px;margin-bottom:10px;box-shadow:0 1px 5px rgba(0,0,0,.07);font-size:11px;color:#444">
@@ -966,10 +978,10 @@ body,h1,h2,h3,h4,h5,p,span,div,td,th,button,a,label,li{
     <span class="grade-chip" onclick="showGradePostit('idle',event)"><span class="grade-dot" style="background:#94a3b8"></span>미참여/신규</span>
   </div>
   <div style="display:flex;flex-wrap:wrap;gap:20px;background:linear-gradient(135deg,#1a1a2e,#0f3460);color:#fff;border-radius:10px;padding:11px 18px;margin-bottom:10px;font-size:13px">
-    <span>표시: <b id="routeMapCount" style="color:#06d6a0">0</b>개 병원</span>
-    <span>활성처: <b id="routeMapActCnt" style="color:#06d6a0">0</b>개</span>
-    <span>일만사처: <b id="routeMapIlmCnt" style="color:#06d6a0">0</b>개</span>
-    <span>일만사환자: <b id="routeMapIlmSum" style="color:#06d6a0">0</b>명</span>
+    <span>표시: <b id="routeMapCount" style="color:#22c55e">0</b>개 병원</span>
+    <span>활성처: <b id="routeMapActCnt" style="color:#22c55e">0</b>개</span>
+    <span>일만사처: <b id="routeMapIlmCnt" style="color:#22c55e">0</b>개</span>
+    <span>일만사환자: <b id="routeMapIlmSum" style="color:#22c55e">0</b>명</span>
   </div>
   <div class="route-map-wrap">
     <div id="routeMapContainer"></div>
@@ -990,7 +1002,7 @@ body,h1,h2,h3,h4,h5,p,span,div,td,th,button,a,label,li{
     <div class="map-filter-group" id="divChips">
       <label>사업부</label>
       <span class="div-chip active" data-div="" style="--clr:#0f3460" onclick="toggleDiv(this)">전체</span>
-      <span class="div-chip" data-div="서울3" style="--clr:#e63946" onclick="toggleDiv(this)">서울3</span>
+      <span class="div-chip" data-div="서울3" style="--clr:#ef4444" onclick="toggleDiv(this)">서울3</span>
       <span class="div-chip" data-div="서울4" style="--clr:#2196f3" onclick="toggleDiv(this)">서울4</span>
       <span class="div-chip" data-div="지방3" style="--clr:#ff9800" onclick="toggleDiv(this)">지방3</span>
       <span class="div-chip" data-div="지방4" style="--clr:#4caf50" onclick="toggleDiv(this)">지방4</span>
@@ -1133,7 +1145,7 @@ body,h1,h2,h3,h4,h5,p,span,div,td,th,button,a,label,li{
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
         <input type="text" id="gsheetUrl" placeholder="구글시트 게시 CSV 링크 또는 시트 주소"
           style="flex:1;min-width:280px;padding:9px 12px;border:1.5px solid #dce3ec;border-radius:8px;font-size:13px;outline:none">
-        <button onclick="saveGsheet()" style="padding:9px 18px;background:#1a6faf;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px">연동 저장</button>
+        <button onclick="saveGsheet()" style="padding:9px 18px;background:#475569;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px">연동 저장</button>
         <button onclick="clearGsheet()" style="padding:9px 16px;background:transparent;color:#6b7a8d;border:1px solid #dce3ec;border-radius:8px;cursor:pointer;font-size:13px">연동 해제</button>
       </div>
       <div id="gsheetStatus" style="margin-top:10px;font-size:12px;font-weight:600"></div>
@@ -1186,18 +1198,32 @@ let usingGsheet = false;
 let gsheetMsg = '';
 
 (function initData(){
-  // v70: 옛 캐시 모두 제거 + EMBEDDED_DATA 강제 + 재분류 건너뜀
-  // (EMBEDDED_DATA에는 이미 정확한 신 등급 분류가 들어 있음.
-  //  classifyGrade()는 옛 9등급만 만들어 미기동-잠재대형 등을 덮어쓰는 버그가 있음)
+  // v75: 마이그레이션 플래그 — 한 번만 옛 캐시 청소. 이후엔 관리자 업로드 보존
+  const MIG_KEY = '전략지도_migrated_v74';
   try {
-    localStorage.removeItem(LS_KEY);
-    localStorage.removeItem(LS_META_KEY);
-    localStorage.removeItem(LS_HIST_KEY);
-    localStorage.removeItem(LS_GSHEET_KEY);
+    if(!localStorage.getItem(MIG_KEY)){
+      localStorage.removeItem(LS_KEY);
+      localStorage.removeItem(LS_META_KEY);
+      localStorage.removeItem(LS_HIST_KEY);
+      localStorage.removeItem(LS_GSHEET_KEY);
+      localStorage.setItem(MIG_KEY, '1');
+    }
   } catch(_){}
-  DATA = EMBEDDED_DATA;
-  usingCustom = false;
-  // reclassifyGrades() 호출 제거 — EMBEDDED_DATA의 등급 그대로 사용
+  // 사용자 업로드 데이터가 있으면 그것 사용, 없으면 EMBEDDED_DATA
+  try {
+    const saved = localStorage.getItem(LS_KEY);
+    if(saved){
+      DATA = JSON.parse(saved);
+      usingCustom = true;
+    } else {
+      DATA = EMBEDDED_DATA;
+      usingCustom = false;
+    }
+  } catch(_){
+    DATA = EMBEDDED_DATA;
+    usingCustom = false;
+  }
+  // reclassifyGrades() 호출하지 않음 — 데이터의 등급 그대로 사용
 })();
 
 // ============================================================
@@ -1241,8 +1267,8 @@ function classifyGrade(r){
   }
 }
 function reclassifyGrades(){
-  if(!Array.isArray(DATA)) return;
-  DATA.forEach(function(r){ r.grade_action=classifyGrade(r); });
+  // v74: 무력화 — 데이터의 등급 그대로 보존 (옛 9등급 룰이 신 등급 덮어쓰던 버그 재발 차단)
+  console.warn('[v75] reclassifyGrades() is disabled. EMBEDDED_DATA grade_action is preserved.');
 }
 
 // ============================================================
@@ -1294,13 +1320,13 @@ function progBadge(p){
 }
 
 const DIV_COLORS = {
-  '서울3':'#4361ee','서울4':'#7209b7','지방3':'#f72585','지방4':'#fb8500'
+  '서울3':'#3b82f6','서울4':'#8b5cf6','지방3':'#ec4899','지방4':'#f59e0b'
 };
 // 5월 활성처 목표 (공식 — 매월 갱신)
 const MAY_TARGETS = {'서울3':1123, '서울4':814, '지방3':1023, '지방4':886};
 // 달성률에 따른 평가 등급 (공식 기준)
 function evalGrade(achPct){
-  if(achPct >= 100) return {grade:'S', color:'#fbbf24', bg:'#fef3c7'};
+  if(achPct >= 100) return {grade:'S', color:'#f59e0b', bg:'#fef3c7'};
   if(achPct >= 80)  return {grade:'A', color:'#22c55e', bg:'#dcfce7'};
   if(achPct >= 60)  return {grade:'B', color:'#3b82f6', bg:'#dbeafe'};
   return {grade:'C', color:'#ef4444', bg:'#fee2e2'};
@@ -1342,9 +1368,9 @@ function renderNurseTab(){
   const avgPerNurse=Math.round(stats.reduce((a,s)=>a+s.total,0)/Math.max(totNurse,1));
   var _nkEl = document.getElementById('nurseKpis');
   if(_nkEl) _nkEl.innerHTML=`
-    <div class="kpi-card" style="--clr:#4361ee"><div class="label">담당 간호사</div><div class="value">${totNurse}명</div></div>
-    <div class="kpi-card" style="--clr:#06d6a0"><div class="label">활성처 합계</div><div class="value">${totActive.toLocaleString()}개</div></div>
-    <div class="kpi-card" style="--clr:#e63946"><div class="label">긴급방문 합계</div><div class="value">${totUrgent}</div></div>
+    <div class="kpi-card" style="--clr:#475569"><div class="label">담당 간호사</div><div class="value">${totNurse}명</div></div>
+    <div class="kpi-card" style="--clr:#22c55e"><div class="label">활성처 합계</div><div class="value">${totActive.toLocaleString()}개</div></div>
+    <div class="kpi-card" style="--clr:#ef4444"><div class="label">긴급방문 합계</div><div class="value">${totUrgent}</div></div>
     <div class="kpi-card" style="--clr:#7209b7"><div class="label">평균 담당 병원</div><div class="value">${avgPerNurse}개</div></div>
     <div class="kpi-card" style="--clr:#94a3b8"><div class="label">미담당 사무소</div><div class="value">${noOffices.length}개</div></div>
   `;
@@ -1354,7 +1380,7 @@ function renderNurseTab(){
   stats.forEach(s=>{
     const actRate=s.total>0?((s.active/s.total)*100).toFixed(0):'0';
     const progHtml=Object.entries(s.progCounts).map(([k,v])=>`${progBadge(k)} <span style="font-size:11px">${v}</span>`).join(' ');
-    cards.innerHTML+=`<div style="background:#fff;border-radius:12px;padding:16px;box-shadow:0 1px 6px rgba(0,0,0,.07);border-top:3px solid #4361ee">
+    cards.innerHTML+=`<div style="background:#fff;border-radius:12px;padding:16px;box-shadow:0 1px 6px rgba(0,0,0,.07);border-top:3px solid #475569">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
         <div>
           <div style="font-size:16px;font-weight:700;color:#1e293b">👩‍⚕️ ${s.name}</div>
@@ -1362,13 +1388,13 @@ function renderNurseTab(){
         </div>
         <div style="text-align:right;font-size:12px;color:#64748b">
           <div>전체 <b style="color:#1e293b">${s.total}</b>개</div>
-          <div>활성 <b style="color:#06d6a0">${s.active}</b> (${actRate}%)</div>
+          <div>활성 <b style="color:#22c55e">${s.active}</b> (${actRate}%)</div>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
         <div style="background:#ffeaea;border-radius:8px;padding:8px;text-align:center">
           <div style="font-size:11px;color:#cc0000">🔴 긴급방문</div>
-          <div style="font-size:18px;font-weight:700;color:#e63946">${s.urgent}</div>
+          <div style="font-size:18px;font-weight:700;color:#ef4444">${s.urgent}</div>
         </div>
         <div style="background:#fef9c3;border-radius:8px;padding:8px;text-align:center">
           <div style="font-size:11px;color:#854d0e">미청구</div>
@@ -1494,8 +1520,8 @@ function shareImage(){
   var dateStr=now.getFullYear()+'.'+String(now.getMonth()+1).padStart(2,'0')+'.'+String(now.getDate()).padStart(2,'0');
   var anchor=(routeAnchor&&routeAnchor.hospital)?'<br><span style="font-size:12px;color:#5b6b7d">📌 기준: '+routeAnchor.hospital+' ('+(routeAnchor.office||'')+')</span>':'';
   var strategyTxt=LENS_META[selectedLens]?'<br><span style="font-size:12px;color:#5b6b7d">🎯 '+LENS_META[selectedLens].title+'</span>':'';
-  temp.innerHTML='<div style="padding-bottom:14px;margin-bottom:14px;border-bottom:2px solid #1a3dcb">'+
-                 '<div style="font-size:22px;font-weight:800;color:#142577">🎯 오늘의 타겟 의원 리스트</div>'+
+  temp.innerHTML='<div style="padding-bottom:14px;margin-bottom:14px;border-bottom:2px solid #1976d2">'+
+                 '<div style="font-size:22px;font-weight:800;color:#3730a3">🎯 오늘의 타겟 의원 리스트</div>'+
                  '<div style="font-size:13px;color:#5b6b7d;margin-top:4px">'+dateStr+' · 대상 '+routeRows.length+'곳</div>'+
                  anchor+strategyTxt+
                  '</div>'+
@@ -1577,7 +1603,7 @@ function switchTab(tab, el){
   document.querySelectorAll('.tab').forEach(e=>e.classList.remove('active'));
   document.getElementById('tab-'+tab).classList.add('active');
   el.classList.add('active');
-  if(tab==='mapview') setTimeout(()=>{initMap();refreshMapMarkers();},50);
+  if(tab==='mapview') setTimeout(()=>{initMap();refreshMapMarkers();if(typeof map!=='undefined'&&map&&map.invalidateSize)map.invalidateSize();},50);
   if(tab==='nurse') setTimeout(()=>{renderNurseTab();},50);
   if(tab==='route') setTimeout(()=>{initRouteMap();if(routeMap)routeMap.invalidateSize();renderNurseTab();renderRoute();},60);
 }
@@ -1782,7 +1808,7 @@ function renderGradeGuide(){
     {keys:['✅ 기본 활성'],     display:'✅ 기본 활성',    clr:'#22c55e', def:'활성 시작 단계', action:'정착 가속 + 데이터 정비'},
     {keys:['✅ A 안정활성'],    display:'✅ A 안정활성',   clr:'#16a34a', def:'안정적 운영', action:'유지 관리 + 청구 모니터링'},
     {keys:['⭐ S+ 우수활성'],    display:'⭐ S+ 우수활성',  clr:'#8b5cf6', def:'우수 활성처', action:'모범 사례 + 누수 방어'},
-    {keys:['🧨 A++ 대규모활성'], display:'🧨 A++ 대규모활성',clr:'#1a3dcb', def:'대규모 활성 — 매출 핵심', action:'관계 유지 + 신뢰 강화'},
+    {keys:['🧨 A++ 대규모활성'], display:'🧨 A++ 대규모활성',clr:'#1976d2', def:'대규모 활성 — 매출 핵심', action:'관계 유지 + 신뢰 강화'},
     {keys:['🚀 미기동/신규','🚀 미기동-잠재대형','⚪ 미참여/신규'], display:'🚀 미기동/신규', clr:'#64748b', def:'일만사 0 — 미참여 (잠재대형 포함)', action:'신규 영입 — 확률 게임'}
   ];
   // 등급별 카운트 (v66: 사업부 필터)
@@ -1841,7 +1867,7 @@ function renderKpiSignals(){
                                   '<b>위기</b> — 매출 누수 심각';
   var crisisPct = total>0 ? (crisis/total*100).toFixed(1) : '0';
   var cards = [
-    {clr:'#1a3dcb', icon:'🎯', label:'전체 활성률', value:actRate.toFixed(1)+'<small>%</small>', diag:actDiag + ' · 활성 '+totalAct.toLocaleString()+'곳 / 전체 '+total.toLocaleString()+'곳'},
+    {clr:'#1976d2', icon:'🎯', label:'전체 활성률', value:actRate.toFixed(1)+'<small>%</small>', diag:actDiag + ' · 활성 '+totalAct.toLocaleString()+'곳 / 전체 '+total.toLocaleString()+'곳'},
     {clr:'#22c55e', icon:'💊', label:'전체 청구율', value:claimRate.toFixed(1)+'<small>%</small>', diag:claimDiag + ' · 청구 '+claimCnt.toLocaleString()+'곳 / 일만사 '+ilmCnt.toLocaleString()+'곳'},
     {clr:'#dc2626', icon:'⚠️', label:'위기 처수', value:crisis.toLocaleString()+'<small>곳</small>', diag:'전체 대비 <b>'+crisisPct+'%</b> · 긴급+이탈+정체 합산 — 매출 회복 시급'},
     {clr:'#f97316', icon:'💸', label:'새는 매출 (4월)', value:fmtKR(leakRev)+'<small>원</small>', diag:'일만사 활성인데 <b>미청구</b> · 들어와야 할 매출이 안 들어옴'}
@@ -1858,19 +1884,22 @@ function renderKpiSignals(){
 function renderActionTriage(){
   var el = document.getElementById('actionTriage');
   if(!el) return;
-  // 등급별 카운트 집계 (v66: 사업부 필터)
   var _src = getFilteredData();
-  var c = {recovery:0, restart:0, activate:0};
-  var rev = {recovery:0, restart:0, activate:0};  // 잠재매출 (4월수가)
+  var c = {recovery:0, activate:0, mix:0};
+  var rev = {recovery:0, activate:0, mix:0};
   _src.forEach(function(r){
     var g = r.grade_action;
     var fee = r.fee_apr || 0;
-    // 매출 회복: 긴급-청구누수(+대형) + 이탈방어
-    if(g==='🔥 긴급-청구누수' || g==='🔥 긴급-청구누수(대형)' || g==='🛡 이탈방어'){ c.recovery++; rev.recovery += fee; }
-    // 잠재 대형 발굴: 미기동-잠재대형 (큰 매출 잠재력 있는 미참여)
-    else if(g==='🚀 미기동-잠재대형'){ c.restart++; rev.restart += fee; }
-    // 활성처 강화: A++/S+/A
-    else if(g==='🧨 A++ 대규모활성' || g==='⭐ S+ 우수활성' || g==='✅ A 안정활성'){ c.activate++; rev.activate += fee; }
+    if(g==='🔥 긴급-청구누수' || g==='🔥 긴급-청구누수(대형)' || g==='🛡 이탈방어'){
+      c.recovery++; rev.recovery += fee;
+      c.mix++; rev.mix += fee;
+    }
+    else if(g==='🧨 A++ 대규모활성' || g==='⭐ S+ 우수활성' || g==='✅ A 안정활성'){
+      c.activate++; rev.activate += fee;
+    }
+    else if(g==='🚀 미기동-잠재대형' || g==='🚀 미기동/신규'){
+      c.mix++; rev.mix += fee;
+    }
   });
   function fmtKR(n){
     if(n>=1e8) return (n/1e8).toFixed(1)+'억';
@@ -1878,30 +1907,9 @@ function renderActionTriage(){
     return n.toLocaleString();
   }
   var cards = [
-    {
-      lens:'recovery', clr:'#dc2626', clr2:'#f97316',
-      icon:'🚨', title:'매출 회복 시급',
-      sub:'새는 매출 되찾기',
-      num:c.recovery, unit:'곳',
-      meta:'긴급-청구누수 + 이탈방어<br>잠재매출 약 '+fmtKR(rev.recovery)+'원',
-      cta:'전략동선 → 매출 회복 렌즈'
-    },
-    {
-      lens:'restart', clr:'#a855f7', clr2:'#7c3aed',
-      icon:'💎', title:'잠재 대형 발굴',
-      sub:'미기동·매출 잠재 큰 곳',
-      num:c.restart, unit:'곳',
-      meta:'미기동-잠재대형 등급<br>가장 큰 신규 영입 기회',
-      cta:'전략동선 → 이탈방어 렌즈'
-    },
-    {
-      lens:'activate', clr:'#f97316', clr2:'#ea580c',
-      icon:'🌟', title:'활성처 강화',
-      sub:'잘 되는 곳 더 잘되게',
-      num:c.activate, unit:'곳',
-      meta:'A++ / S+ / A 등급<br>잠재매출 약 '+fmtKR(rev.activate)+'원',
-      cta:'전략동선 → 활성처 강화 렌즈'
-    }
+    {lens:'recovery', clr:'#dc2626', clr2:'#b91c1c', icon:'🔥', title:'매출 회복', sub:'위기 대응 — 새는 매출 되찾기', num:c.recovery, unit:'곳', meta:'긴급-청구누수 + 이탈방어<br>잠재매출 약 '+fmtKR(rev.recovery)+'원', cta:'전략동선 → 매출 회복 렌즈'},
+    {lens:'activate', clr:'#f59e0b', clr2:'#d97706', icon:'🌟', title:'활성처 강화', sub:'안정 유지 — 누수 방어·성장', num:c.activate, unit:'곳', meta:'A++ / S+ / A 활성처<br>잠재매출 약 '+fmtKR(rev.activate)+'원', cta:'전략동선 → 활성처 강화 렌즈'},
+    {lens:'mix_recover_acquire', clr:'#0d9488', clr2:'#0f766e', icon:'🔀', title:'회수+영입 혼합', sub:'일타양득 — 한 출장에 두 임팩트', num:c.mix, unit:'곳', meta:'위기(긴급·이탈) + 미기동-잠재<br>잠재매출 약 '+fmtKR(rev.mix)+'원', cta:'전략동선 → 회수+영입 렌즈'}
   ];
   el.innerHTML = cards.map(function(card){
     return '<div class="action-card" style="--clr:'+card.clr+';--clr2:'+card.clr2+'" '+
@@ -1929,6 +1937,21 @@ function goToRouteWithLens(lens){
   var routeTab = document.querySelector('.tab[onclick*="\'route\'"]');
   if(routeTab){ routeTab.click(); }
   setTimeout(function(){
+    // v72: 사업부 드릴다운 상태 → 전략동선 탭 사업부 필터에 자동 전달
+    if(selectedDivision){
+      var routeDivEl = document.getElementById('routeDiv');
+      if(routeDivEl){
+        routeDivEl.value = selectedDivision;
+        if(typeof filterRouteOffice === 'function') filterRouteOffice();
+      }
+    } else {
+      // 사업부 선택 안 됐으면 전체로 초기화
+      var routeDivEl = document.getElementById('routeDiv');
+      var routeOfficeEl = document.getElementById('routeOffice');
+      if(routeDivEl) routeDivEl.value = '';
+      if(routeOfficeEl) routeOfficeEl.value = '';
+      if(typeof filterRouteOffice === 'function') filterRouteOffice();
+    }
     if(typeof selectLens === 'function') selectLens(lens);
   }, 200);
 }
@@ -2048,7 +2071,7 @@ function renderDivisionTab(){
   const gradeCounts={};
   DATA.forEach(r=>{ gradeCounts[r.grade_action]=(gradeCounts[r.grade_action]||0)+1; });
   const gradeLabels=Object.keys(gradeCounts), gradeVals=gradeLabels.map(k=>gradeCounts[k]);
-  const gColors=['#e85858','#f5a623','#f6c445','#2ecc87','#1a6faf','#7c5cbf','#e0699a','#f08a3c'];
+  const gColors=['#e85858','#f5a623','#f6c445','#2ecc87','#475569','#7c5cbf','#e0699a','#f08a3c'];
   // v64: gradeChart canvas가 제거됨 — guard 추가
   var _gradeCanvas = document.getElementById('gradeChart');
   if(_gradeCanvas){
@@ -2057,7 +2080,7 @@ function renderDivisionTab(){
     gradeChart=new Chart(_gradeCanvas,{
     type:'doughnut',
     data:{labels:gradeLabels,datasets:[{data:gradeVals,backgroundColor:gColors,borderWidth:4,borderColor:'#fff',hoverOffset:10,hoverBorderWidth:4}]},
-    options:{cutout:'68%',plugins:{legend:{position:'right',labels:{font:{size:12.5,weight:'700',family:'system-ui, -apple-system, sans-serif'},boxWidth:11,boxHeight:11,padding:14,usePointStyle:true,color:'#334155'}},tooltip:{backgroundColor:'#0f172a',titleColor:'#fff',bodyColor:'#fff',padding:14,borderRadius:10,titleFont:{size:14.5,weight:'800',family:"'Pretendard','맑은 고딕',sans-serif"},bodyFont:{size:13.5,weight:'700',family:"'Pretendard','맑은 고딕',sans-serif"},displayColors:true,boxPadding:6,callbacks:{label:function(c){var t=c.dataset.data.reduce((a,b)=>a+b,0);return c.label+' : '+c.parsed.toLocaleString()+'곳 ('+((c.parsed/t)*100).toFixed(1)+'%)';}}}},responsive:true,maintainAspectRatio:true,animation:{animateRotate:true,animateScale:false,duration:800,easing:'easeOutQuart'}}
+    options:{cutout:'68%',plugins:{legend:{position:'right',labels:{font:{size:12.5,weight:'700',family:'system-ui, -apple-system, sans-serif'},boxWidth:11,boxHeight:11,padding:14,usePointStyle:true,color:'#475569'}},tooltip:{backgroundColor:'#0f172a',titleColor:'#fff',bodyColor:'#fff',padding:14,borderRadius:10,titleFont:{size:14.5,weight:'800',family:"'Pretendard','맑은 고딕',sans-serif"},bodyFont:{size:13.5,weight:'700',family:"'Pretendard','맑은 고딕',sans-serif"},displayColors:true,boxPadding:6,callbacks:{label:function(c){var t=c.dataset.data.reduce((a,b)=>a+b,0);return c.label+' : '+c.parsed.toLocaleString()+'곳 ('+((c.parsed/t)*100).toFixed(1)+'%)';}}}},responsive:true,maintainAspectRatio:true,animation:{animateRotate:true,animateScale:false,duration:800,easing:'easeOutQuart'}}
     });
   }
   // v64: 새 콘텐츠 렌더
@@ -2066,35 +2089,33 @@ function renderDivisionTab(){
   // 기존 간호사 순위 — guard 있어서 안전 (DOM 없으면 return)
   renderNursePerf();
 
-  // v66: 사업부 선택 시 사무소별 드릴다운
-  var _labels, _cData, _actData, _ilmData, _claimTitle, _divTitle;
+  // v86: 추세 차트 — 4월 vs 5월 일만사 환자수 변화 + 사업부별 등급 그룹 분포
+  var _GA = ['🧨 A++ 대규모활성','⭐ S+ 우수활성','✅ A 안정활성','✅ 기본 활성'];
+  var _GW = ['🔥 긴급-청구누수(대형)','🔥 긴급-청구누수','🛡 이탈방어','💛 진입 정착 필요'];
+  var _GI = ['🚀 미기동-잠재대형','🚀 미기동/신규','⚪ 미참여/신규'];
+
+  var _labels, _aprIlm, _mayIlm, _grpActive, _grpCrisis, _grpIdle, _claimTitle, _divTitle;
   if(selectedDivision){
-    // 선택된 사업부의 사무소별 비교
     var _offices = [];
-    DATA.forEach(function(r){
-      if(r.division===selectedDivision && r.office && _offices.indexOf(r.office)<0) _offices.push(r.office);
-    });
+    DATA.forEach(function(r){if(r.division===selectedDivision && r.office && _offices.indexOf(r.office)<0) _offices.push(r.office);});
     _offices.sort();
     _labels = _offices;
-    _cData = _offices.map(function(o){
-      var r = DATA.filter(function(d){return d.division===selectedDivision && d.office===o;});
-      return {yes:r.filter(function(x){return x.claim_status==='청구';}).length, no:r.filter(function(x){return x.claim_status==='미청구';}).length};
-    });
-    _actData = _offices.map(function(o){return DATA.filter(function(d){return d.division===selectedDivision && d.office===o && d.ilmansa_pt>=10;}).length;});
-    _ilmData = _offices.map(function(o){return DATA.filter(function(d){return d.division===selectedDivision && d.office===o && d.ilmansa_pt>0;}).length;});
-    _claimTitle = '💊 청구 현황 ('+selectedDivision+' · 사무소별)';
-    _divTitle   = '📈 사무소별 활성처 / 일만사 ('+selectedDivision+')';
+    _aprIlm = _offices.map(function(o){return DATA.filter(function(d){return d.division===selectedDivision && d.office===o;}).reduce(function(a,r){return a+(r.prev_ilm||0);},0);});
+    _mayIlm = _offices.map(function(o){return DATA.filter(function(d){return d.division===selectedDivision && d.office===o;}).reduce(function(a,r){return a+(r.ilmansa_pt||0);},0);});
+    _grpActive = _offices.map(function(o){return DATA.filter(function(d){return d.division===selectedDivision && d.office===o && _GA.indexOf(d.grade_action)>=0;}).length;});
+    _grpCrisis = _offices.map(function(o){return DATA.filter(function(d){return d.division===selectedDivision && d.office===o && _GW.indexOf(d.grade_action)>=0;}).length;});
+    _grpIdle   = _offices.map(function(o){return DATA.filter(function(d){return d.division===selectedDivision && d.office===o && _GI.indexOf(d.grade_action)>=0;}).length;});
+    _claimTitle = '📈 4월 vs 5월 일만사 환자수 변화 ('+selectedDivision+' · 사무소별)';
+    _divTitle   = '🎯 등급 그룹 분포 ('+selectedDivision+' · 사무소별)';
   } else {
-    // 전체 — 사업부별 비교
     _labels = DIVISIONS;
-    _cData = DIVISIONS.map(function(div){
-      var r=DATA.filter(function(d){return d.division===div;});
-      return {yes:r.filter(function(x){return x.claim_status==='청구';}).length, no:r.filter(function(x){return x.claim_status==='미청구';}).length};
-    });
-    _actData = DIVISIONS.map(function(div){return DATA.filter(function(d){return d.division===div && d.ilmansa_pt>=10;}).length;});
-    _ilmData = DIVISIONS.map(function(div){return DATA.filter(function(d){return d.division===div && d.ilmansa_pt>0;}).length;});
-    _claimTitle = '💊 청구 현황 (전체)';
-    _divTitle   = '📈 사업부별 활성처 / 일만사';
+    _aprIlm = DIVISIONS.map(function(div){return DATA.filter(function(d){return d.division===div;}).reduce(function(a,r){return a+(r.prev_ilm||0);},0);});
+    _mayIlm = DIVISIONS.map(function(div){return DATA.filter(function(d){return d.division===div;}).reduce(function(a,r){return a+(r.ilmansa_pt||0);},0);});
+    _grpActive = DIVISIONS.map(function(div){return DATA.filter(function(d){return d.division===div && _GA.indexOf(d.grade_action)>=0;}).length;});
+    _grpCrisis = DIVISIONS.map(function(div){return DATA.filter(function(d){return d.division===div && _GW.indexOf(d.grade_action)>=0;}).length;});
+    _grpIdle   = DIVISIONS.map(function(div){return DATA.filter(function(d){return d.division===div && _GI.indexOf(d.grade_action)>=0;}).length;});
+    _claimTitle = '📈 4월 vs 5월 일만사 환자수 변화 (사업부별)';
+    _divTitle   = '🎯 사업부별 등급 그룹 분포 (활성/위기/미기동)';
   }
 
   // 차트 제목 업데이트
@@ -2111,12 +2132,13 @@ function renderDivisionTab(){
 
   if(claimChart) claimChart.destroy();
   if(_claimCanvas){
+    var _delta = _labels.map(function(_,i){var a=_aprIlm[i]||0,b=_mayIlm[i]||0;return a>0?((b-a)/a*100):0;});
     claimChart=new Chart(_claimCanvas,{
       type:'bar',
       data:{labels:_labels,datasets:[
-        {label:'청구',data:_cData.map(function(d){return d.yes;}),backgroundColor:'#22c55e',borderColor:'#16a34a',borderWidth:0,borderRadius:8,borderSkipped:false,maxBarThickness:48},
-        {label:'미청구',data:_cData.map(function(d){return d.no;}),backgroundColor:'#ef4444',borderColor:'#dc2626',borderWidth:0,borderRadius:8,borderSkipped:false,maxBarThickness:48}]},
-      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:13,weight:'700'},boxWidth:14,boxHeight:14,padding:14,usePointStyle:true,color:'#334155'}},tooltip:{backgroundColor:'#0f172a',titleColor:'#fff',bodyColor:'#fff',padding:14,borderRadius:10,titleFont:{size:14.5,weight:'800',family:"'Pretendard','맑은 고딕',sans-serif"},bodyFont:{size:13.5,weight:'700',family:"'Pretendard','맑은 고딕',sans-serif"},boxPadding:6}},scales:{x:{stacked:true,grid:{display:false},ticks:{font:{size:12,weight:'700'},color:'#334155'}},y:{stacked:true,grid:{color:'#f1f5f9'},ticks:{font:{size:11,weight:'600'},color:'#94a3b8'},border:{display:false}}},animation:{duration:700,easing:'easeOutQuart'}}
+        {label:'4월 (기준)',data:_aprIlm,backgroundColor:'#cbd5e1',borderRadius:8,borderSkipped:false,maxBarThickness:38},
+        {label:'5월 (현재)',data:_mayIlm,backgroundColor:'#1976d2',borderRadius:8,borderSkipped:false,maxBarThickness:38}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:13,weight:'700'},boxWidth:14,boxHeight:14,padding:14,usePointStyle:true,color:'#475569'}},tooltip:{backgroundColor:'#0f172a',titleColor:'#fff',bodyColor:'#fff',padding:14,borderRadius:10,titleFont:{size:14.5,weight:'800',family:"'Pretendard','맑은 고딕',sans-serif"},bodyFont:{size:13.5,weight:'700',family:"'Pretendard','맑은 고딕',sans-serif"},boxPadding:6,callbacks:{afterBody:function(items){if(items&&items.length){var i=items[0].dataIndex;var d=_delta[i]||0;var sign=d>0?'+':'';return ['','변화율: '+sign+d.toFixed(1)+'%'];}return [];}}}},scales:{x:{grid:{display:false},ticks:{font:{size:12,weight:'700'},color:'#475569'}},y:{grid:{color:'#f1f5f9'},ticks:{font:{size:11,weight:'600'},color:'#94a3b8'},border:{display:false}}},animation:{duration:700,easing:'easeOutQuart'}}
     });
   }
   if(divBarChart) divBarChart.destroy();
@@ -2124,9 +2146,10 @@ function renderDivisionTab(){
     divBarChart=new Chart(_divCanvas,{
       type:'bar',
       data:{labels:_labels,datasets:[
-        {label:'활성처 (기관수)',data:_actData,backgroundColor:'#1a6faf',borderRadius:8,borderSkipped:false,maxBarThickness:42},
-        {label:'일만사처 (기관수)',data:_ilmData,backgroundColor:'#a855f7',borderRadius:8,borderSkipped:false,maxBarThickness:42}]},
-      options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'top',labels:{font:{size:13,weight:'700'},boxWidth:14,boxHeight:14,padding:14,usePointStyle:true,color:'#334155'}},tooltip:{backgroundColor:'#0f172a',titleColor:'#fff',bodyColor:'#fff',padding:14,borderRadius:10,titleFont:{size:14.5,weight:'800',family:"'Pretendard','맑은 고딕',sans-serif"},bodyFont:{size:13.5,weight:'700',family:"'Pretendard','맑은 고딕',sans-serif"},boxPadding:6}},scales:{x:{grid:{display:false},ticks:{font:{size:12,weight:'700'},color:'#334155'}},y:{grid:{color:'#f1f5f9'},ticks:{font:{size:11,weight:'600'},color:'#94a3b8'},border:{display:false}}},animation:{duration:700,easing:'easeOutQuart'}}
+        {label:'🟢 활성',data:_grpActive,backgroundColor:'#22c55e',borderRadius:6,borderSkipped:false,maxBarThickness:48},
+        {label:'🔴 위기',data:_grpCrisis,backgroundColor:'#ef4444',borderRadius:6,borderSkipped:false,maxBarThickness:48},
+        {label:'⚪ 미기동',data:_grpIdle,backgroundColor:'#94a3b8',borderRadius:6,borderSkipped:false,maxBarThickness:48}]},
+      options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'top',labels:{font:{size:13,weight:'700'},boxWidth:14,boxHeight:14,padding:14,usePointStyle:true,color:'#475569'}},tooltip:{backgroundColor:'#0f172a',titleColor:'#fff',bodyColor:'#fff',padding:14,borderRadius:10,titleFont:{size:14.5,weight:'800',family:"'Pretendard','맑은 고딕',sans-serif"},bodyFont:{size:13.5,weight:'700',family:"'Pretendard','맑은 고딕',sans-serif"},boxPadding:6}},scales:{x:{stacked:true,grid:{display:false},ticks:{font:{size:12,weight:'700'},color:'#475569'}},y:{stacked:true,grid:{color:'#f1f5f9'},ticks:{font:{size:11,weight:'600'},color:'#94a3b8'},border:{display:false}}},animation:{duration:700,easing:'easeOutQuart'}}
     });
   }
 }
@@ -2143,35 +2166,30 @@ const FEE_PER_PT = 8192;        // 일만사 환자 1명당 4월 평균 수가 (
 const VISIT_MIN = 30;            // 의원당 방문 시간 (분)
 const TRAVEL_MIN_PER_KM = 2;     // 1km당 이동 시간 (분)
 const SUCCESS_RATE = {           // 등급별 1회 방문 성공 확률 (휴리스틱)
-  '🧨 A++ 대규모활성' : 0.70,
-  '⭐ S+ 우수활성'    : 0.65,
-  '🌱 A 안정활성'     : 0.60,
-  '🔁 정체/재가동'    : 0.55,  // 기존 관계 활용 — 재가동 시도
-  '🛡 이탈방어'      : 0.55,
-  '💛 진입 정착 필요' : 0.50,
-  '✅ 기본 활성'      : 0.45,
-  '🔥 긴급-청구누수'  : 0.40,
+  '🧨 A++ 대규모활성'    : 0.70,
+  '⭐ S+ 우수활성'        : 0.65,
+  '✅ A 안정활성'         : 0.60,
+  '🛡 이탈방어'           : 0.55,
+  '💛 진입 정착 필요'     : 0.50,
   '🔥 긴급-청구누수(대형)': 0.45,
-  '✅ A 안정활성'     : 0.60,
-  '🚀 미기동-잠재대형' : 0.25,
-  '🚀 미기동/신규'    : 0.15,
-  '⚪ 미참여/신규'    : 0.15
+  '✅ 기본 활성'          : 0.45,
+  '🔥 긴급-청구누수'      : 0.40,
+  '🚀 미기동-잠재대형'    : 0.25,
+  '🚀 미기동/신규'        : 0.15,
+  '⚪ 미참여/신규'         : 0.15
 };
+// v83: 4개 lens로 단순화
 const LENS_FILTER = {
-  'all':     null,  // 모든 의원
-  'recovery':['🔥 긴급-청구누수','🔥 긴급-청구누수(대형)','🛡 이탈방어'],
-  'restart': ['🛡 이탈방어'],  // v65: 데이터에 정체/재가동 없음 — 이탈방어로 대체 (방어 의미)
-  'activate':['🧨 A++ 대규모활성','⭐ S+ 우수활성','✅ A 안정활성'],
-  'educate': ['💛 진입 정착 필요','✅ 기본 활성'],
-  'acquire': ['🚀 미기동/신규','🚀 미기동-잠재대형','⚪ 미참여/신규']
+  'all':                 null,
+  'recovery':            ['🔥 긴급-청구누수','🔥 긴급-청구누수(대형)','🛡 이탈방어'],
+  'activate':            ['🧨 A++ 대규모활성','⭐ S+ 우수활성','✅ A 안정활성'],
+  'mix_recover_acquire': ['🔥 긴급-청구누수','🔥 긴급-청구누수(대형)','🛡 이탈방어','🚀 미기동-잠재대형','🚀 미기동/신규']
 };
 const LENS_META = {
-  'all':     {title:'✨ AI 추천', color:'#8b5cf6', desc:'전 의원을 EV 점수로 평가해 자동 정렬 — 의도 구분 없이 가장 가치 큰 곳부터'},
-  'recovery':{title:'🔥 매출 회복', color:'#dc2626', desc:'긴급-청구누수 + 이탈방어 의원을 방문가치 순으로 — 새는 매출 되찾기'},
-  'restart': {title:'🔁 정체 재가동', color:'#a855f7', desc:'4월 활성 베이스에서 5월 환자수가 정체/역성장한 의원 — 재가동 시도로 추가 성장 자극'},
-  'activate':{title:'🌟 활성처 강화', color:'#f97316', desc:'A++/S+/A 활성처를 방문가치 순으로 — 잘 되는 곳 더 잘 되게 (누수 방어·명의풀 육성)'},
-  'educate': {title:'🌱 진입 교육', color:'#22c55e', desc:'진입 정착 필요 + 기본 활성을 방문가치 순으로 — 초기·정착 교육으로 활성처 전환'},
-  'acquire': {title:'🚀 신규 영입', color:'#1a3dcb', desc:'미참여/신규 의원을 방문가치 순으로 — 가까운 곳 위주 확률 게임'}
+  'all':                 {title:'✨ AI 추천', color:'#8b5cf6', desc:'전 의원을 EV 점수로 평가해 자동 정렬 — 의도 구분 없이 가장 가치 큰 곳부터'},
+  'recovery':            {title:'🔥 매출 회복', color:'#dc2626', desc:'긴급-청구누수 + 이탈방어 의원을 방문가치 순으로 — 새는 매출 되찾기'},
+  'activate':            {title:'🌟 활성처 강화', color:'#f97316', desc:'A++/S+/A 활성처를 방문가치 순으로 — 잘 되는 곳 더 잘 되게 (누수 방어·명의풀 육성)'},
+  'mix_recover_acquire': {title:'🔀 회수+영입 혼합', color:'#0d9488', desc:'위기 의원 + 잠재 대형을 한 동선에 — 한 출장에 청구 회수와 신규 영입 두 임팩트'}
 };
 let selectedLens = 'all';
 // EV 점수 계산 (anchor 있으면 거리는 anchor 기준, 없으면 0 가정 — 거리 비교는 전체에서)
@@ -2271,7 +2289,7 @@ function renderOfficeTable(){
   const noClaimCnt=rows.filter(r=>r.claim_status==='미청구').length;
 
   document.getElementById('officeKpis').innerHTML=`
-    <div class="kpi-card" style="--clr:#1a6faf"><div class="label">전체 기관 수</div><div class="value">${rows.length.toLocaleString()}</div></div>
+    <div class="kpi-card" style="--clr:#475569"><div class="label">전체 기관 수</div><div class="value">${rows.length.toLocaleString()}</div></div>
     <div class="kpi-card" style="--clr:#18a86a"><div class="label">활성처</div><div class="value">${totalAct.toLocaleString()}<span style="font-size:14px;font-weight:600">개</span></div></div>
     <div class="kpi-card" style="--clr:#7c5cbf"><div class="label">일만사처</div><div class="value">${ilmCnt.toLocaleString()}<span style="font-size:14px;font-weight:600">개</span></div></div>
     <div class="kpi-card" style="--clr:#8b5cf6"><div class="label">일만사환자</div><div class="value">${fmt(totalIlm)}<span style="font-size:14px;font-weight:600">명</span></div></div>
@@ -2304,7 +2322,7 @@ function renderOfficePage(){
       <td>${fmt(r.wellcheck_pt)}</td>
       <td>${r.fee_apr>0?fmtW(r.fee_apr)+'원':'-'}</td>
       <td class="${cCls}">${r.claim_status}</td>
-      <td>${r.lat&&r.lng?`<button class="btn-nav" onclick="event.stopPropagation();window.open('${kakaoNavUrl(r).replace(/'/g, "%27")}','_blank')" title="카카오맵 길찾기">🗺</button>`:'-'}</td>
+      <td>${r.lat&&r.lng?`<button class="btn-nav" onclick="event.stopPropagation();window.open('${kakaoNavUrl(r).replace(/'/g, "%27")}','_blank')" title="카카오맵 길찾기"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.5C7.86 2.5 4.5 5.7 4.5 9.62c0 5.04 6.43 11.5 7.5 12.38 1.07-.88 7.5-7.34 7.5-12.38C19.5 5.7 16.14 2.5 12 2.5z" fill="#ffd400" stroke="#3c1e1e" stroke-width="1.4"/><text x="12" y="13.5" font-family="Arial Black" font-weight="900" font-size="9" text-anchor="middle" fill="#3c1e1e">K</text></svg></button>`:'-'}</td>
     </tr>`;
   });
   tbody.innerHTML=htmlParts.join('');
@@ -2313,7 +2331,7 @@ function renderOfficePage(){
   function buildPagHTML(){
     if(totalPages<=1) return '';
     const btnStyle='padding:4px 10px;border:1.5px solid #d0d7e3;border-radius:6px;background:#fff;cursor:pointer;font-size:12px';
-    const activeBtnStyle='padding:4px 10px;border:1.5px solid #4361ee;border-radius:6px;background:#4361ee;color:#fff;cursor:pointer;font-size:12px;font-weight:700';
+    const activeBtnStyle='padding:4px 10px;border:1.5px solid #475569;border-radius:6px;background:#475569;color:#fff;cursor:pointer;font-size:12px;font-weight:700';
     let btns='';
     // 이전
     btns+=`<button style="${btnStyle}" onclick="goOfficePage(${_officePage-1})" ${_officePage===1?'disabled':''}>‹ 이전</button>`;
@@ -2416,7 +2434,7 @@ const GRADE_DEFS={
   'entry':{color:'#f59e0b',title:'💛 진입 정착 필요',
     body:'일만사 환자가 1~9명 있지만 청구는 아직 0인 의원. 진입 초기 단계로, 청구 프로세스가 정착하면 자연스럽게 활성처로 전환됩니다.',
     crit:'기준: 일만사 1~9명 AND 미청구 · 전국 748곳 (18.0%)'},
-  'churn':{color:'#0891b2',title:'🛡 이탈 방어',
+  'churn':{color:'#0891b2',title:'🛡 이탈방어',
     body:'청구가 정상적으로 이뤄지고 수가도 발생 중이지만 활성환자가 1~4명으로 급감한 상태. 우수처에서 추락 신호 — 회복 비용은 신규 영입보다 큽니다.',
     crit:'기준: 활성환자 1~4명 AND 청구 O AND 4월수가 > 0 · 전국 33곳 (0.8%)'},
   'restart':{color:'#a855f7',title:'🔁 정체/재가동',
@@ -2436,7 +2454,19 @@ const GRADE_DEFS={
     crit:'기준: 일만사 ≥100명 AND 청구 O · 전국 289곳 (7.0%)'},
   'idle':{color:'#94a3b8',title:'⚪ 미참여/신규',
     body:'사업에 참여하지 않았거나 일만사 환자가 0인 의원. 기본 사업 소개·교육·관계 형성이 필요한 단계입니다.',
-    crit:'기준: program_type=미참여 OR 일만사=0 · 전국 2,377곳 (57.3%)'}
+    crit:'기준: program_type=미참여 OR 일만사=0 · 전국 2,377곳'},
+  'emergency_large':{color:'#b91c1c',title:'🔥 긴급-청구누수(대형)',
+    body:'대형 활성처(일만사 ≥40명)였다가 청구 누수에 빠진 의원. 새는 매출이 가장 큰 곳 — 즉시 청구 회복 시급.',
+    crit:'기준: 일만사 ≥40명 AND 미청구 · 전국 255곳'},
+  'idle_potential':{color:'#475569',title:'🚀 미기동-잠재대형',
+    body:'아직 미기동(미참여)이지만 의료 패턴/내원 환자수 등으로 보아 대형 활성처가 될 잠재력이 큰 의원. 신규 영입 1순위.',
+    crit:'기준: 미참여 + 잠재 환자 다수 · 전국 54곳'},
+  'idle_new':{color:'#64748b',title:'🚀 미기동/신규',
+    body:'미참여이거나 일만사 0인 의원. 일반 영입 대상 — 확률 게임이지만 시장 확장의 핵심.',
+    crit:'기준: 미참여 OR 일만사=0 · 전국 2,238곳'},
+  'a_stable':{color:'#22c55e',title:'✅ A 안정활성',
+    body:'일만사 10~39명 + 청구 정상 + 안정적 운영. 우수활성처로의 성장 후보 (앞 a 항목과 이모지만 다른 신등급 라벨).',
+    crit:'기준: 일만사 10~39명 AND 청구 O · 전국 22곳'}
 };
 function showGradePostit(key,ev){
   if(ev){ ev.stopPropagation(); }
@@ -2486,24 +2516,28 @@ const INFO_CONTENTS={
       '<tr><td><b>거리km × 2분</b></td><td>이동 시간 (도심 평균)</td><td>좌표 거리 기반</td></tr></table>'+
       '<h4>등급별 성공 확률 (휴리스틱)</h4>'+
       '<table><tr><th>등급</th><th>성공률</th><th>근거</th></tr>'+
+      '<tr style="background:#f0fdf4"><td colspan="3" style="font-weight:800;color:#15803d;letter-spacing:-0.2px;padding:7px 11px">🟢 활성 그룹 (4) — 안정 유지·성장</td></tr>'+
       '<tr><td>🧨 A++ 대규모활성</td><td>70%</td><td>관계 형성·청구 정상 — 누수 방어 쉬움</td></tr>'+
       '<tr><td>⭐ S+ 우수활성</td><td>65%</td><td>안정 운영 — 명의풀 진입 가능</td></tr>'+
-      '<tr><td>🌱 A 안정활성</td><td>60%</td><td>운영 안정 단계</td></tr>'+
-      '<tr><td>🔁 정체/재가동</td><td>55%</td><td>기존 활성 베이스 — 재가동 자극 가능</td></tr>'+
+      '<tr><td>✅ A 안정활성</td><td>60%</td><td>운영 안정 단계</td></tr>'+
+      '<tr><td>✅ 기본 활성</td><td>45%</td><td>이미 가동 중, 성장은 점진적</td></tr>'+
+      '<tr style="background:#fef2f2"><td colspan="3" style="font-weight:800;color:#b91c1c;letter-spacing:-0.2px;padding:7px 11px">🔴 위기 그룹 (4) — 즉시 대응</td></tr>'+
       '<tr><td>🛡 이탈방어</td><td>55%</td><td>기존 관계 활용 가능</td></tr>'+
       '<tr><td>💛 진입 정착 필요</td><td>50%</td><td>교육으로 청구 정상화 가능</td></tr>'+
-      '<tr><td>✅ 기본 활성</td><td>45%</td><td>이미 가동 중, 성장은 점진적</td></tr>'+
+      '<tr><td>🔥 긴급-청구누수(대형)</td><td>45%</td><td>대형 누수 — 즉시 효과 큼</td></tr>'+
       '<tr><td>🔥 긴급-청구누수</td><td>40%</td><td>청구 프로세스 문제 — 시간 소요</td></tr>'+
+      '<tr style="background:#f8fafc"><td colspan="3" style="font-weight:800;color:#475569;letter-spacing:-0.2px;padding:7px 11px">⚪ 미기동 그룹 (3) — 신규 영입</td></tr>'+
+      '<tr><td>🚀 미기동-잠재대형</td><td>25%</td><td>잠재력은 크나 신규 영입 시간 소요</td></tr>'+
+      '<tr><td>🚀 미기동/신규</td><td>15%</td><td>일반 신규 — 확률 게임</td></tr>'+
       '<tr><td>⚪ 미참여/신규</td><td>15%</td><td>신규 영입은 어려움</td></tr></table>'+
       '<p style="font-size:11.5px;color:#7a8fb5;font-style:italic">⚠ 성공확률은 운영 경험 기반 휴리스틱 — 향후 방문 결과 데이터로 보정 예정</p>'+
-      '<h4>6개 렌즈</h4>'+
+      '<h4>4개 렌즈 (단일 3 + 혼합 1)</h4>'+
       '<table><tr><th>렌즈</th><th>역할</th></tr>'+
-      '<tr><td><b>✨ AI 추천</b></td><td>전 의원의 EV 점수 상위 N개 (기본값 — 의도 구분 없음)</td></tr>'+
-      '<tr><td><b>🔥 매출 회복</b></td><td>긴급-청구누수 + 이탈방어로 풀 좁힌 뒤 EV 정렬</td></tr>'+
-      '<tr><td><b>🔁 정체 재가동</b></td><td>4월→5월 환자수가 정체/역성장한 활성처 — 멈춘 곳 깨우기 (174곳)</td></tr>'+
-      '<tr><td><b>🌟 활성처 강화</b></td><td>A++/S+/A 활성처 풀에서 EV 정렬</td></tr>'+
-      '<tr><td><b>🌱 진입 교육</b></td><td>진입 정착 + 기본 활성 풀에서 EV 정렬</td></tr>'+
-      '<tr><td><b>🚀 신규 영입</b></td><td>미참여/신규 풀에서 EV 정렬</td></tr></table>'+
+      '<tr><td><b>✨ AI 추천</b></td><td>전 의원의 EV 점수 상위 N개 — 의도 구분 없이 자동</td></tr>'+
+      '<tr><td><b>🔥 매출 회복</b></td><td>긴급-청구누수 + 이탈방어 — 새는 매출 되찾기 (위기 대응)</td></tr>'+
+      '<tr><td><b>🌟 활성처 강화</b></td><td>A++/S+/A 활성처 — 누수 방어 + 명의풀 육성 (안정 유지)</td></tr>'+
+      '<tr style="background:#f0fdfa"><td><b>🔀 회수+영입</b> <span style="font-size:10px;color:#0d9488;font-weight:700">혼합</span></td><td>긴급-청구누수 + 이탈방어 + 미기동-잠재대형 — 한 출장에 청구 회수와 신규 영입 두 임팩트</td></tr></table>'+
+      '<p style="font-size:11.5px;color:#0d9488;font-style:italic;margin-top:8px">💡 혼합 렌즈는 두 등급 의원이 지리적으로 근접하면 같은 동선에 자동 배치됩니다.</p>'+
       ''
   }
 };
@@ -2556,13 +2590,13 @@ function openNurseModal(name, office){
   function kpi(label, value, sub, color){
     return '<div style="background:#f8fafc;border-radius:9px;padding:10px 12px;text-align:center">'+
            '<div style="font-size:10px;color:#7a8fb5;font-weight:600">'+label+'</div>'+
-           '<div style="font-size:18px;font-weight:900;color:'+(color||'#142577')+';margin-top:2px;letter-spacing:-0.3px">'+value+'</div>'+
+           '<div style="font-size:18px;font-weight:900;color:'+(color||'#3730a3')+';margin-top:2px;letter-spacing:-0.3px">'+value+'</div>'+
            (sub?'<div style="font-size:10px;color:#94a3b8;margin-top:1px">'+sub+'</div>':'')+
            '</div>';
   }
   var actRate = total>0 ? (totalAct/total*100).toFixed(0)+'%' : '-';
   var ilmRate = total>0 ? (ilmCnt/total*100).toFixed(0)+'%' : '-';
-  html += kpi('활성처', totalAct.toLocaleString(), actRate, '#1a6faf');
+  html += kpi('활성처', totalAct.toLocaleString(), actRate, '#475569');
   html += kpi('일만사처', ilmCnt.toLocaleString(), ilmRate, '#7c5cbf');
   html += kpi('일만사환자', totalIlm.toLocaleString()+'명', '담당 '+total+'곳', '#22c55e');
   html += kpi('4월 수가', fmtKRW(totalFee), '', '#18a86a');
@@ -2570,7 +2604,7 @@ function openNurseModal(name, office){
   // 활성처 분해
   html += '<h4>🎯 활성처 분해</h4>';
   html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">';
-  html += kpi('① 일만사 활성', actIlm.toLocaleString(), '환자 4명+ 의사접속', '#1a6faf');
+  html += kpi('① 일만사 활성', actIlm.toLocaleString(), '환자 4명+ 의사접속', '#475569');
   html += kpi('② 비일만사 활성', actNon.toLocaleString(), 'MAU 4명+', '#7c5cbf');
   html += '</div>';
   // 등급 분포
@@ -2608,10 +2642,10 @@ function openNurseModal(name, office){
     var cl=GRADE_COLOR[r.grade_action]||'#94a3b8';
     var ev = ((r._ev||0)/1000).toFixed(1)+'k';
     html += '<tr style="cursor:pointer" onclick="closeInfoModal();setTimeout(function(){openHospitalModal(\''+r.biz_no+'\');},150)">'+
-            '<td class="col-num"><b style="color:#1a3dcb">'+(i+1)+'</b></td>'+
+            '<td class="col-num"><b style="color:#1976d2">'+(i+1)+'</b></td>'+
             '<td><b>'+r.hospital+'</b> <span style="color:#94a3b8;font-size:11px">· 일만사 '+(r.ilmansa_pt||0)+'명</span></td>'+
             '<td class="col-grade"><span style="font-size:11.5px;color:'+cl+';font-weight:700">'+r.grade_action+'</span></td>'+
-            '<td class="col-ev" style="text-align:right;font-weight:800;color:#142577">'+ev+'/분</td>'+
+            '<td class="col-ev" style="text-align:right;font-weight:800;color:#3730a3">'+ev+'/분</td>'+
             '</tr>';
   });
   html += '</table>';
@@ -2619,7 +2653,7 @@ function openNurseModal(name, office){
   // 액션 버튼
   html += '<h4>🔗 빠른 액션</h4>';
   html += '<div style="display:flex;gap:8px;flex-wrap:wrap">';
-  html += '<button onclick="closeInfoModal();setTimeout(function(){document.querySelector(\'.tab[onclick*=route]\').click();document.getElementById(\'routeOffice\').value=\''+office+'\';if(typeof renderRoute===\'function\')renderRoute();},150)" style="flex:1;padding:9px 14px;background:#1a3dcb;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px">📍 ' + office + ' 사무소 전략동선 보기</button>';
+  html += '<button onclick="closeInfoModal();setTimeout(function(){document.querySelector(\'.tab[onclick*=route]\').click();document.getElementById(\'routeOffice\').value=\''+office+'\';if(typeof renderRoute===\'function\')renderRoute();},150)" style="flex:1;padding:9px 14px;background:#1976d2;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px">📍 ' + office + ' 사무소 전략동선 보기</button>';
   html += '</div>';
   // 모달에 주입
   document.getElementById('infoModalTitle').textContent='👩‍⚕️ ' + name + ' · ' + office + ' 사무소 (담당 ' + total + '곳)';
@@ -2637,9 +2671,9 @@ function openHospitalModal(bizNo){
       gradeKey=k; gradeDef=GRADE_DEFS[k]; break;
     }
   }
-  var clr = (gradeDef&&gradeDef.color)||(GRADE_COLOR[r.grade_action]||'#1a3dcb');
+  var clr = (gradeDef&&gradeDef.color)||(GRADE_COLOR[r.grade_action]||'#1976d2');
   var nurseName = NURSE_MAP[r.office]||'없음';
-  var nurseColor = NURSE_MAP[r.office]?'#1a6faf':'#e85858';
+  var nurseColor = NURSE_MAP[r.office]?'#475569':'#e85858';
   var html='';
   // 위치·담당자
   html += '<h4>📍 위치 & 담당</h4>';
@@ -2715,7 +2749,7 @@ function setRouteAnchor(i){
   var tag=document.getElementById('routeAnchorTag');
   tag.style.display='block';
   var _of=routeAnchor.office||'';
-  tag.innerHTML='<span style="background:#e8f2fa;color:#1a6faf;padding:3px 9px;border-radius:8px;font-weight:700">📌 기준: '+(routeAnchor.hospital||'')+(_of?' <span style=\'opacity:.7\'>· '+_of+'</span>':'')+'</span> '
+  tag.innerHTML='<span style="background:#e8f2fa;color:#475569;padding:3px 9px;border-radius:8px;font-weight:700">📌 기준: '+(routeAnchor.hospital||'')+(_of?' <span style=\'opacity:.7\'>· '+_of+'</span>':'')+'</span> '
     +'<label style="display:inline-flex;align-items:center;gap:4px;margin-left:8px;color:#28527a;font-weight:600;cursor:pointer"><input type="checkbox" id="anchorSameOffice" checked onchange="renderRoute()" style="margin:0"> 같은 사무소만</label>'
     +'<a onclick="clearRouteAnchor()" style="color:#e85858;cursor:pointer;font-weight:700;margin-left:8px">✕ 해제</a>';
   renderRoute();
@@ -2880,7 +2914,8 @@ function renderRoute(){
   const _routeHtml=[];
   if(!rows.length){ list.innerHTML='<div style="text-align:center;color:#999;padding:40px">조건에 맞는 병원이 없습니다.</div>'; return; }
   rows.forEach((r,i)=>{
-    const clr=r.target_tier.includes('긴급')?'#e63946':r.target_tier.includes('정기')?'#ffd166':r.target_tier.includes('유지')?'#06d6a0':r.target_tier.includes('개척')?'#4361ee':'#adb5bd';
+    const _tt = r.target_tier || '';
+    const clr=_tt.includes('긴급')?'#ef4444':_tt.includes('정기')?'#f59e0b':_tt.includes('유지')?'#22c55e':_tt.includes('개척')?'#475569':'#adb5bd';
     const _kNavUrl = (r.lat&&r.lng)?kakaoNavUrl(r):'';
     const navBtn=_kNavUrl?`<button class="btn-nav-kakao" onclick="event.stopPropagation();window.open('${_kNavUrl.replace(/'/g,'%27')}','_blank')">🗺 카카오맵 길찾기</button>`:'';
     const nurseName=NURSE_MAP[r.office]||'없음';
@@ -2889,16 +2924,16 @@ function renderRoute(){
       <div class="rnum">${i+1}</div>
       <div class="rinfo" style="flex:1">
         <h4>${r.hospital}</h4>
-        <div class="rmeta">📍 ${r.address||'-'} &nbsp;|&nbsp; 👤 ${r.manager} &nbsp;|&nbsp; 🏢 ${r.office||'-'} &nbsp;|&nbsp; 👩‍⚕️ 간호사 <b style="color:${NURSE_MAP[r.office]?'#1a6faf':'#e85858'}">${nurseName}</b></div>
+        <div class="rmeta">📍 ${r.address||'-'} &nbsp;|&nbsp; 👤 ${r.manager} &nbsp;|&nbsp; 🏢 ${r.office||'-'} &nbsp;|&nbsp; 👩‍⚕️ 간호사 <b style="color:${NURSE_MAP[r.office]?'#475569':'#e85858'}">${nurseName}</b></div>
         <div class="rmeta">${r.grade_action}</div>
-        <div style="margin-top:6px;font-size:12.5px;color:#1a3dcb;background:#eef2ff;padding:6px 12px;border-radius:8px;display:inline-block;font-weight:700;letter-spacing:-0.2px">✨ 추천 근거: ${(i===0&&routeAnchor)?'기준 의원 (출발점)':'방문가치 '+((r._ev||0)/1000).toFixed(1)+'k/분'+((typeof r._km==='number'&&r._km>0)?' · '+r._km.toFixed(1)+'km':'')+((r.ilmansa_pt||0)>0?' · 일만사 '+r.ilmansa_pt+'명':'')+' · 성공률 '+(((SUCCESS_RATE[r.grade_action]||0.2)*100).toFixed(0))+'%'}</div>
+        <div style="margin-top:6px;font-size:12.5px;color:#1976d2;background:#eef2ff;padding:6px 12px;border-radius:8px;display:inline-block;font-weight:700;letter-spacing:-0.2px">✨ 추천 근거: ${(i===0&&routeAnchor)?'기준 의원 (출발점)':'방문가치 '+((r._ev||0)/1000).toFixed(1)+'k/분'+((typeof r._km==='number'&&r._km>0)?' · '+r._km.toFixed(1)+'km':'')+((r.ilmansa_pt||0)>0?' · 일만사 '+r.ilmansa_pt+'명':'')+' · 성공률 '+(((SUCCESS_RATE[r.grade_action]||0.2)*100).toFixed(0))+'%'}</div>
         <div class="rtags">
           ${tierBadge(r.target_tier)}
           ${progBadge(r.program_type)}
           <span class="tag">활성 ${fmt(r.active_pt)}</span>
           <span class="tag">일만사 ${fmt(r.ilmansa_pt)}</span>
           ${r.fee_apr>0?`<span class="tag">수가 ${fmtW(r.fee_apr)}원</span>`:''}
-          ${(typeof r._km==='number')?`<span class="tag" style="background:#e8f2fa;color:#1a3dcb;font-weight:700">${i===0?'출발':r._km.toFixed(1)+'km'}</span>`:''}
+          ${(typeof r._km==='number')?`<span class="tag" style="background:#e8f2fa;color:#1976d2;font-weight:700">${i===0?'출발':r._km.toFixed(1)+'km'}</span>`:''}
           <span class="tag" style="${r.claim_status==='미청구'?'background:#ffeaea;color:#cc0000':''}">${r.claim_status}</span>
         </div>
         <div style="margin-top:8px">${navBtn}</div>
@@ -2915,7 +2950,7 @@ function renderRoute(){
 let routeMap=null, routeLayer=null, routeMapInited=false, routeClusterGroup=null;
 
 function nurseAvatarColor(i){
-  var pal=['#1a6faf','#2ecc87','#f5a623','#e0699a','#7c5cbf','#0891b2','#e8a33d','#d4647a','#5b8def','#3aa66f','#c47fd4','#ef8f5b'];
+  var pal=['#475569','#2ecc87','#f5a623','#e0699a','#7c5cbf','#0891b2','#e8a33d','#d4647a','#5b8def','#3aa66f','#c47fd4','#ef8f5b'];
   return pal[i%pal.length];
 }
 function renderNursePerf(){
@@ -3041,7 +3076,7 @@ function renderNurseTab(){
 }
 
 function fullPopup(r, num){
-  var dc=(typeof DIV_COLOR!=='undefined'&&DIV_COLOR[r.division])||'#1a6faf';
+  var dc=(typeof DIV_COLOR!=='undefined'&&DIV_COLOR[r.division])||'#475569';
   var nm=NURSE_MAP[r.office];
   var nurse=nm||'간호사 없음';
   var fee=r.fee_apr?Number(r.fee_apr).toLocaleString('ko-KR')+'원':'0원';
@@ -3061,7 +3096,7 @@ function fullPopup(r, num){
     +row('사업유형',r.program_type||'-')
     +row('방문티어',r.target_tier||'-')
     +row('담당자',r.manager||'-')
-    +row('담당간호사',nurse,nm?'#1a6faf':'#e85858')
+    +row('담당간호사',nurse,nm?'#475569':'#e85858')
     +row('활성환자',n(r.active_pt)+'명','#0ea5e9')
     +row('일만사환자',n(r.ilmansa_pt)+'명','#7c5cbf')
     +row('웰체크환자',n(r.wellcheck_pt)+'명')
@@ -3069,7 +3104,7 @@ function fullPopup(r, num){
     +row('청구상태',r.claim_status||'-',r.claim_status==='미청구'?'#e85858':'#18a86a')
     +'</table>';
   if(r.address){ h+='<div style="font-size:11px;color:#8a97a6;margin-top:6px">📍 '+r.address+'</div>'; }
-  if(r.action){ h+='<div style="margin-top:8px;padding:7px 9px;background:#eef4fb;border-left:3px solid #1a6faf;border-radius:0 6px 6px 0;font-size:11px;color:#33405a">'+r.action+'</div>'; }
+  if(r.action){ h+='<div style="margin-top:8px;padding:7px 9px;background:#eef4fb;border-left:3px solid #475569;border-radius:0 6px 6px 0;font-size:11px;color:#33405a">'+r.action+'</div>'; }
   if(r.lat&&r.lng){ h+='<div style="margin-top:8px"><a href="'+kakaoNavUrl(r)+'" target="_blank" style="display:inline-block;background:#fee500;color:#3c1e1e;padding:6px 14px;border-radius:7px;font-size:12px;font-weight:800;text-decoration:none">🗺 카카오맵 길찾기</a></div>'; }
   h+='</div>';
   return h;
@@ -3077,10 +3112,10 @@ function fullPopup(r, num){
 
 function routeTierColor(t){
   t=t||'';
-  if(t.indexOf('긴급')>=0) return '#e63946';
+  if(t.indexOf('긴급')>=0) return '#ef4444';
   if(t.indexOf('정기')>=0) return '#f0a500';
-  if(t.indexOf('유지')>=0) return '#06d6a0';
-  if(t.indexOf('개척')>=0) return '#4361ee';
+  if(t.indexOf('유지')>=0) return '#22c55e';
+  if(t.indexOf('개척')>=0) return '#475569';
   return '#adb5bd';
 }
 
@@ -3170,7 +3205,7 @@ function adminLogin(){
     document.getElementById('adminPanel').style.display='block';
     renderAdminPanel();
   } else {
-    document.getElementById('adminPwInput').style.borderColor='#e63946';
+    document.getElementById('adminPwInput').style.borderColor='#ef4444';
     setTimeout(()=>document.getElementById('adminPwInput').style.borderColor='',1000);
     alert('비밀번호가 올바르지 않습니다.');
   }
@@ -3361,23 +3396,23 @@ const PROG_COLOR={
 };
 
 const GRADE_COLOR={
-  '🔥 긴급-청구누수'  :'#dc2626',
+  '🔥 긴급-청구누수'  :'#ef4444',
   '💛 진입 정착 필요' :'#f59e0b',
-  '🛡 이탈방어'       :'#0891b2',
+  '🛡 이탈방어'       :'#06b6d4',
   '🔁 정체/재가동'    :'#a855f7',
   '✅ 기본 활성'      :'#84cc16',
   '🌱 A 안정활성'     :'#22c55e',
   '⭐ S+ 우수활성'    :'#eab308',
   '🧨 A++ 대규모활성' :'#f97316',
   '⚪ 미참여/신규'    :'#94a3b8',
-  '🔥 긴급-청구누수(대형)':'#b91c1c',
+  '🔥 긴급-청구누수(대형)':'#dc2626',
   '✅ A 안정활성'     :'#22c55e',
   '🚀 미기동/신규'    :'#64748b',
   '🚀 미기동-잠재대형' :'#475569'
 };
 
 
-const DIV_COLOR={'서울3':'#e63946','서울4':'#2196f3','지방3':'#ff9800','지방4':'#4caf50'};
+const DIV_COLOR={'서울3':'#3b82f6','서울4':'#8b5cf6','지방3':'#ec4899','지방4':'#f59e0b'};
 
 let _selDiv=''; // 현재 선택된 사업부
 
@@ -3466,7 +3501,7 @@ function refreshMapMarkers(){
           <tr><td style="color:#888;padding:2px 4px">등급</td><td style="padding:2px 4px;font-weight:600">${r.grade_action}</td></tr>
           <tr><td style="color:#888;padding:2px 4px">사업유형</td><td style="padding:2px 4px;font-weight:600">${r.program_type||'-'}</td></tr>
           <tr><td style="color:#888;padding:2px 4px">담당자</td><td style="padding:2px 4px">${r.manager||'-'}</td></tr>
-          <tr><td style="color:#888;padding:2px 4px">담당간호사</td><td style="padding:2px 4px;font-weight:700;color:${NURSE_MAP[r.office]?'#1a6faf':'#e85858'}">${NURSE_MAP[r.office]||'간호사 없음'}</td></tr>
+          <tr><td style="color:#888;padding:2px 4px">담당간호사</td><td style="padding:2px 4px;font-weight:700;color:${NURSE_MAP[r.office]?'#475569':'#e85858'}">${NURSE_MAP[r.office]||'간호사 없음'}</td></tr>
           <tr><td style="color:#888;padding:2px 4px">활성환자</td><td style="padding:2px 4px;color:#0ea5e9;font-weight:600">${fmt2(r.active_pt)}명</td></tr>
           <tr><td style="color:#888;padding:2px 4px">일만사환자</td><td style="padding:2px 4px;color:#7c3aed;font-weight:600">${fmt2(r.ilmansa_pt)}명</td></tr>
           <tr><td style="color:#888;padding:2px 4px">웰체크환자</td><td style="padding:2px 4px">${fmt2(r.wellcheck_pt)}명</td></tr>
