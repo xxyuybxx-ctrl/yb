@@ -534,6 +534,16 @@ th.sort-th.sort-active .sort-ind{color:#1a3dcb;font-weight:900}
 .kpi-sig .ks-diag b{color:var(--clr);font-weight:800}
 @media (max-width:600px){.kpi-signals{grid-template-columns:1fr}}
 
+
+/* v66: 사업부 카드 드릴다운 상태 */
+.div-card{cursor:pointer;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .3s ease,opacity .25s ease}
+.div-card:hover{transform:translateY(-4px)}
+.div-card-selected{transform:translateY(-6px) scale(1.02);box-shadow:0 4px 8px rgba(15,23,42,.10),0 24px 56px rgba(15,23,42,.18),0 0 0 3px var(--clr) !important;z-index:10;position:relative}
+.div-card-dim{opacity:.45;transform:scale(.98);filter:saturate(.6)}
+.div-card-dim:hover{opacity:.7;transform:scale(.99)}
+.div-sel-badge{position:absolute;top:-12px;right:14px;background:var(--clr);color:#fff;padding:5px 12px;border-radius:14px;font-size:11.5px;font-weight:800;letter-spacing:-0.2px;box-shadow:0 4px 10px rgba(15,23,42,.18);z-index:11;white-space:nowrap;animation:divBadgePop .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes divBadgePop{from{transform:scale(.6) translateY(-4px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+
 </style>
 </head>
 <body>
@@ -1604,6 +1614,22 @@ function filterRouteOffice(){
 //  TAB 1: 사업부별
 // ============================================================
 let gradeChart, tierChart, claimChart, divBarChart;
+// v66: 사업부 드릴다운 필터 — null이면 전체, 사업부명이면 해당 사업부만
+let selectedDivision = null;
+function getFilteredData(){
+  return selectedDivision ? DATA.filter(function(r){return r.division===selectedDivision;}) : DATA;
+}
+function selectDivision(div){
+  // 토글: 같은 카드 다시 누르면 해제
+  if(selectedDivision === div) selectedDivision = null;
+  else selectedDivision = div;
+  renderDivisionTab();
+  // 부드러운 스크롤 — 하단 영역으로
+  setTimeout(function(){
+    var el = document.getElementById('gradeGuide');
+    if(el && selectedDivision) el.scrollIntoView({behavior:'smooth', block:'center'});
+  }, 100);
+}
 
 
 // v64: 등급 가이드 카드 렌더
@@ -1621,9 +1647,9 @@ function renderGradeGuide(){
     {keys:['🧨 A++ 대규모활성'], display:'🧨 A++ 대규모활성',clr:'#1a3dcb', def:'대규모 활성 — 매출 핵심', action:'관계 유지 + 신뢰 강화'},
     {keys:['🚀 미기동/신규','🚀 미기동-잠재대형','⚪ 미참여/신규'], display:'🚀 미기동/신규', clr:'#64748b', def:'일만사 0 — 미참여 (잠재대형 포함)', action:'신규 영입 — 확률 게임'}
   ];
-  // 등급별 카운트
+  // 등급별 카운트 (v66: 사업부 필터)
   var cnt = {};
-  DATA.forEach(function(r){ cnt[r.grade_action] = (cnt[r.grade_action]||0) + 1; });
+  getFilteredData().forEach(function(r){ cnt[r.grade_action] = (cnt[r.grade_action]||0) + 1; });
   el.innerHTML = GUIDE.map(function(g){
     var c = g.keys.reduce(function(a,k){ return a + (cnt[k]||0); }, 0);
     return '<div class="grade-card" style="--clr:'+g.clr+'">' +
@@ -1641,22 +1667,24 @@ function renderGradeGuide(){
 function renderKpiSignals(){
   var el = document.getElementById('kpiSignals');
   if(!el) return;
-  var total = DATA.length;
+  // v66: 사업부 필터 적용
+  var _src = getFilteredData();
+  var total = _src.length;
   // ① 전체 활성률 = (일만사활성 + 비일만사활성) / 전체
-  var actIlm = DATA.reduce(function(a,r){return a + (r.is_active_ilm||0);},0);
-  var actNon = DATA.reduce(function(a,r){return a + (r.is_active_non_ilm||0);},0);
+  var actIlm = _src.reduce(function(a,r){return a + (r.is_active_ilm||0);},0);
+  var actNon = _src.reduce(function(a,r){return a + (r.is_active_non_ilm||0);},0);
   var totalAct = actIlm + actNon;
   var actRate = total>0 ? (totalAct/total*100) : 0;
   // ② 전체 청구율 = 청구 / 일만사 의원
-  var ilmCnt = DATA.filter(function(r){return r.ilmansa_pt>0;}).length;
-  var claimCnt = DATA.filter(function(r){return r.claim_status==='청구';}).length;
+  var ilmCnt = _src.filter(function(r){return r.ilmansa_pt>0;}).length;
+  var claimCnt = _src.filter(function(r){return r.claim_status==='청구';}).length;
   var claimRate = ilmCnt>0 ? (claimCnt/ilmCnt*100) : 0;
   // ③ 위기 처수 = 긴급-청구누수 + 이탈방어 + 정체/재가동
-  var crisis = DATA.filter(function(r){
+  var crisis = _src.filter(function(r){
     return r.grade_action==='🔥 긴급-청구누수' || r.grade_action==='🔥 긴급-청구누수(대형)' || r.grade_action==='🛡 이탈방어';
   }).length;
   // ④ 새는 매출 = 일만사 활성·미청구 의원의 4월 수가 합 (실제로 들어와야 하는데 안 들어온 매출)
-  var leakRev = DATA
+  var leakRev = _src
     .filter(function(r){return r.is_active_ilm===1 && r.claim_status!=='청구';})
     .reduce(function(a,r){return a + (r.fee_apr||0);},0);
   function fmtKR(n){
@@ -1692,10 +1720,11 @@ function renderKpiSignals(){
 function renderActionTriage(){
   var el = document.getElementById('actionTriage');
   if(!el) return;
-  // 등급별 카운트 집계
+  // 등급별 카운트 집계 (v66: 사업부 필터)
+  var _src = getFilteredData();
   var c = {recovery:0, restart:0, activate:0};
   var rev = {recovery:0, restart:0, activate:0};  // 잠재매출 (4월수가)
-  DATA.forEach(function(r){
+  _src.forEach(function(r){
     var g = r.grade_action;
     var fee = r.fee_apr || 0;
     // 매출 회복: 긴급-청구누수(+대형) + 이탈방어
@@ -1801,8 +1830,11 @@ function renderDivisionTab(){
     var gaugeR = 30, gaugeC = 2 * Math.PI * gaugeR;
     var gaugePct = Math.min(ach, 100) / 100;
     var gaugeOffset = gaugeC * (1 - gaugePct);
+    var _isSel = (selectedDivision === div);
+    var _isDim = (selectedDivision && !_isSel);
     container.innerHTML += `
-    <div class="div-card" style="--clr:${clr}">
+    <div class="div-card ${_isSel?'div-card-selected':''} ${_isDim?'div-card-dim':''}" style="--clr:${clr}" onclick="selectDivision('${div}')" title="클릭하여 ${_isSel?'전체 보기로 복귀':div+' 상세 보기'}">
+      ${_isSel?'<div class="div-sel-badge">✓ 선택됨 — 클릭하여 해제</div>':''}
       <div class="card-header">
         <h3>${div}</h3>
         <div class="head">총 ${rows.length.toLocaleString()}개 기관</div>
@@ -1896,29 +1928,69 @@ function renderDivisionTab(){
   // 기존 간호사 순위 — guard 있어서 안전 (DOM 없으면 return)
   renderNursePerf();
 
-  const cData=DIVISIONS.map(div=>{
-    const r=DATA.filter(d=>d.division===div);
-    return{yes:r.filter(x=>x.claim_status==='청구').length, no:r.filter(x=>x.claim_status==='미청구').length};
-  });
-  if(claimChart) claimChart.destroy();
-  claimChart=new Chart(document.getElementById('claimChart'),{
-    type:'bar',
-    data:{labels:DIVISIONS,datasets:[
-      {label:'청구',data:cData.map(d=>d.yes),backgroundColor:'#22c55e',borderColor:'#16a34a',borderWidth:0,borderRadius:8,borderSkipped:false,maxBarThickness:48},
-      {label:'미청구',data:cData.map(d=>d.no),backgroundColor:'#ef4444',borderColor:'#dc2626',borderWidth:0,borderRadius:8,borderSkipped:false,maxBarThickness:48}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:13,weight:'700'},boxWidth:14,boxHeight:14,padding:14,usePointStyle:true,color:'#334155'}},tooltip:{backgroundColor:'#0f172a',titleColor:'#fff',bodyColor:'#fff',padding:14,borderRadius:10,titleFont:{size:14.5,weight:'800',family:"'Pretendard','맑은 고딕',sans-serif"},bodyFont:{size:13.5,weight:'700',family:"'Pretendard','맑은 고딕',sans-serif"},boxPadding:6}},scales:{x:{stacked:true,grid:{display:false},ticks:{font:{size:13,weight:'700'},color:'#334155'}},y:{stacked:true,grid:{color:'#f1f5f9'},ticks:{font:{size:11,weight:'600'},color:'#94a3b8'},border:{display:false}}},animation:{duration:700,easing:'easeOutQuart'}}
-  });
+  // v66: 사업부 선택 시 사무소별 드릴다운
+  var _labels, _cData, _actData, _ilmData, _claimTitle, _divTitle;
+  if(selectedDivision){
+    // 선택된 사업부의 사무소별 비교
+    var _offices = [];
+    DATA.forEach(function(r){
+      if(r.division===selectedDivision && r.office && _offices.indexOf(r.office)<0) _offices.push(r.office);
+    });
+    _offices.sort();
+    _labels = _offices;
+    _cData = _offices.map(function(o){
+      var r = DATA.filter(function(d){return d.division===selectedDivision && d.office===o;});
+      return {yes:r.filter(function(x){return x.claim_status==='청구';}).length, no:r.filter(function(x){return x.claim_status==='미청구';}).length};
+    });
+    _actData = _offices.map(function(o){return DATA.filter(function(d){return d.division===selectedDivision && d.office===o && d.ilmansa_pt>=10;}).length;});
+    _ilmData = _offices.map(function(o){return DATA.filter(function(d){return d.division===selectedDivision && d.office===o && d.ilmansa_pt>0;}).length;});
+    _claimTitle = '💊 청구 현황 ('+selectedDivision+' · 사무소별)';
+    _divTitle   = '📈 사무소별 활성처 / 일만사 ('+selectedDivision+')';
+  } else {
+    // 전체 — 사업부별 비교
+    _labels = DIVISIONS;
+    _cData = DIVISIONS.map(function(div){
+      var r=DATA.filter(function(d){return d.division===div;});
+      return {yes:r.filter(function(x){return x.claim_status==='청구';}).length, no:r.filter(function(x){return x.claim_status==='미청구';}).length};
+    });
+    _actData = DIVISIONS.map(function(div){return DATA.filter(function(d){return d.division===div && d.ilmansa_pt>=10;}).length;});
+    _ilmData = DIVISIONS.map(function(div){return DATA.filter(function(d){return d.division===div && d.ilmansa_pt>0;}).length;});
+    _claimTitle = '💊 청구 현황 (전체)';
+    _divTitle   = '📈 사업부별 활성처 / 일만사';
+  }
 
-  const actData=DIVISIONS.map(div=>DATA.filter(d=>d.division===div&&d.ilmansa_pt>=10).length);
-  const ilmData=DIVISIONS.map(div=>DATA.filter(d=>d.division===div&&d.ilmansa_pt>0).length);
+  // 차트 제목 업데이트
+  var _claimCanvas = document.getElementById('claimChart');
+  var _divCanvas = document.getElementById('divisionBarChart');
+  if(_claimCanvas){
+    var _claimTitleEl = _claimCanvas.closest('.chart-box').querySelector('.section-title');
+    if(_claimTitleEl) _claimTitleEl.textContent = _claimTitle;
+  }
+  if(_divCanvas){
+    var _divTitleEl = _divCanvas.closest('.chart-box').querySelector('.section-title');
+    if(_divTitleEl) _divTitleEl.textContent = _divTitle;
+  }
+
+  if(claimChart) claimChart.destroy();
+  if(_claimCanvas){
+    claimChart=new Chart(_claimCanvas,{
+      type:'bar',
+      data:{labels:_labels,datasets:[
+        {label:'청구',data:_cData.map(function(d){return d.yes;}),backgroundColor:'#22c55e',borderColor:'#16a34a',borderWidth:0,borderRadius:8,borderSkipped:false,maxBarThickness:48},
+        {label:'미청구',data:_cData.map(function(d){return d.no;}),backgroundColor:'#ef4444',borderColor:'#dc2626',borderWidth:0,borderRadius:8,borderSkipped:false,maxBarThickness:48}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:13,weight:'700'},boxWidth:14,boxHeight:14,padding:14,usePointStyle:true,color:'#334155'}},tooltip:{backgroundColor:'#0f172a',titleColor:'#fff',bodyColor:'#fff',padding:14,borderRadius:10,titleFont:{size:14.5,weight:'800',family:"'Pretendard','맑은 고딕',sans-serif"},bodyFont:{size:13.5,weight:'700',family:"'Pretendard','맑은 고딕',sans-serif"},boxPadding:6}},scales:{x:{stacked:true,grid:{display:false},ticks:{font:{size:12,weight:'700'},color:'#334155'}},y:{stacked:true,grid:{color:'#f1f5f9'},ticks:{font:{size:11,weight:'600'},color:'#94a3b8'},border:{display:false}}},animation:{duration:700,easing:'easeOutQuart'}}
+    });
+  }
   if(divBarChart) divBarChart.destroy();
-  divBarChart=new Chart(document.getElementById('divisionBarChart'),{
-    type:'bar',
-    data:{labels:DIVISIONS,datasets:[
-      {label:'활성처 (기관수)',data:actData,backgroundColor:'#1a6faf',borderRadius:8,borderSkipped:false,maxBarThickness:42},
-      {label:'일만사처 (기관수)',data:ilmData,backgroundColor:'#a855f7',borderRadius:8,borderSkipped:false,maxBarThickness:42}]},
-    options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'top',labels:{font:{size:13,weight:'700'},boxWidth:14,boxHeight:14,padding:14,usePointStyle:true,color:'#334155'}},tooltip:{backgroundColor:'#0f172a',titleColor:'#fff',bodyColor:'#fff',padding:14,borderRadius:10,titleFont:{size:14.5,weight:'800',family:"'Pretendard','맑은 고딕',sans-serif"},bodyFont:{size:13.5,weight:'700',family:"'Pretendard','맑은 고딕',sans-serif"},boxPadding:6}},scales:{x:{grid:{display:false},ticks:{font:{size:13,weight:'700'},color:'#334155'}},y:{grid:{color:'#f1f5f9'},ticks:{font:{size:11,weight:'600'},color:'#94a3b8'},border:{display:false}}},animation:{duration:700,easing:'easeOutQuart'}}
-  });
+  if(_divCanvas){
+    divBarChart=new Chart(_divCanvas,{
+      type:'bar',
+      data:{labels:_labels,datasets:[
+        {label:'활성처 (기관수)',data:_actData,backgroundColor:'#1a6faf',borderRadius:8,borderSkipped:false,maxBarThickness:42},
+        {label:'일만사처 (기관수)',data:_ilmData,backgroundColor:'#a855f7',borderRadius:8,borderSkipped:false,maxBarThickness:42}]},
+      options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'top',labels:{font:{size:13,weight:'700'},boxWidth:14,boxHeight:14,padding:14,usePointStyle:true,color:'#334155'}},tooltip:{backgroundColor:'#0f172a',titleColor:'#fff',bodyColor:'#fff',padding:14,borderRadius:10,titleFont:{size:14.5,weight:'800',family:"'Pretendard','맑은 고딕',sans-serif"},bodyFont:{size:13.5,weight:'700',family:"'Pretendard','맑은 고딕',sans-serif"},boxPadding:6}},scales:{x:{grid:{display:false},ticks:{font:{size:12,weight:'700'},color:'#334155'}},y:{grid:{color:'#f1f5f9'},ticks:{font:{size:11,weight:'600'},color:'#94a3b8'},border:{display:false}}},animation:{duration:700,easing:'easeOutQuart'}}
+    });
+  }
 }
 
 // ============================================================
