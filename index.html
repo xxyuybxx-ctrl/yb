@@ -544,6 +544,144 @@ th.sort-th.sort-active .sort-ind{color:#1a3dcb;font-weight:900}
 .div-sel-badge{position:absolute;top:-12px;right:14px;background:var(--clr);color:#fff;padding:5px 12px;border-radius:14px;font-size:11.5px;font-weight:800;letter-spacing:-0.2px;box-shadow:0 4px 10px rgba(15,23,42,.18);z-index:11;white-space:nowrap;animation:divBadgePop .35s cubic-bezier(.34,1.56,.64,1)}
 @keyframes divBadgePop{from{transform:scale(.6) translateY(-4px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
 
+
+/* ════════════════════════════════════════════════════════════ */
+/* 모바일 종합 최적화 v71 — 줄바꿈/가독성/그리드/터치영역 */
+/* ════════════════════════════════════════════════════════════ */
+
+/* 전 영역 기본 — 한글 줄바꿈 방어 */
+body,h1,h2,h3,h4,h5,p,span,div,td,th,button,a,label,li{
+  word-break:keep-all;
+  overflow-wrap:break-word;
+}
+
+/* === 태블릿 (768px 이하) === */
+@media (max-width:768px){
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  body{font-size:15px;line-height:1.45}
+
+  /* 헤더 — 두 줄로 자연스럽게 */
+  .header{flex-direction:column;align-items:flex-start;padding:14px 16px;gap:10px}
+  .header > div:first-child{width:100%}
+  .header-right{width:100%;justify-content:space-between;flex-wrap:wrap;gap:6px}
+
+  /* 탭 — 가로 스크롤 + 터치 친화 */
+  .tabs{padding:0 8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;white-space:nowrap;display:flex}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{padding:13px 14px;font-size:14px;flex:0 0 auto;min-height:46px;letter-spacing:-0.3px}
+
+  /* 액션 카드 3선 — 1열 + 큰 글씨 */
+  .action-triage{grid-template-columns:1fr;gap:13px}
+  .action-card .ac-head{padding:15px 18px 14px}
+  .action-card .ac-title{font-size:18px}
+  .action-card .ac-sub{font-size:13.5px}
+  .action-card .ac-num{font-size:34px}
+  .action-card .ac-meta{font-size:12.5px}
+  .action-card .ac-cta{padding:12px 18px;font-size:13.5px}
+
+  /* 사업부 카드 — 1열 (이미 division-grid:1fr) */
+  .div-card{padding:0 !important}
+  .div-card .card-header{padding:16px 18px 20px}
+  .div-card h3{font-size:26px;letter-spacing:-1px}
+  .div-card .grade-badge{top:14px;right:16px;padding:6px 12px}
+  .div-card .grade-badge .gb-grade{font-size:26px}
+  .div-card .card-body{padding:16px}
+  .div-card .ach-gauge{width:74px;height:74px}
+  .div-card .ach-pct{font-size:22px !important}
+  .div-card .ach-num{font-size:17px}
+  .div-card .div-metric .mv{font-size:19px}
+  .div-card .div-metric.hero .mv{font-size:24px}
+
+  /* 등급 가이드 카드 — 2열 + 글씨 ↑ */
+  .grade-guide{grid-template-columns:repeat(2,1fr);gap:8px}
+  .grade-card{padding:11px 12px 10px}
+  .grade-card .gc-name{font-size:13px}
+  .grade-card .gc-count{font-size:12.5px;padding:3px 8px}
+  .grade-card .gc-def{font-size:12px;line-height:1.45}
+  .grade-card .gc-action{font-size:12px;line-height:1.45}
+
+  /* KPI 시그널 — 2x2 유지하되 폰트 조정 */
+  .kpi-signals{grid-template-columns:repeat(2,1fr);gap:10px}
+  .kpi-sig{padding:13px 14px;min-height:108px}
+  .kpi-sig .ks-label{font-size:12px}
+  .kpi-sig .ks-value{font-size:26px}
+  .kpi-sig .ks-diag{font-size:11.5px}
+
+  /* 차트 박스 */
+  .chart-box{padding:14px 16px}
+  .chart-box .section-title{font-size:15px;margin-bottom:8px}
+
+  /* 섹션 타이틀 */
+  .section-title{font-size:16px;letter-spacing:-0.4px}
+
+  /* 테이블 — 가로 스크롤 보장 */
+  .hospital-table-wrap,#nursePerf,.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+  table{font-size:13.5px}
+  th,td{padding:9px 10px;white-space:nowrap}
+  th:first-child,td:first-child{white-space:normal;min-width:140px}
+
+  /* 모달 */
+  .info-modal-box{max-width:94vw;margin:8vh auto;border-radius:14px;max-height:84vh;overflow-y:auto}
+  .info-modal-head{padding:15px 17px}
+  .info-modal-head h3{font-size:16px}
+  .info-modal-body{padding:17px 18px;font-size:14px;line-height:1.55}
+  .info-modal-body h4{font-size:15px;margin-top:14px}
+  .info-modal-body table{font-size:13px}
+  .info-modal-body td,.info-modal-body th{padding:8px 9px}
+}
+
+/* === 모바일 좁은 화면 (430px 이하) === */
+@media (max-width:430px){
+  body{font-size:14.5px}
+  .content{padding:12px 10px}
+
+  /* 헤더 타이틀 축소 */
+  .header > div:first-child > div:first-child{font-size:15px !important;letter-spacing:-0.6px !important}
+  .header > div:first-child > div:nth-child(2){font-size:11.5px !important;letter-spacing:-0.3px !important}
+
+  /* 액션 카드 폰트 약간 축소 */
+  .action-card .ac-title{font-size:17px}
+  .action-card .ac-num{font-size:30px}
+
+  /* 등급 가이드 — 1열 (좁은 화면) */
+  .grade-guide{grid-template-columns:1fr;gap:8px}
+  .grade-card{padding:12px 14px}
+  .grade-card .gc-name{font-size:14px}
+  .grade-card .gc-def,.grade-card .gc-action{font-size:12.5px}
+
+  /* KPI 시그널 — 1열 */
+  .kpi-signals{grid-template-columns:1fr;gap:9px}
+  .kpi-sig .ks-value{font-size:28px}
+
+  /* 사업부 카드 */
+  .div-card h3{font-size:23px}
+  .div-card .div-metric .mv{font-size:18px}
+  .div-card .div-metric.hero .mv{font-size:22px}
+
+  /* 사업부 선택 배지 — 모바일 위치 조정 */
+  .div-sel-badge{top:-10px;right:12px;padding:4px 10px;font-size:11px}
+
+  /* 사무소·간호사 필터 dropdown */
+  .ctrl-group{flex:1 1 100%}
+  .ctrl-group select,.ctrl-group input{font-size:14px;padding:9px 11px}
+
+  /* 동선 카드 */
+  .route-item{padding:12px 14px;gap:9px}
+  .route-item .rnum{font-size:17px;min-width:22px}
+  .route-item .rhead{font-size:14.5px}
+  .route-item .rmeta{font-size:12px;line-height:1.55}
+
+  /* 차트 캔버스 */
+  .chart-box canvas{max-height:260px !important}
+}
+
+/* === 작은 폰 (360px 이하) === */
+@media (max-width:360px){
+  .div-card h3{font-size:21px}
+  .action-card .ac-num{font-size:27px}
+  .kpi-sig .ks-value{font-size:25px}
+}
+
 </style>
 </head>
 <body>
