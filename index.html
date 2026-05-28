@@ -360,19 +360,39 @@ th.sort-th.sort-active .sort-ind{color:#1976d2;font-weight:900}
 @media (max-width:768px){#lensCards{grid-template-columns:repeat(2,1fr) !important}}
 /* 인쇄용 스타일 */
 .print-only{display:none}
+/* v88: 임원 인쇄 모드 */
+body.exec-print .header, body.exec-print .tabs, body.exec-print #loginGate,
+body.exec-print .info-modal, body.exec-print .no-print,
+body.exec-print .tab-content:not(#tab-division){display:none !important}
+body.exec-print #tab-division.tab-content{display:block !important}
+@media print {
+  body.exec-print{background:#fff !important;color:#222 !important;font-size:10pt}
+  body.exec-print .action-triage{grid-template-columns:repeat(3,1fr) !important;gap:8px !important;margin-bottom:8px !important}
+  body.exec-print .action-card{break-inside:avoid;page-break-inside:avoid;box-shadow:none !important;border:1px solid #ccc !important}
+  body.exec-print .division-grid{grid-template-columns:repeat(4,1fr) !important;gap:8px !important;margin-bottom:8px !important}
+  body.exec-print .div-card{break-inside:avoid;page-break-inside:avoid;box-shadow:none !important;border:1px solid #ccc !important}
+  body.exec-print .div-card h3{font-size:14pt !important}
+  body.exec-print .chart-row{grid-template-columns:1fr 1fr !important;gap:8px !important}
+  body.exec-print .chart-box{break-inside:avoid;page-break-inside:avoid;box-shadow:none !important;border:1px solid #ddd !important;padding:10px !important}
+  body.exec-print .grade-guide{grid-template-columns:repeat(4,1fr) !important;gap:6px !important}
+  body.exec-print .kpi-signals{grid-template-columns:repeat(4,1fr) !important;gap:8px !important}
+  body.exec-print canvas{max-height:200px !important}
+  @page { size:A4 landscape; margin:8mm 8mm 10mm 8mm }
+}
 @media print {
   @page { size:A4; margin:14mm 12mm 16mm 12mm }
   html,body{background:#fff !important;color:#222 !important;font-size:11pt}
-  /* 인쇄 시 숨길 영역 */
-  #loginGate, .header, .tabs, #strategyBanner,
-  .route-controls, .route-map-wrap, .map-controls, .map-stat-bar, .map-legend-bar,
-  #routeMapContainer, #mapContainer,
-  .maps-bar, .no-print,
-  #nurseKpis, #nurseCards, .section-card,
-  .tab-content:not(#tab-route),
-  .info-modal { display:none !important }
-  /* 전략동선 탭만 보이게 */
-  #tab-route.tab-content{display:block !important;padding:0 !important;margin:0 !important}
+  body:not(.exec-print) #loginGate, body:not(.exec-print) .header,
+  body:not(.exec-print) .tabs, body:not(.exec-print) #strategyBanner,
+  body:not(.exec-print) .route-controls, body:not(.exec-print) .route-map-wrap,
+  body:not(.exec-print) .map-controls, body:not(.exec-print) .map-stat-bar,
+  body:not(.exec-print) .map-legend-bar, body:not(.exec-print) #routeMapContainer,
+  body:not(.exec-print) #mapContainer, body:not(.exec-print) .maps-bar,
+  body:not(.exec-print) .no-print, body:not(.exec-print) #nurseKpis,
+  body:not(.exec-print) #nurseCards, body:not(.exec-print) .section-card,
+  body:not(.exec-print) .tab-content:not(#tab-route),
+  body:not(.exec-print) .info-modal { display:none !important }
+  body:not(.exec-print) #tab-route.tab-content{display:block !important;padding:0 !important;margin:0 !important}
   .container{padding:0 !important;margin:0 !important;max-width:100% !important}
   /* 인쇄 헤더 보이기 */
   #printHeader, .print-only{display:block !important}
@@ -763,10 +783,10 @@ body,h1,h2,h3,h4,h5,p,span,div,td,th,button,a,label,li{
 
 <!-- ===== TAB 1: 사업부별 ===== -->
 <div class="tab-content active" id="tab-division">
-  <!-- v63: 이번 주 액션 3선 — 첫 화면 최상단 -->
   <div class="section-title" style="margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
     <span>🎯 이번 주 액션 3선</span>
     <span style="font-size:12px;font-weight:500;color:#7a8fb5">— 카드 클릭 → 전략동선 즉시 이동</span>
+    <button class="no-print" onclick="printExecSummary()" style="margin-left:auto;background:#1976d2;color:#fff;border:none;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer" title="임원 보고용 한 페이지 인쇄">🖨 임원 보고 인쇄</button>
   </div>
   <div id="actionTriage" class="action-triage"></div>
 
@@ -876,6 +896,11 @@ body,h1,h2,h3,h4,h5,p,span,div,td,th,button,a,label,li{
       <option value="name_asc">이름순</option>
     </select>
     <span id="nurseCountInfo" style="font-size:12px;color:#7a8fb5;font-weight:600"></span>
+  </div>
+  <div id="myNurseCard"></div>
+  <div class="section-title" style="margin:18px 0 10px;display:flex;align-items:center;gap:8px">
+    <span>📊 전체 18명 순위</span>
+    <span style="font-size:12px;font-weight:500;color:#94a3b8">활성률 기준 자동 정렬</span>
   </div>
   <div id="nurseGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px"></div>
 </div>
@@ -1434,6 +1459,14 @@ function doLogin(){
   } else {
     document.getElementById('loginErr').textContent='아이디 또는 비밀번호가 올바르지 않습니다.';
   }
+}
+
+function printExecSummary(){
+  document.body.classList.add('exec-print');
+  setTimeout(function(){
+    window.print();
+    setTimeout(function(){ document.body.classList.remove('exec-print'); }, 500);
+  }, 200);
 }
 
 function printRoute(){
@@ -2980,6 +3013,44 @@ function renderNursePerf(){
   }).join('');
 }
 
+// v87: 본인(유영빈) 중심 카드 렌더링
+function renderMyNurseCard(allStats){
+  var el = document.getElementById('myNurseCard');
+  if(!el) return;
+  var MY_NAME = '유영빈';
+  var me = allStats.find(function(s){return s.name === MY_NAME;});
+  if(!me){ el.innerHTML=''; return; }
+  var sorted = allStats.slice().sort(function(a,b){return b.rate-a.rate;});
+  var myRank = sorted.findIndex(function(s){return s.name===MY_NAME;}) + 1;
+  var total = allStats.length;
+  var avgRate = allStats.reduce(function(a,s){return a+s.rate;},0)/allStats.length;
+  var diff = me.rate - avgRate;
+  var diffTxt = (diff>=0?'+':'')+diff.toFixed(1);
+  var myDiv = '';
+  for(var i=0;i<DATA.length;i++){ if(DATA[i].office===me.office){ myDiv=DATA[i].division; break; }}
+  var divStats = allStats.filter(function(s){
+    for(var i=0;i<DATA.length;i++){ if(DATA[i].office===s.office) return DATA[i].division===myDiv; }
+    return false;
+  });
+  var divAvg = divStats.length ? divStats.reduce(function(a,s){return a+s.rate;},0)/divStats.length : 0;
+  var divDiff = me.rate - divAvg;
+  var divDiffTxt = (divDiff>=0?'+':'')+divDiff.toFixed(1);
+  el.innerHTML =
+    '<div style="background:linear-gradient(135deg,#1976d2 0%,#2196f3 100%);border-radius:18px;padding:22px 26px;color:#fff;margin-bottom:6px;box-shadow:0 8px 24px rgba(25,118,210,.20),0 2px 6px rgba(25,118,210,.10);position:relative;overflow:hidden">'+
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap">'+
+        '<div style="min-width:200px"><div style="font-size:12.5px;font-weight:700;letter-spacing:0.4px;text-transform:uppercase;color:rgba(255,255,255,.85);margin-bottom:6px">👤 내 성과</div><div style="font-size:28px;font-weight:800;letter-spacing:-0.8px;line-height:1.1">'+me.name+' 간호사</div><div style="font-size:13px;font-weight:600;color:rgba(255,255,255,.85);margin-top:4px">'+me.office+' 사무소 · 담당 '+me.total+'곳</div></div>'+
+        '<div style="text-align:right;background:rgba(255,255,255,.18);padding:12px 18px;border-radius:14px;min-width:140px"><div style="font-size:11.5px;font-weight:700;color:rgba(255,255,255,.85);letter-spacing:0.3px;text-transform:uppercase">전체 순위</div><div style="font-size:28px;font-weight:800;letter-spacing:-0.8px;margin-top:2px">'+myRank+'<span style="font-size:14px;font-weight:700;color:rgba(255,255,255,.75)">/'+total+'</span></div></div>'+
+      '</div>'+
+      '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:18px">'+
+        '<div style="background:rgba(255,255,255,.12);border-radius:11px;padding:11px 14px"><div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.8);letter-spacing:0.3px;text-transform:uppercase">활성률</div><div style="font-size:24px;font-weight:800;letter-spacing:-0.5px;margin-top:2px">'+me.rate.toFixed(1)+'<span style="font-size:14px">%</span></div><div style="font-size:11px;font-weight:600;color:rgba(255,255,255,.75);margin-top:1px">전체평균 '+avgRate.toFixed(1)+'% (<b style="color:'+(diff>=0?'#bbf7d0':'#fecaca')+'">'+diffTxt+'</b>)</div></div>'+
+        '<div style="background:rgba(255,255,255,.12);border-radius:11px;padding:11px 14px"><div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.8);letter-spacing:0.3px;text-transform:uppercase">활성처</div><div style="font-size:24px;font-weight:800;letter-spacing:-0.5px;margin-top:2px">'+me.active.toLocaleString()+'<span style="font-size:13px"> 곳</span></div><div style="font-size:11px;font-weight:600;color:rgba(255,255,255,.75);margin-top:1px">일만사 '+me.actIlm+' · 비일만사 '+me.actNon+'</div></div>'+
+        '<div style="background:rgba(255,255,255,.12);border-radius:11px;padding:11px 14px"><div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.8);letter-spacing:0.3px;text-transform:uppercase">4월 수가</div><div style="font-size:24px;font-weight:800;letter-spacing:-0.5px;margin-top:2px">'+fmtKRW(me.totalFee||0)+'</div><div style="font-size:11px;font-weight:600;color:rgba(255,255,255,.75);margin-top:1px">일만사 환자 '+(me.totalIlm||0).toLocaleString()+'명</div></div>'+
+        '<div style="background:rgba(255,255,255,.12);border-radius:11px;padding:11px 14px"><div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.8);letter-spacing:0.3px;text-transform:uppercase">미청구 / 긴급</div><div style="font-size:24px;font-weight:800;letter-spacing:-0.5px;margin-top:2px">'+me.noClaim+'<span style="font-size:14px"> / </span>'+me.urgent+'</div><div style="font-size:11px;font-weight:600;color:rgba(255,255,255,.75);margin-top:1px">미청구 '+((me.noClaim/me.total)*100).toFixed(0)+'% · 긴급 '+((me.urgent/me.total)*100).toFixed(0)+'%</div></div>'+
+      '</div>'+
+      (myDiv ? '<div style="margin-top:14px;font-size:12px;font-weight:600;color:rgba(255,255,255,.85)">📊 '+myDiv+' 사업부 평균: '+divAvg.toFixed(1)+'% · 본인 차이 <b style="color:'+(divDiff>=0?'#bbf7d0':'#fecaca')+'">'+divDiffTxt+'</b></div>' : '')+
+    '</div>';
+}
+
 // ============================================================
 //  간호사 탭 (v48~)
 // ============================================================
@@ -3007,6 +3078,7 @@ function renderNurseTab(){
       rate: total>0 ? (totalAct/total*100) : 0
     };
   });
+  renderMyNurseCard(stats);
   // 검색
   var q = search.trim().toLowerCase();
   if(q){ stats = stats.filter(function(s){
