@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -1079,6 +1080,10 @@ body,h1,h2,h3,h4,h5,p,span,div,td,th,button,a,label,li{
     <span>활성처: <b id="mapActCnt">0</b>개</span>
     <span>일만사처: <b id="mapIlmCnt">0</b>개</span>
     <span>일만사환자: <b id="mapIlmSum">0</b>명</span>
+    <span style="margin-left:auto;display:flex;gap:6px">
+      <button id="mapViewClusterBtn" onclick="setMapView('cluster')" style="background:rgba(255,255,255,.22);color:#fff;border:1.5px solid #fff;padding:4px 11px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">📍 클러스터</button>
+      <button id="mapViewHeatBtn" onclick="setMapView('heat')" style="background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.5);padding:4px 11px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer">🔥 히트맵</button>
+    </span>
   </div>
   <div id="mapContainer"></div>
 </div>
@@ -1222,8 +1227,31 @@ let usingCustom = false;
 let usingGsheet = false;
 let gsheetMsg = '';
 
+const LS_TRENDS_KEY = '전략지도_trends_v1';
+function saveTrendSnapshot(){
+  try{
+    if(typeof DATA==='undefined' || !DATA.length) return;
+    var snap = {
+      date: new Date().toISOString().slice(0,10),
+      total: DATA.length,
+      totalAct: DATA.reduce(function(a,r){return a+(r.is_active_ilm||0)+(r.is_active_non_ilm||0);},0),
+      totalIlm: DATA.reduce(function(a,r){return a+(r.ilmansa_pt||0);},0),
+      totalFee: DATA.reduce(function(a,r){return a+(r.fee_apr||0);},0),
+      noClaim: DATA.filter(function(r){return r.claim_status==='미청구';}).length,
+      crisis: DATA.filter(function(r){return ['🔥 긴급-청구누수','🔥 긴급-청구누수(대형)','🛡 이탈방어'].indexOf(r.grade_action)>=0;}).length
+    };
+    var existing = [];
+    try{ existing = JSON.parse(localStorage.getItem(LS_TRENDS_KEY)||'[]'); }catch(_){}
+    if(!Array.isArray(existing)) existing=[];
+    existing = existing.filter(function(s){return s.date!==snap.date;});
+    existing.push(snap);
+    if(existing.length>12) existing = existing.slice(-12);
+    localStorage.setItem(LS_TRENDS_KEY, JSON.stringify(existing));
+  }catch(_){}
+}
+function getTrends(){ try{ return JSON.parse(localStorage.getItem(LS_TRENDS_KEY)||'[]') || []; }catch(_){ return []; } }
+
 (function initData(){
-  // v75: 마이그레이션 플래그 — 한 번만 옛 캐시 청소. 이후엔 관리자 업로드 보존
   const MIG_KEY = '전략지도_migrated_v74';
   try {
     if(!localStorage.getItem(MIG_KEY)){
@@ -1654,6 +1682,7 @@ function renderAll(){
   renderOfficeTable();
   renderRoute();
   initAdminUI();
+  try{ saveTrendSnapshot(); }catch(_){}
 }
 
 function normalizeGsheetUrl(u){
@@ -3499,9 +3528,28 @@ function initMap(){
     chunkedLoading:true,
     maxClusterRadius:40,
     iconCreateFunction:function(cluster){
-      const cnt=cluster.getChildCount();
-      const sz=cnt>100?44:cnt>30?36:28;
-      return L.divIcon({html:`<div style="background:rgba(15,52,96,.85);color:#fff;border-radius:50%;width:${sz}px;height:${sz}px;display:flex;align-items:center;justify-content:center;font-size:${sz>36?13:11}px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,.3)">${cnt}</div>`,iconSize:[sz,sz],className:''});
+      var markers = cluster.getAllChildMarkers();
+      var GA=['🧨 A++ 대규모활성','⭐ S+ 우수활성','✅ A 안정활성','✅ 기본 활성'];
+      var GW=['🔥 긴급-청구누수(대형)','🔥 긴급-청구누수','🛡 이탈방어','💛 진입 정착 필요'];
+      var nA=0, nW=0, nI=0;
+      markers.forEach(function(m){
+        var g = m.options && m.options.gradeAction;
+        if(GA.indexOf(g)>=0) nA++;
+        else if(GW.indexOf(g)>=0) nW++;
+        else nI++;
+      });
+      var cnt = cluster.getChildCount();
+      var bg = '#475569';
+      if(nW > 0 && nW >= nA) bg = '#dc2626';
+      else if(nA > nW && nA > nI) bg = '#16a34a';
+      var sz = cnt>100?48:cnt>30?38:30;
+      var totSeg = nA+nW+nI || 1;
+      var aPct = (nA/totSeg)*100, wPct = (nW/totSeg)*100;
+      var ring = 'background:conic-gradient(#22c55e 0% '+aPct+'%, #ef4444 '+aPct+'% '+(aPct+wPct)+'%, #94a3b8 '+(aPct+wPct)+'% 100%);';
+      return L.divIcon({
+        html:'<div style="position:relative;width:'+sz+'px;height:'+sz+'px"><div style="position:absolute;inset:0;border-radius:50%;'+ring+'box-shadow:0 3px 8px rgba(0,0,0,.28)"></div><div style="position:absolute;inset:3px;background:'+bg+';color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:'+(sz>38?13:11)+'px;font-weight:800">'+cnt+'</div></div>',
+        iconSize:[sz,sz], className:''
+      });
     }
   });
   _map.addLayer(_clusterGroup);
@@ -3533,6 +3581,45 @@ function toggleDiv(el){
   refreshMapMarkers();
 }
 
+// v89: 클러스터 ↔ 히트맵 토글
+var _mapView = 'cluster';
+var _heatLayer = null;
+function setMapView(mode){
+  if(!_map) return;
+  _mapView = mode;
+  var cb=document.getElementById('mapViewClusterBtn'), hb=document.getElementById('mapViewHeatBtn');
+  if(cb && hb){
+    if(mode==='cluster'){cb.style.background='rgba(255,255,255,.22)';cb.style.borderColor='#fff';hb.style.background='transparent';hb.style.borderColor='rgba(255,255,255,.5)';}
+    else{hb.style.background='rgba(255,255,255,.22)';hb.style.borderColor='#fff';cb.style.background='transparent';cb.style.borderColor='rgba(255,255,255,.5)';}
+  }
+  if(mode==='heat'){
+    if(_clusterGroup && _map.hasLayer(_clusterGroup)) _map.removeLayer(_clusterGroup);
+    refreshHeatLayer();
+  } else {
+    if(_heatLayer && _map.hasLayer(_heatLayer)) _map.removeLayer(_heatLayer);
+    if(_clusterGroup && !_map.hasLayer(_clusterGroup)) _map.addLayer(_clusterGroup);
+  }
+}
+function refreshHeatLayer(){
+  if(!_map || typeof L.heatLayer!=='function') return;
+  if(_heatLayer){ try{_map.removeLayer(_heatLayer);}catch(_){} _heatLayer=null; }
+  const officeFilter=(document.getElementById('mapOffice')||{}).value||'';
+  const gradeFilter=(document.getElementById('mapGrade')||{}).value||'';
+  const progTypeFilter=(document.getElementById('mapProgType')||{}).value||'';
+  let rows=DATA;
+  if(_selDiv) rows=rows.filter(function(r){return r.division===_selDiv;});
+  if(officeFilter) rows=rows.filter(function(r){return r.office===officeFilter;});
+  if(gradeFilter) rows=rows.filter(function(r){return r.grade_action===gradeFilter;});
+  if(progTypeFilter) rows=rows.filter(function(r){return r.program_type===progTypeFilter;});
+  rows=rows.filter(function(r){return r.lat&&r.lng&&!isNaN(parseFloat(r.lat));});
+  var pts = rows.map(function(r){
+    var w = Math.max(0.3, Math.min(1, (r.ilmansa_pt||0)/50));
+    return [parseFloat(r.lat), parseFloat(r.lng), w];
+  });
+  _heatLayer = L.heatLayer(pts, {radius:30, blur:24, maxZoom:13, max:1.0, gradient:{0.2:'#1976d2',0.4:'#22c55e',0.6:'#eab308',0.8:'#f59e0b',1.0:'#dc2626'}});
+  _map.addLayer(_heatLayer);
+}
+
 function makeCircleIcon(color){
   return L.divIcon({
     html:`<div style="width:20px;height:20px;border-radius:50%;background:${color};border:2.5px solid #fff;box-shadow:0 2px 5px rgba(0,0,0,.55)"></div>`,
@@ -3556,11 +3643,23 @@ function refreshMapMarkers(){
   if(progTypeFilter)rows=rows.filter(r=>r.program_type===progTypeFilter);
   rows=rows.filter(r=>r.lat&&r.lng&&!isNaN(parseFloat(r.lat)));
 
+  if(_mapView==='heat'){
+    var actCnt=rows.filter(r=>(r.is_active_ilm||0)+(r.is_active_non_ilm||0)>0).length;
+    var ilmCnt=rows.filter(r=>(r.ilmansa_pt||0)>0).length;
+    var ilmSum=rows.reduce((a,r)=>a+(r.ilmansa_pt||0),0);
+    document.getElementById('mapCount').textContent=rows.length.toLocaleString();
+    document.getElementById('mapActCnt').textContent=actCnt.toLocaleString();
+    document.getElementById('mapIlmCnt').textContent=ilmCnt.toLocaleString();
+    document.getElementById('mapIlmSum').textContent=ilmSum.toLocaleString();
+    refreshHeatLayer();
+    return;
+  }
+
   const markers=rows.map(r=>{
     const lat=parseFloat(r.lat),lng=parseFloat(r.lng);
     const color=GRADE_COLOR[r.grade_action]||'#94a3b8';
     const divColor=DIV_COLOR[r.division]||'#888';
-    const m=L.marker([lat,lng],{icon:makeCircleIcon(color)});
+    const m=L.marker([lat,lng],{icon:makeCircleIcon(color),gradeAction:r.grade_action});
     const feeStr=r.fee_apr?fmt2(r.fee_apr)+'원':'0원';
     m.bindPopup(`
       <div style="min-width:220px;font-family:'Noto Sans KR',sans-serif">
