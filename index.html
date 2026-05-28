@@ -1651,7 +1651,11 @@ function renderAll(){
   renderOfficeTable();
   renderRoute();
   initAdminUI();
-  try{ saveTrendSnapshot(); }catch(_){}
+  try{
+    var last = localStorage.getItem('전략지도_trends_lastsave');
+    var today = new Date().toISOString().slice(0,10);
+    if(last !== today){ saveTrendSnapshot(); localStorage.setItem('전략지도_trends_lastsave', today); }
+  }catch(_){}
 }
 
 function normalizeGsheetUrl(u){
@@ -3503,31 +3507,24 @@ function initMap(){
     attribution:'© OpenStreetMap',maxZoom:19
   }).addTo(_map);
   _clusterGroup=L.markerClusterGroup({
-    chunkedLoading:true,
-    maxClusterRadius:40,
+    chunkedLoading:true, chunkInterval:200, chunkDelay:50,
+    maxClusterRadius:50,
     iconCreateFunction:function(cluster){
-      var markers = cluster.getAllChildMarkers();
-      var GA=['🧨 A++ 대규모활성','⭐ S+ 우수활성','✅ A 안정활성','✅ 기본 활성'];
-      var GW=['🔥 긴급-청구누수(대형)','🔥 긴급-청구누수','🛡 이탈방어','💛 진입 정착 필요'];
-      var nA=0, nW=0, nI=0;
-      markers.forEach(function(m){
-        var g = m.options && m.options.gradeAction;
-        if(GA.indexOf(g)>=0) nA++;
-        else if(GW.indexOf(g)>=0) nW++;
-        else nI++;
-      });
       var cnt = cluster.getChildCount();
-      var bg = '#475569';
-      if(nW > 0 && nW >= nA) bg = '#dc2626';
-      else if(nA > nW && nA > nI) bg = '#16a34a';
-      var sz = cnt>100?48:cnt>30?38:30;
-      var totSeg = nA+nW+nI || 1;
-      var aPct = (nA/totSeg)*100, wPct = (nW/totSeg)*100;
-      var ring = 'background:conic-gradient(#22c55e 0% '+aPct+'%, #ef4444 '+aPct+'% '+(aPct+wPct)+'%, #94a3b8 '+(aPct+wPct)+'% 100%);';
-      return L.divIcon({
-        html:'<div style="position:relative;width:'+sz+'px;height:'+sz+'px"><div style="position:absolute;inset:0;border-radius:50%;'+ring+'box-shadow:0 3px 8px rgba(0,0,0,.28)"></div><div style="position:absolute;inset:3px;background:'+bg+';color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:'+(sz>38?13:11)+'px;font-weight:800">'+cnt+'</div></div>',
-        iconSize:[sz,sz], className:''
-      });
+      var sz = cnt>100?44:cnt>30?36:28;
+      if(cnt > 80){
+        return L.divIcon({html:'<div style="background:rgba(15,52,96,.88);color:#fff;border-radius:50%;width:'+sz+'px;height:'+sz+'px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;box-shadow:0 2px 6px rgba(0,0,0,.3)">'+cnt+'</div>',iconSize:[sz,sz],className:''});
+      }
+      var markers = cluster.getAllChildMarkers();
+      var nA=0, nW=0;
+      for(var i=0;i<markers.length;i++){
+        var g = markers[i].options && markers[i].options.gradeAction || '';
+        var c0 = g.charAt(0);
+        if(c0==='🧨'.charAt(0) || c0==='⭐'.charAt(0) || c0==='✅'.charAt(0)) nA++;
+        else if(c0==='🔥'.charAt(0) || c0==='🛡'.charAt(0) || c0==='💛'.charAt(0)) nW++;
+      }
+      var bg = nW>=nA ? (nW>0?'#dc2626':'#475569') : (nA>0?'#16a34a':'#475569');
+      return L.divIcon({html:'<div style="background:'+bg+';color:#fff;border-radius:50%;width:'+sz+'px;height:'+sz+'px;display:flex;align-items:center;justify-content:center;font-size:'+(sz>36?13:11)+'px;font-weight:800;box-shadow:0 2px 6px rgba(0,0,0,.3)">'+cnt+'</div>',iconSize:[sz,sz],className:''});
     }
   });
   _map.addLayer(_clusterGroup);
